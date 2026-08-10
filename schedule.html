@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Schedule an e-waste pickup with GreenLoop. Browse our collection catalogue, filter by category, and book your doorstep collection.">
+  <title>Schedule Pickup | GreenLoop E-Waste Recycling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+  <!-- ══ SHARED NAVBAR ══════════════════════════════════════════ -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="accent">◈</span> Green<span style="color:var(--text-muted)">Loop</span>
+    </a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="register.html">Register</a>
+      <a href="contact.html">Contact</a>
+      <a href="schedule.html" class="nav-cta active">Schedule Pickup</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ══ PAGE HERO ══════════════════════════════════════════════ -->
+    <section class="page-hero">
+      <div class="page-hero-content">
+        <span class="eyebrow">COLLECTION CATALOGUE</span>
+        <h1>
+          <span style="display:block;color:var(--text-primary)">Start a better</span>
+          <span style="display:block;color:var(--text-muted)">goodbye.</span>
+        </h1>
+        <p class="lead">
+          Find your item below, then book a collection window that suits your schedule.
+          Search, filter by category, and sort by environmental risk level.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══ CATALOGUE SECTION ══════════════════════════════════════ -->
+    <!--
+      DOM MANIPULATION: renderItems() in script.js builds both table and cards from ewasteItems JSON.
+      EVENT HANDLING: setupCatalogueFilters() wires search, chips, sort button.
+      EXCEPTION HANDLING: safelyLoadItems() wraps data access.
+      JSON REPRESENTATION: items sourced from data.js ewasteItems array.
+    -->
+    <section class="section">
+      <div class="catalogue-header fade-in-up">
+        <span class="eyebrow">WHAT WE COLLECT</span>
+        <h2>
+          <span style="color:var(--text-primary)">Browse the</span>
+          <span style="color:var(--text-muted)"> catalogue.</span>
+        </h2>
+      </div>
+
+      <!-- Search + sort toolbar — EVENT HANDLING -->
+      <div class="toolbar fade-in-up" data-delay="1">
+        <input
+          id="item-search"
+          type="search"
+          placeholder="Search by item, category or description…"
+          aria-label="Search item catalogue"
+        >
+        <button id="sort-hazard" type="button">
+          ↑ Sort by Hazard
+        </button>
+      </div>
+
+      <!-- Category filter chips — EVENT HANDLING (built by JS) -->
+      <div id="category-chips" class="chips" aria-label="Filter by category" role="group"></div>
+
+      <!-- ── Catalogue TABLE (DOM MANIPULATION via script.js) ─── -->
+      <div class="cat-table-wrap fade-in-up" data-delay="2">
+        <table aria-label="E-waste item catalogue">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Item</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Hazard Level</th>
+            </tr>
+          </thead>
+          <tbody id="items-table-body">
+            <!-- Rows injected by renderItems() in script.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── Catalogue CARDS (DOM MANIPULATION via script.js) ─── -->
+      <div id="item-cards-grid" class="item-cards-grid fade-in-up" data-delay="3" aria-label="E-waste items as cards">
+        <!-- Cards injected by renderItems() in script.js -->
+      </div>
+    </section>
+
+    <!-- ══ SCHEDULING FORM ════════════════════════════════════════ -->
+    <!--
+      FORM VALIDATION: validatePickupForm() in script.js
+      EXCEPTION HANDLING: getRequiredField() + try-catch in setupSchedulePage()
+      EVENT HANDLING: input/change → clearFieldError, submit → validate + push to pickupsStore
+      DOM MANIPULATION: form submit → renderPickups() re-renders the table below
+    -->
+    <section class="section alt">
+      <div class="schedule-grid">
+        <div class="schedule-copy fade-in-up">
+          <span class="eyebrow">BOOK YOUR PICKUP</span>
+          <h2>
+            <span style="color:var(--text-primary)">Choose your</span>
+            <span style="color:var(--text-muted)">collection details.</span>
+          </h2>
+          <p>
+            Select the types of items you're recycling, choose a time slot, and we'll
+            hold the collection window for you. All fields are required.
+          </p>
+          <div style="margin-top:32px;display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <span style="color:var(--accent);font-size:1.1rem;flex-shrink:0;">◈</span>
+              <p style="color:var(--text-muted);font-size:.875rem;margin:0;line-height:1.6;">
+                <strong style="color:var(--text-primary);">Free collection</strong> — standard household pickups have no charge.
+              </p>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <span style="color:var(--accent-2);font-size:1.1rem;flex-shrink:0;">◈</span>
+              <p style="color:var(--text-muted);font-size:.875rem;margin:0;line-height:1.6;">
+                <strong style="color:var(--text-primary);">Data safe</strong> — all drives processed under NIST 800-88.
+              </p>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <span style="color:var(--accent);font-size:1.1rem;flex-shrink:0;">◈</span>
+              <p style="color:var(--text-muted);font-size:.875rem;margin:0;line-height:1.6;">
+                <strong style="color:var(--text-primary);">Tracked</strong> — register for a recycling receipt.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <form id="schedule-form" class="form-card fade-in-up" data-delay="2" novalidate>
+
+          <!-- Exception Handling demo status (loadMalformedDraftDemo targets this) -->
+          <div id="draft-status" class="form-status" role="status" aria-live="polite"></div>
+
+          <!-- Schedule form status (submit validation) -->
+          <div id="schedule-status" class="form-status" role="status" aria-live="polite"></div>
+
+          <!-- Full name — text -->
+          <div class="form-group">
+            <label for="pickup-name">Full name</label>
+            <input
+              id="pickup-name"
+              name="fullName"
+              type="text"
+              required
+              minlength="2"
+              placeholder="Your name"
+              autocomplete="name"
+            >
+            <span class="error-msg" data-error-for="pickup-name"></span>
+          </div>
+
+          <!-- Address — textarea -->
+          <div class="form-group">
+            <label for="pickup-address">Pickup address</label>
+            <textarea
+              id="pickup-address"
+              name="address"
+              required
+              minlength="10"
+              maxlength="300"
+              placeholder="Street, area, city, pin code"
+              style="min-height:90px;"
+            ></textarea>
+            <span class="error-msg" data-error-for="pickup-address"></span>
+          </div>
+
+          <!-- Item type — checkboxes -->
+          <fieldset>
+            <legend>Item types to collect</legend>
+            <div class="choice-group">
+              <label class="choice-label">
+                <input type="checkbox" name="itemType" value="Phone"> 📱 Phone
+              </label>
+              <label class="choice-label">
+                <input type="checkbox" name="itemType" value="Laptop"> 💻 Laptop
+              </label>
+              <label class="choice-label">
+                <input type="checkbox" name="itemType" value="Battery"> 🔋 Battery
+              </label>
+              <label class="choice-label">
+                <input type="checkbox" name="itemType" value="Tablet"> 📟 Tablet
+              </label>
+              <label class="choice-label">
+                <input type="checkbox" name="itemType" value="Cables"> 🔌 Cables
+              </label>
+              <label class="choice-label">
+                <input type="checkbox" name="itemType" value="Monitor"> 🖥️ Monitor
+              </label>
+              <label class="choice-label">
+                <input type="checkbox" name="itemType" value="Other"> 📦 Other
+              </label>
+            </div>
+            <span class="error-msg" data-error-for="itemType"></span>
+          </fieldset>
+
+          <div class="form-grid-2">
+            <!-- Quantity — number -->
+            <div class="form-group">
+              <label for="pickup-quantity">Quantity of items</label>
+              <input
+                id="pickup-quantity"
+                name="quantity"
+                type="number"
+                required
+                min="1"
+                max="50"
+                placeholder="e.g. 3"
+              >
+              <span class="error-msg" data-error-for="pickup-quantity"></span>
+            </div>
+
+            <!-- Date — date -->
+            <div class="form-group">
+              <label for="pickup-date">Preferred date</label>
+              <input
+                id="pickup-date"
+                name="date"
+                type="date"
+                required
+              >
+              <span class="error-msg" data-error-for="pickup-date"></span>
+            </div>
+
+            <!-- Time slot — select -->
+            <div class="form-group">
+              <label for="pickup-time">Time slot</label>
+              <select id="pickup-time" name="time" required>
+                <option value="">Choose a slot…</option>
+                <option>09:00–12:00 (Morning)</option>
+                <option>12:00–15:00 (Afternoon)</option>
+                <option>15:00–18:00 (Evening)</option>
+              </select>
+              <span class="error-msg" data-error-for="pickup-time"></span>
+            </div>
+          </div>
+
+          <!-- Condition — radio -->
+          <fieldset>
+            <legend>Item condition</legend>
+            <div class="choice-group">
+              <label class="choice-label">
+                <input type="radio" name="condition" value="Working" required> Working
+              </label>
+              <label class="choice-label">
+                <input type="radio" name="condition" value="Partially working"> Partially working
+              </label>
+              <label class="choice-label">
+                <input type="radio" name="condition" value="Not working"> Not working
+              </label>
+              <label class="choice-label">
+                <input type="radio" name="condition" value="Damaged / unsafe"> Damaged / unsafe
+              </label>
+            </div>
+            <span class="error-msg" data-error-for="condition"></span>
+          </fieldset>
+
+          <!-- Special instructions — textarea -->
+          <div class="form-group">
+            <label for="pickup-instructions">Special instructions <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
+            <textarea
+              id="pickup-instructions"
+              name="instructions"
+              maxlength="300"
+              placeholder="Access notes, gate codes, fragile items, etc."
+            ></textarea>
+          </div>
+
+          <button class="btn" type="submit" id="schedule-submit-btn" style="width:100%;justify-content:center;">
+            Confirm pickup <span class="arrow">→</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ══ MY SCHEDULED PICKUPS ═══════════════════════════════════ -->
+    <!--
+      DOM MANIPULATION: renderPickups() in script.js builds this table from pickupsStore[]
+      The table re-renders every time a new pickup is confirmed.
+    -->
+    <section class="section pickups-section">
+      <span class="eyebrow fade-in-up">YOUR REQUESTS</span>
+      <h2 class="fade-in-up" style="margin-bottom:32px;">
+        <span style="color:var(--text-primary)">My scheduled</span>
+        <span style="color:var(--text-muted)"> pickups.</span>
+      </h2>
+
+      <div class="cat-table-wrap fade-in-up" data-delay="2">
+        <table aria-label="My scheduled pickups">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Items</th>
+              <th>Quantity</th>
+              <th>Date &amp; Time</th>
+              <th>Condition</th>
+            </tr>
+          </thead>
+          <tbody id="pickups-table-body">
+            <!-- Rows injected by renderPickups() in script.js -->
+            <tr class="empty-row">
+              <td colspan="6">No pickups scheduled yet. Your confirmed requests will appear here.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
+  <footer>
+    <div>
+      <a class="brand" href="index.html">
+        <span class="accent">◈</span> Green<span style="color:var(--text-muted)">Loop</span>
+      </a>
+      <p style="margin-top:8px;">Making responsible recycling beautifully simple.</p>
+    </div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="register.html">Register</a>
+    </div>
+    <p>© 2026 GreenLoop</p>
+  </footer>
+
+  <!-- data.js must load before script.js -->
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
