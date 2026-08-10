@@ -3,39 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Create a GreenLoop account to easily schedule e-waste recycling pickups for your home or business.">
+  <meta name="description" content="Create a GreenLoop account to easily schedule e-waste recycling pickups for your home or business. Free registration, doorstep collection.">
   <title>Register | GreenLoop E-Waste Recycling</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="effects.css">
 </head>
 <body>
 
-  <!-- ══ SHARED NAVBAR ══════════════════════════════════════════ -->
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <span class="accent">◈</span> Green<span style="color:var(--text-muted)">Loop</span>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <a class="brand" href="index.html" aria-label="GreenLoop — home">
+      <span class="brand-icon" aria-hidden="true">♻</span>
+      GreenLoop
     </a>
-    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-    <nav class="site-nav" aria-label="Main navigation">
+    <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
       <a href="index.html">Home</a>
+      <a href="index.html#how-it-works">How It Works</a>
       <a href="about.html">About</a>
-      <a href="register.html" class="active">Register</a>
+      <a href="register.html" class="active" aria-current="page">Register</a>
       <a href="contact.html">Contact</a>
-      <a href="schedule.html" class="nav-cta">Schedule Pickup</a>
+      <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
     </nav>
   </header>
 
-  <main>
-    <section class="form-page-wrap">
+  <main id="main-content">
+    <section class="form-page-wrap" aria-labelledby="register-heading">
 
-      <!-- ── Copy column ─────────────────────────────────────── -->
+      <!-- ── Copy column ──────────────────────────────────────── -->
       <div class="form-page-copy fade-in-up">
-        <span class="eyebrow">JOIN THE CYCLE</span>
-        <h1>
-          <span style="display:block;color:var(--text-primary)">Ready to recycle</span>
+        <span class="eyebrow">Join the Cycle</span>
+        <h1 id="register-heading">
+          <span style="display:block">Ready to recycle</span>
           <span style="display:block;color:var(--text-muted)">better?</span>
         </h1>
         <p>
@@ -44,36 +50,42 @@
         </p>
         <p>
           Already have an account?
-          <a href="#" style="color:var(--accent);font-weight:600;">Sign in →</a>
+          <a href="#" style="color:var(--accent);font-weight:600;" id="sign-in-link">Sign in →</a>
         </p>
 
-        <!-- Why join list -->
-        <div style="margin-top:40px;display:flex;flex-direction:column;gap:16px;">
-          <div style="display:flex;align-items:flex-start;gap:14px;">
-            <span style="color:var(--accent);font-size:1.2rem;flex-shrink:0;margin-top:1px;">◈</span>
-            <div>
-              <p style="font-weight:700;margin-bottom:4px;">Doorstep collection</p>
-              <p style="color:var(--text-muted);font-size:.875rem;">Schedule pickups without leaving home.</p>
+        <div class="benefit-list" role="list" aria-label="Why create an account">
+          <div class="benefit-item" role="listitem">
+            <div class="benefit-icon" aria-hidden="true">🚪</div>
+            <div class="benefit-text">
+              <strong>Doorstep collection</strong>
+              <span>Schedule pickups without leaving home.</span>
             </div>
           </div>
-          <div style="display:flex;align-items:flex-start;gap:14px;">
-            <span style="color:var(--accent-2);font-size:1.2rem;flex-shrink:0;margin-top:1px;">◈</span>
-            <div>
-              <p style="font-weight:700;margin-bottom:4px;">Certified recycling</p>
-              <p style="color:var(--text-muted);font-size:.875rem;">Every item handled by verified partners.</p>
+          <div class="benefit-item" role="listitem">
+            <div class="benefit-icon" aria-hidden="true">🔒</div>
+            <div class="benefit-text">
+              <strong>Data safe</strong>
+              <span>NIST 800-88 certified data destruction available.</span>
             </div>
           </div>
-          <div style="display:flex;align-items:flex-start;gap:14px;">
-            <span style="color:var(--accent);font-size:1.2rem;flex-shrink:0;margin-top:1px;">◈</span>
-            <div>
-              <p style="font-weight:700;margin-bottom:4px;">No fees</p>
-              <p style="color:var(--text-muted);font-size:.875rem;">Standard household pickups are free.</p>
+          <div class="benefit-item" role="listitem">
+            <div class="benefit-icon" aria-hidden="true">📄</div>
+            <div class="benefit-text">
+              <strong>Recycling receipts</strong>
+              <span>Track every item through certified partners.</span>
+            </div>
+          </div>
+          <div class="benefit-item" role="listitem">
+            <div class="benefit-icon" aria-hidden="true">✓</div>
+            <div class="benefit-text">
+              <strong>No fees</strong>
+              <span>Standard household pickups are completely free.</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── Registration form card ──────────────────────────── -->
+      <!-- ── Registration form ────────────────────────────────── -->
       <!--
         FORM VALIDATION + EXCEPTION HANDLING handled in script.js:
         - setupRegistrationForm()
@@ -81,9 +93,15 @@
         - getRequiredField() with try-catch
         All graded requirements are in script.js, clearly commented.
       -->
-      <form id="registration-form" class="form-card fade-in-up" data-delay="2" novalidate>
-        <h2>Create your account</h2>
-        <p class="form-desc">All fields marked are required.</p>
+      <form
+        id="registration-form"
+        class="form-card fade-in-up"
+        data-delay="2"
+        novalidate
+        aria-labelledby="form-card-heading"
+      >
+        <h2 id="form-card-heading">Create your account</h2>
+        <p class="form-desc">All fields are required unless marked optional.</p>
 
         <!-- Status banner (DOM MANIPULATION target) -->
         <div id="registration-status" class="form-status" role="status" aria-live="polite"></div>
@@ -100,11 +118,13 @@
             maxlength="60"
             placeholder="e.g. Priya Sharma"
             autocomplete="name"
+            aria-describedby="reg-name-error"
           >
-          <span class="error-msg" data-error-for="reg-name"></span>
+          <span class="error-msg" id="reg-name-error" data-error-for="reg-name" role="alert"></span>
         </div>
 
         <div class="form-grid-2">
+
           <!-- Email — email input -->
           <div class="form-group">
             <label for="reg-email">Email address</label>
@@ -115,8 +135,9 @@
               required
               placeholder="you@example.com"
               autocomplete="email"
+              aria-describedby="reg-email-error"
             >
-            <span class="error-msg" data-error-for="reg-email"></span>
+            <span class="error-msg" id="reg-email-error" data-error-for="reg-email" role="alert"></span>
           </div>
 
           <!-- Password — password input -->
@@ -130,8 +151,14 @@
               minlength="8"
               placeholder="8+ chars, include a number"
               autocomplete="new-password"
+              aria-describedby="reg-password-error reg-pw-label"
             >
-            <span class="error-msg" data-error-for="reg-password"></span>
+            <!-- Password strength indicator -->
+            <div class="pw-strength-bar" role="progressbar" aria-labelledby="reg-pw-label" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+              <div class="pw-strength-fill" id="pw-strength-fill"></div>
+            </div>
+            <span class="pw-strength-label" id="reg-pw-label" aria-live="polite"></span>
+            <span class="error-msg" id="reg-password-error" data-error-for="reg-password" role="alert"></span>
           </div>
 
           <!-- Phone — tel input -->
@@ -146,8 +173,9 @@
               maxlength="10"
               placeholder="10 digits, no spaces"
               autocomplete="tel"
+              aria-describedby="reg-phone-error"
             >
-            <span class="error-msg" data-error-for="reg-phone"></span>
+            <span class="error-msg" id="reg-phone-error" data-error-for="reg-phone" role="alert"></span>
           </div>
 
           <!-- Date of birth — date input -->
@@ -160,8 +188,9 @@
               required
               min="1900-01-01"
               max="2010-12-31"
+              aria-describedby="reg-dob-error"
             >
-            <span class="error-msg" data-error-for="reg-dob"></span>
+            <span class="error-msg" id="reg-dob-error" data-error-for="reg-dob" role="alert"></span>
           </div>
 
           <!-- House number — number input -->
@@ -175,14 +204,15 @@
               min="1"
               max="99999"
               placeholder="e.g. 42"
+              aria-describedby="reg-house-error"
             >
-            <span class="error-msg" data-error-for="reg-house"></span>
+            <span class="error-msg" id="reg-house-error" data-error-for="reg-house" role="alert"></span>
           </div>
 
           <!-- City — select -->
           <div class="form-group">
             <label for="reg-city">City / service area</label>
-            <select id="reg-city" name="city" required>
+            <select id="reg-city" name="city" required aria-describedby="reg-city-error">
               <option value="">Select an area…</option>
               <option>Central</option>
               <option>Northside</option>
@@ -191,9 +221,10 @@
               <option>East Quarter</option>
               <option>Southgate</option>
             </select>
-            <span class="error-msg" data-error-for="reg-city"></span>
+            <span class="error-msg" id="reg-city-error" data-error-for="reg-city" role="alert"></span>
           </div>
-        </div>
+
+        </div><!-- /form-grid-2 -->
 
         <!-- Address — textarea -->
         <div class="form-group">
@@ -204,15 +235,16 @@
             required
             minlength="10"
             maxlength="250"
-            placeholder="Street, area, city, pin code"
+            placeholder="Street, area, city, postal code"
+            aria-describedby="reg-address-error"
           ></textarea>
-          <span class="error-msg" data-error-for="reg-address"></span>
+          <span class="error-msg" id="reg-address-error" data-error-for="reg-address" role="alert"></span>
         </div>
 
         <!-- Account type — radio inputs -->
         <fieldset>
           <legend>Account type</legend>
-          <div class="choice-group">
+          <div class="choice-group" role="radiogroup" aria-describedby="accountType-error">
             <label class="choice-label">
               <input type="radio" name="accountType" value="individual" required>
               Individual
@@ -226,12 +258,15 @@
               NGO / Non-profit
             </label>
           </div>
-          <span class="error-msg" data-error-for="accountType"></span>
+          <span class="error-msg" id="accountType-error" data-error-for="accountType" role="alert"></span>
         </fieldset>
 
-        <!-- Interests — checkboxes -->
+        <!-- Interests — checkboxes (optional) -->
         <fieldset>
-          <legend>Notify me about</legend>
+          <legend>
+            Notify me about
+            <span style="color:var(--text-sub);font-weight:400;text-transform:none;">(optional)</span>
+          </legend>
           <div class="choice-group">
             <label class="choice-label">
               <input type="checkbox" name="notifyPickup" value="pickup">
@@ -250,38 +285,68 @@
 
         <!-- Terms — checkbox -->
         <div class="form-group">
-          <label class="choice-label" style="background:transparent;border:none;padding:0;gap:12px;">
-            <input id="reg-terms" type="checkbox" name="terms" required>
+          <label class="choice-label" style="background:transparent;border:none;padding:0;gap:10px;font-size:.875rem;font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted);">
+            <input id="reg-terms" type="checkbox" name="terms" required aria-describedby="reg-terms-error">
             I agree to the
-            <a href="#" style="color:var(--accent);">Terms of Service</a> and
-            <a href="#" style="color:var(--accent);">Privacy Policy</a>.
+            <a href="#" style="color:var(--accent);" id="terms-link">Terms of Service</a> and
+            <a href="#" style="color:var(--accent);" id="privacy-link">Privacy Policy</a>.
           </label>
-          <span class="error-msg" data-error-for="reg-terms"></span>
+          <span class="error-msg" id="reg-terms-error" data-error-for="reg-terms" role="alert"></span>
         </div>
 
         <div class="form-submit-row">
-          <button class="btn" type="submit" id="reg-submit-btn">
-            Create account <span class="arrow">→</span>
+          <button class="btn btn-lg" type="submit" id="reg-submit-btn">
+            Create account <span class="arrow" aria-hidden="true">→</span>
           </button>
         </div>
+
       </form>
 
     </section>
   </main>
 
   <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
-  <footer>
-    <div>
-      <a class="brand" href="index.html">
-        <span class="accent">◈</span> Green<span style="color:var(--text-muted)">Loop</span>
-      </a>
-      <p style="margin-top:8px;">Making responsible recycling beautifully simple.</p>
+  <footer role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="GreenLoop home">
+          <span class="brand-icon" aria-hidden="true">♻</span>
+          GreenLoop
+        </a>
+        <p>Making responsible e-waste recycling beautifully simple.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Site navigation">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Account links">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="register.html">Create Account</a></li>
+          <li><a href="schedule.html">Schedule Pickup</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-cta-col">
+        <h4>Ready to recycle?</h4>
+        <p>Schedule a free doorstep pickup today.</p>
+        <a href="schedule.html" class="btn">Schedule Pickup <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+
+    <div class="footer-bottom">
+      <p>© 2026 GreenLoop. Doorstep E-Waste Recycling.</p>
+      <div class="footer-bottom-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
-    <p>© 2026 GreenLoop</p>
   </footer>
 
   <script src="script.js"></script>

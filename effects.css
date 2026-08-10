@@ -1,82 +1,26 @@
 /* ============================================================
    GreenLoop — effects.css
-   Decorative animations, tilt cards, Three.js canvas styling
-   NOT part of graded JS requirements
+   Purposeful animations only. No Three.js. No WebGL.
+   No particle systems. No cursor effects.
    ============================================================ */
 
-/* ── Tilt/hover cards ── */
-.tilt-card {
-  will-change: transform;
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-.tilt-card:hover {
-  transform: perspective(900px) rotateX(2deg) rotateY(-3deg) translateY(-6px);
-  box-shadow: 0 32px 64px rgba(0,0,0,.5), 0 0 0 1px rgba(46,230,168,.15);
+/* ── Page entrance animation ── */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Button hover lift ── */
-.btn { will-change: transform; }
-.btn:active { transform: translateY(0) !important; }
-
-/* ── Ambient glow behind canvas ── */
-#hero-canvas-mount {
-  /* The canvas inherits position from HTML */
-  will-change: opacity;
+main {
+  animation: page-in .4s ease forwards;
 }
 
-/* ── Floating animation for decorative elements ── */
-@keyframes float-y {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-16px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: .5; }
-  50%       { opacity: 1; }
-}
-
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
-}
-
-/* ── Hero ambient orb (CSS-only fallback bg element) ── */
-.hero-orb {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-.hero-orb-1 {
-  width: 600px; height: 600px;
-  top: -200px; right: -100px;
-  background: radial-gradient(circle, rgba(46,230,168,.07) 0%, transparent 70%);
-  animation: pulse-glow 6s ease-in-out infinite;
-}
-
-.hero-orb-2 {
-  width: 400px; height: 400px;
-  bottom: -100px; right: 20%;
-  background: radial-gradient(circle, rgba(201,138,75,.06) 0%, transparent 70%);
-  animation: pulse-glow 8s ease-in-out infinite 2s;
-}
-
-/* ── Decorative circuit line (used in page-hero) ── */
-.circuit-line {
-  position: absolute;
-  bottom: 0; right: 0;
-  width: 40%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  opacity: .08;
-}
-
-/* ── Scroll fade-in (applied by IntersectionObserver in script.js) ── */
+/* ── Scroll reveal: fade-in-up ──
+   Applied by IntersectionObserver in script.js
+   Elements start hidden, become visible when scrolled into view. */
 .fade-in-up {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity .7s ease, transform .7s ease;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
 }
 
 .fade-in-up.visible {
@@ -85,83 +29,142 @@
 }
 
 /* Staggered delay helpers */
-.fade-in-up[data-delay="1"] { transition-delay: .1s; }
-.fade-in-up[data-delay="2"] { transition-delay: .2s; }
-.fade-in-up[data-delay="3"] { transition-delay: .3s; }
-.fade-in-up[data-delay="4"] { transition-delay: .4s; }
-.fade-in-up[data-delay="5"] { transition-delay: .5s; }
-.fade-in-up[data-delay="6"] { transition-delay: .6s; }
+.fade-in-up[data-delay="1"] { transition-delay: .08s; }
+.fade-in-up[data-delay="2"] { transition-delay: .16s; }
+.fade-in-up[data-delay="3"] { transition-delay: .24s; }
+.fade-in-up[data-delay="4"] { transition-delay: .32s; }
+.fade-in-up[data-delay="5"] { transition-delay: .40s; }
+.fade-in-up[data-delay="6"] { transition-delay: .48s; }
 
-/* ── Nav scroll effect ── */
-.site-header.scrolled {
-  background: rgba(10,10,10,.96);
-  border-bottom-color: rgba(255,255,255,.1);
+/* ── Navbar scroll effect ── */
+/* (Applied via JS classList.toggle on scroll)
+   Background and shadow are handled in style.css .site-header.scrolled */
+
+/* ── Hero image subtle entrance ── */
+@keyframes hero-img-in {
+  from { opacity: 0; transform: scale(1.02); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-/* ── Chip active pulse ── */
-.chip.active {
-  animation: none;
+.hero-image-wrap img {
+  animation: hero-img-in .8s ease .2s both;
 }
 
-/* ── Stat number count-up (already runs via JS) ── */
-.stat-block .num { will-change: contents; }
-
-/* ── Card glassmorphism extra layer ── */
-.item-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(255,255,255,.03) 0%, transparent 60%);
-  pointer-events: none;
-}
-.item-card { position: relative; overflow: hidden; }
-
-/* ── Scrollbar hint at bottom of catalogue table on mobile ── */
-.cat-table-wrap { overflow-x: auto; }
-
-/* ── Three.js canvas fill ── */
-#hero-canvas-mount canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* ── Page transition overlay (CSS only) ── */
-@keyframes page-in {
+/* ── Hero badge entrance ── */
+@keyframes badge-in {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-main {
-  animation: page-in .4s ease forwards;
+.hero-image-badge {
+  animation: badge-in .5s ease .6s both;
 }
 
-/* ── Loading pulse for async JS ── */
+/* ── Button press ── */
+.btn:active { transform: translateY(0) !important; }
+
+/* ── Step circle hover (already handled in style.css transitions) ── */
+
+/* ── Counter animation (stat numbers) ──
+   Number animates via JS; ensure smooth render */
+.stat-card .num {
+  will-change: contents;
+}
+
+/* ── Skeleton loading pulse ── */
 @keyframes skeleton-pulse {
-  0%, 100% { opacity: .4; }
-  50%       { opacity: .7; }
+  0%, 100% { opacity: .35; }
+  50%       { opacity: .65; }
 }
 
 .skeleton {
-  background: var(--bg-card);
+  background: var(--bg-2);
   border-radius: 6px;
   animation: skeleton-pulse 1.5s ease-in-out infinite;
 }
 
-/* ── Floating particles around hero canvas ── */
-.hero-particle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  will-change: transform, opacity;
+/* ── Form success checkmark ── */
+@keyframes check-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-/* ── Reduced motion ── */
+.success-icon {
+  animation: check-pop .4s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+/* ── Trust bar item subtle entrance ── */
+.trust-item {
+  transition: background .2s;
+}
+.trust-item:hover {
+  background: var(--bg-green-pale, #edf7f1);
+}
+
+/* ── Device/item card shimmer on hover ── */
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+
+/* ── Subtle pulse for CTA arrow ── */
+@keyframes arrow-nudge {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(3px); }
+}
+
+.hero .btn .arrow {
+  animation: arrow-nudge 2s ease-in-out infinite;
+}
+.hero .btn:hover .arrow {
+  animation: none;
+  transform: translateX(4px);
+}
+
+/* ── Summary panel entrance ── */
+@keyframes summary-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.summary-device-item {
+  animation: summary-in .25s ease forwards;
+}
+
+/* ── Accordion height transition (handled by .open class in style.css) ── */
+
+/* ── Loading state for form submit ── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn.loading::after {
+  content: '';
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+/* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-  .fade-in-up { opacity: 1; transform: none; }
+
+  .fade-in-up {
+    opacity: 1;
+    transform: none;
+  }
+
+  main { animation: none; }
+  .hero-image-wrap img { animation: none; }
+  .hero-image-badge { animation: none; }
+  .hero .btn .arrow { animation: none; }
 }

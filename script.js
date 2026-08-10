@@ -13,11 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // EVENT HANDLING: Wire up all page-specific modules safely
   setupNavbar();
   setupFadeInObserver();
-  setupRegistrationForm();   // register.html
-  setupContactForm();        // contact.html
-  setupFaq();               // contact.html
-  setupSchedulePage();       // schedule.html
-  loadMalformedDraftDemo(); // Exception Handling demo (schedule.html)
+  setupRegistrationForm();       // register.html
+  setupPasswordStrength();       // register.html — password strength meter
+  setupContactForm();            // contact.html
+  setupFaq();                    // contact.html
+  setupSchedulePage();           // schedule.html
+  renderHomeDeviceCards();       // index.html — device cards from JSON
+  loadMalformedDraftDemo();      // Exception Handling demo (schedule.html)
 });
 
 /* ════════════════════════════════════════════════════════════
@@ -44,6 +46,15 @@ function setupNavbar() {
         toggle.textContent = '☰';
       });
     });
+
+    // Close nav when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!header.contains(e.target) && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.textContent = '☰';
+      }
+    });
   }
 
   // EVENT HANDLING: Scroll listener for header style
@@ -69,7 +80,7 @@ function setupFadeInObserver() {
         observer.unobserve(entry.target); // fire once only
       }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.1 });
 
   elements.forEach(el => observer.observe(el));
 }
@@ -88,7 +99,7 @@ function showFieldError(fieldId, message) {
   if (errorSpan) {
     errorSpan.textContent = message;
     // DOM MANIPULATION: add error state class to the parent wrapper
-    const wrapper = errorSpan.closest('.form-group') || errorSpan.parentElement;
+    const wrapper = errorSpan.closest('.form-group') || errorSpan.closest('fieldset') || errorSpan.parentElement;
     if (wrapper) wrapper.classList.add('field-error');
   }
 }
@@ -101,7 +112,7 @@ function clearFieldError(fieldId) {
   const errorSpan = document.querySelector(`[data-error-for="${fieldId}"]`);
   if (errorSpan) {
     errorSpan.textContent = '';
-    const wrapper = errorSpan.closest('.form-group') || errorSpan.parentElement;
+    const wrapper = errorSpan.closest('.form-group') || errorSpan.closest('fieldset') || errorSpan.parentElement;
     if (wrapper) wrapper.classList.remove('field-error');
   }
 }
@@ -176,6 +187,157 @@ function loadMalformedDraftDemo() {
     draftStatusEl.textContent =
       '⚠ A saved draft was found but could not be recovered (corrupted data). Starting a fresh form.';
   }
+}
+
+/* ════════════════════════════════════════════════════════════
+   HOME PAGE — DEVICE CARDS (DOM MANIPULATION, JSON)
+   ════════════════════════════════════════════════════════════ */
+/**
+ * DOM MANIPULATION: Renders e-waste items as visual cards on the homepage.
+ * Uses the ewasteItems JSON data from data.js.
+ * Only runs on index.html (checks for #home-device-cards element).
+ */
+function renderHomeDeviceCards() {
+  const grid = document.querySelector('#home-device-cards');
+  if (!grid) return; // not on homepage
+
+  try {
+    // EXCEPTION HANDLING: verify JSON data
+    if (typeof ewasteItems === 'undefined' || !Array.isArray(ewasteItems)) {
+      throw new Error('ewasteItems data not available.');
+    }
+
+    // JSON REPRESENTATION: iterate over ewasteItems array
+    ewasteItems.forEach(item => {
+      // DOM MANIPULATION: createElement for each card
+      const card = document.createElement('article');
+      card.className = 'device-card fade-in-up';
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'article');
+      card.setAttribute('aria-label', `${item.itemName} — ${item.category}`);
+
+      const iconEl = document.createElement('div');
+      iconEl.className = 'card-icon';
+      iconEl.setAttribute('aria-hidden', 'true');
+      iconEl.textContent = item.iconOrImage;
+
+      const catEl = document.createElement('p');
+      catEl.className = 'card-cat';
+      catEl.textContent = item.category;
+
+      const titleEl = document.createElement('h3');
+      titleEl.textContent = item.itemName;
+
+      const descEl = document.createElement('p');
+      descEl.className = 'card-desc';
+      descEl.textContent = item.description;
+
+      const hazardEl = document.createElement('span');
+      hazardEl.className = `hazard ${item.hazardLevel.toLowerCase()}`;
+      hazardEl.textContent = `${item.hazardLevel} hazard`;
+
+      // Recovered materials chips
+      const materialsEl = document.createElement('div');
+      materialsEl.className = 'card-materials';
+      if (item.recoveredMaterials && item.recoveredMaterials.length) {
+        item.recoveredMaterials.forEach(mat => {
+          const chip = document.createElement('span');
+          chip.className = 'material-chip';
+          chip.textContent = mat;
+          materialsEl.appendChild(chip);
+        });
+      }
+
+      const arrowEl = document.createElement('span');
+      arrowEl.className = 'card-arrow';
+      arrowEl.setAttribute('aria-hidden', 'true');
+      arrowEl.textContent = '→';
+
+      card.append(iconEl, catEl, titleEl, descEl, hazardEl, materialsEl, arrowEl);
+
+      // EVENT HANDLING: card click navigates to schedule page
+      card.addEventListener('click', () => {
+        window.location.href = 'schedule.html';
+      });
+
+      // EVENT HANDLING: keyboard Enter/Space for accessibility
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.location.href = 'schedule.html';
+        }
+      });
+
+      grid.appendChild(card);
+    });
+
+    // Re-run fade observer for newly added cards
+    setupFadeInObserver();
+
+  } catch (err) {
+    // EXCEPTION HANDLING: graceful fallback if data is unavailable
+    console.error('[GreenLoop] Could not render home device cards:', err.message);
+    const msg = document.createElement('p');
+    msg.style.cssText = 'color:var(--text-muted);padding:24px 0;text-align:center;';
+    msg.textContent = 'Device catalogue is loading…';
+    grid.appendChild(msg);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   PASSWORD STRENGTH — DOM MANIPULATION / EVENT HANDLING
+   ════════════════════════════════════════════════════════════ */
+/**
+ * DOM MANIPULATION: Updates password strength bar and label as user types.
+ * EVENT HANDLING: Listens on the password input.
+ */
+function setupPasswordStrength() {
+  const pwInput   = document.querySelector('#reg-password');
+  const fillEl    = document.querySelector('#pw-strength-fill');
+  const labelEl   = document.querySelector('#reg-pw-label');
+  const barEl     = fillEl ? fillEl.parentElement : null;
+  if (!pwInput || !fillEl || !labelEl) return;
+
+  pwInput.addEventListener('input', () => {
+    const val = pwInput.value;
+    const score = calcPasswordStrength(val);
+
+    // DOM MANIPULATION: update fill width and colour
+    const levels = [
+      { pct: 0,    color: 'transparent', label: '' },
+      { pct: 25,   color: '#e74c3c',    label: 'Weak' },
+      { pct: 50,   color: '#f39c12',    label: 'Fair' },
+      { pct: 75,   color: '#f0ad4e',    label: 'Good' },
+      { pct: 100,  color: '#1f6b47',    label: 'Strong' }
+    ];
+
+    const level = levels[score];
+    fillEl.style.width    = level.pct + '%';
+    fillEl.style.background = level.color;
+    labelEl.textContent   = val.length ? level.label : '';
+    labelEl.style.color   = level.color;
+
+    // Update ARIA for screen readers
+    if (barEl) {
+      barEl.setAttribute('aria-valuenow', level.pct);
+      barEl.setAttribute('aria-valuetext', val.length ? `Password strength: ${level.label}` : 'Enter a password');
+    }
+  });
+}
+
+/**
+ * FORM VALIDATION: Calculates password strength score 0–4.
+ * @param {string} pw
+ * @returns {number} 0 = empty, 1 = weak, 2 = fair, 3 = good, 4 = strong
+ */
+function calcPasswordStrength(pw) {
+  if (!pw.length) return 0;
+  let score = 0;
+  if (pw.length >= 8)  score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+  return Math.max(1, score); // at least 1 if they've typed anything
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -285,6 +447,13 @@ function setupRegistrationForm() {
         setStatus(statusEl, 'success',
           '✓ Account created successfully! You can now schedule your first pickup.');
         form.reset();
+
+        // DOM MANIPULATION: reset password strength bar after success
+        const fillEl  = document.querySelector('#pw-strength-fill');
+        const labelEl = document.querySelector('#reg-pw-label');
+        if (fillEl)  { fillEl.style.width = '0%'; fillEl.style.background = 'transparent'; }
+        if (labelEl) { labelEl.textContent = ''; }
+
       } else {
         // DOM MANIPULATION: draw attention to first error
         const firstError = form.querySelector('[data-error-for]:not(:empty)');
@@ -309,20 +478,41 @@ function setupContactForm() {
   const statusEl = document.querySelector('#contact-status');
   if (!form) return;
 
+  // EVENT HANDLING: clear errors on input
+  form.addEventListener('input', (e) => {
+    const id = e.target.id || e.target.name;
+    if (id) clearFieldError(id);
+  });
+
+  form.addEventListener('change', (e) => {
+    const id = e.target.id || e.target.name;
+    if (id) clearFieldError(id);
+  });
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    hideStatus(statusEl);
+
     try {
-      // FORM VALIDATION: use HTML5 validity + custom check
+      // FORM VALIDATION: use custom checks with inline errors
       const name    = form.elements['contactName'].value.trim();
       const email   = form.elements['contactEmail'].value.trim();
       const subject = form.elements['subject'].value;
       const message = form.elements['message'].value.trim();
 
+      // FORM VALIDATION: check each field individually with inline errors
+      const checks = [
+        ['contact-name',    name.length >= 2,                                    'Enter your name (at least 2 characters).'],
+        ['contact-email',   /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email),        'Enter a valid email address.'],
+        ['contact-subject', Boolean(subject),                                    'Please choose a topic.'],
+        ['contact-message', message.length >= 10,                                'Enter a message (at least 10 characters).']
+      ];
+
       let valid = true;
-      if (name.length < 2)            { valid = false; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { valid = false; }
-      if (!subject)                   { valid = false; }
-      if (message.length < 10)        { valid = false; }
+      checks.forEach(([id, passes, msg]) => {
+        if (!passes) { showFieldError(id, msg); valid = false; }
+        else clearFieldError(id);
+      });
 
       if (valid) {
         // DOM MANIPULATION: inject success message
@@ -330,9 +520,9 @@ function setupContactForm() {
           '✓ Message sent! Our team will reply within 1–2 business days.');
         form.reset();
       } else {
-        // FORM VALIDATION: browser native validity UI as fallback
-        form.reportValidity();
-        setStatus(statusEl, 'error', 'Please fill in all fields correctly.');
+        const firstErr = form.querySelector('[data-error-for]:not(:empty)');
+        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setStatus(statusEl, 'error', 'Please correct the highlighted fields above.');
       }
     } catch (err) {
       // EXCEPTION HANDLING: unexpected DOM/runtime errors
@@ -352,17 +542,19 @@ function setupFaq() {
 
   faqBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const answer  = btn.nextElementSibling; // .faq-answer
-      const isOpen  = btn.getAttribute('aria-expanded') === 'true';
-      const icon    = btn.querySelector('.faq-icon');
+      const answerId = btn.getAttribute('aria-controls');
+      const answer   = answerId ? document.querySelector(`#${answerId}`) : btn.nextElementSibling;
+      const isOpen   = btn.getAttribute('aria-expanded') === 'true';
+      const icon     = btn.querySelector('.faq-icon');
 
       // EVENT HANDLING: close all others first (accordion pattern)
       faqBtns.forEach(other => {
         if (other !== btn) {
           other.setAttribute('aria-expanded', 'false');
-          const otherAnswer = other.nextElementSibling;
-          const otherIcon   = other.querySelector('.faq-icon');
-          if (otherAnswer) otherAnswer.classList.remove('open');
+          const otherId   = other.getAttribute('aria-controls');
+          const otherAns  = otherId ? document.querySelector(`#${otherId}`) : other.nextElementSibling;
+          const otherIcon = other.querySelector('.faq-icon');
+          if (otherAns)  otherAns.classList.remove('open');
           if (otherIcon) otherIcon.textContent = '+';
         }
       });
@@ -429,10 +621,10 @@ function renderItems(items) {
     tableBody.appendChild(emptyRow);
 
     // DOM MANIPULATION: empty card state
-    const emptyMsg = document.createElement('p');
-    emptyMsg.style.cssText = 'color:var(--text-muted);padding:24px 0;';
-    emptyMsg.textContent = 'No matching items found.';
-    cardsGrid.appendChild(emptyMsg);
+    const emptyWrap = document.createElement('div');
+    emptyWrap.style.cssText = 'text-align:center;padding:48px 24px;color:var(--text-muted);grid-column:1/-1;';
+    emptyWrap.innerHTML = '<p style="font-size:1.1rem;font-weight:600;margin-bottom:8px;">No devices match your search.</p><p style="font-size:.875rem;">Try another category or clear your filters.</p>';
+    cardsGrid.appendChild(emptyWrap);
     return;
   }
 
@@ -443,6 +635,7 @@ function renderItems(items) {
 
     const cellIcon = document.createElement('td');
     cellIcon.style.fontSize = '1.4rem';
+    cellIcon.setAttribute('aria-hidden', 'true');
     cellIcon.textContent = item.iconOrImage;
 
     const cellName = document.createElement('td');
@@ -453,7 +646,7 @@ function renderItems(items) {
 
     const cellCat = document.createElement('td');
     cellCat.textContent = item.category;
-    cellCat.style.color = 'var(--text-sub)';
+    cellCat.style.color = 'var(--text-muted)';
 
     const cellDesc = document.createElement('td');
     cellDesc.textContent = item.description;
@@ -471,10 +664,11 @@ function renderItems(items) {
     // ── CARD ──────────────────────────────────────────────
     // DOM MANIPULATION: createElement for card structure
     const card = document.createElement('article');
-    card.className = 'item-card tilt-card fade-in-up';
+    card.className = 'item-card fade-in-up';
 
     const iconEl = document.createElement('div');
     iconEl.className = 'card-icon';
+    iconEl.setAttribute('aria-hidden', 'true');
     iconEl.textContent = item.iconOrImage;
 
     const catEl = document.createElement('p');
@@ -495,10 +689,10 @@ function renderItems(items) {
     // Recovered materials chips
     if (item.recoveredMaterials && item.recoveredMaterials.length) {
       const materialsEl = document.createElement('div');
-      materialsEl.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;';
+      materialsEl.className = 'card-materials';
       item.recoveredMaterials.forEach(mat => {
         const chip = document.createElement('span');
-        chip.style.cssText = 'font-size:.7rem;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.05);color:var(--text-muted);border:1px solid var(--border);';
+        chip.className = 'material-chip';
         chip.textContent = mat;
         materialsEl.appendChild(chip);
       });
@@ -526,7 +720,7 @@ function setupCatalogueFilters(allItems) {
   if (!searchEl || !chipsEl || !sortBtn) return;
 
   let activeCategory = 'All';
-  let sortedDesc     = false; // track sort direction
+  let sortedDesc     = false;
 
   // EVENT HANDLING: compute filtered + sorted items then re-render
   const applyFilters = () => {
@@ -558,6 +752,7 @@ function setupCatalogueFilters(allItems) {
     chip.className = `chip${cat === 'All' ? ' active' : ''}`;
     chip.textContent = cat;
     chip.dataset.cat = cat;
+    chip.setAttribute('aria-pressed', cat === 'All' ? 'true' : 'false');
     chipsEl.appendChild(chip);
   });
 
@@ -569,10 +764,11 @@ function setupCatalogueFilters(allItems) {
     const chip = e.target.closest('.chip');
     if (!chip) return;
     activeCategory = chip.dataset.cat;
-    // DOM MANIPULATION: update chip active state
-    chipsEl.querySelectorAll('.chip').forEach(c =>
-      c.classList.toggle('active', c === chip)
-    );
+    // DOM MANIPULATION: update chip active state and aria-pressed
+    chipsEl.querySelectorAll('.chip').forEach(c => {
+      c.classList.toggle('active', c === chip);
+      c.setAttribute('aria-pressed', c === chip ? 'true' : 'false');
+    });
     applyFilters();
   });
 
@@ -583,10 +779,113 @@ function setupCatalogueFilters(allItems) {
     sortBtn.textContent = sortedDesc
       ? '↓ Hazard: High → Low'
       : '↑ Sort by Hazard';
+    sortBtn.setAttribute('aria-pressed', String(sortedDesc));
     applyFilters();
   });
 }
 
+/* ════════════════════════════════════════════════════════════
+   LIVE PICKUP SUMMARY — DOM MANIPULATION
+   ════════════════════════════════════════════════════════════ */
+/**
+ * DOM MANIPULATION: Updates the live pickup summary panel on the right side
+ * of the schedule page as the user fills in the form.
+ * @param {HTMLFormElement} form
+ */
+function updatePickupSummary(form) {
+  const emptyState    = document.querySelector('#summary-empty-state');
+  const devicesWrap   = document.querySelector('#summary-devices');
+  const devicesList   = document.querySelector('#summary-devices-list');
+  const datetimeWrap  = document.querySelector('#summary-datetime');
+  const summaryDate   = document.querySelector('#summary-date');
+  const summaryTime   = document.querySelector('#summary-time');
+  const addressWrap   = document.querySelector('#summary-address-row');
+  const summaryAddr   = document.querySelector('#summary-address');
+  const confirmWrap   = document.querySelector('#summary-confirm-wrap');
+
+  if (!emptyState) return; // not on schedule page
+
+  // Gather current form values
+  const checkedItems = [...form.querySelectorAll('input[name="itemType"]:checked')];
+  const quantity     = form.elements['quantity'] ? form.elements['quantity'].value : '';
+  const date         = form.elements['date'] ? form.elements['date'].value : '';
+  const time         = form.elements['time'] ? form.elements['time'].value : '';
+  const address      = form.elements['address'] ? form.elements['address'].value.trim() : '';
+
+  const hasDevices   = checkedItems.length > 0;
+  const hasDatetime  = date || time;
+  const hasAddress   = address.length >= 5;
+  const hasAnything  = hasDevices || hasDatetime || hasAddress;
+
+  // DOM MANIPULATION: show/hide empty state
+  emptyState.style.display = hasAnything ? 'none' : 'block';
+
+  // DOM MANIPULATION: update device list
+  if (devicesWrap && devicesList) {
+    devicesWrap.style.display = hasDevices ? 'block' : 'none';
+    devicesList.innerHTML = '';
+    checkedItems.forEach(cb => {
+      const item = document.createElement('div');
+      item.className = 'summary-device-item';
+      // Find icon from ewasteItems if available
+      let icon = '📦';
+      if (typeof ewasteItems !== 'undefined') {
+        const match = ewasteItems.find(i => i.itemName.toLowerCase().includes(cb.value.toLowerCase())
+          || cb.value.toLowerCase().includes(i.itemName.toLowerCase()));
+        if (match) icon = match.iconOrImage;
+      }
+      item.innerHTML = `<span class="summary-device-icon" aria-hidden="true">${icon}</span> ${cb.value}${quantity ? ' × ' + quantity : ''}`;
+      devicesList.appendChild(item);
+    });
+  }
+
+  // DOM MANIPULATION: update date/time
+  if (datetimeWrap && summaryDate && summaryTime) {
+    datetimeWrap.style.display = hasDatetime ? 'block' : 'none';
+    summaryDate.textContent = date
+      ? new Date(date + 'T00:00:00').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })
+      : '—';
+    summaryTime.textContent = time || '—';
+  }
+
+  // DOM MANIPULATION: update address
+  if (addressWrap && summaryAddr) {
+    addressWrap.style.display = hasAddress ? 'block' : 'none';
+    summaryAddr.textContent   = address;
+  }
+
+  // DOM MANIPULATION: show confirm button when enough data
+  if (confirmWrap) {
+    const readyToConfirm = hasDevices && hasDatetime && hasAddress;
+    confirmWrap.style.display = readyToConfirm ? 'block' : 'none';
+  }
+
+  // Update step pills based on progress
+  updateStepPills(form, hasDevices, hasDatetime);
+}
+
+/**
+ * DOM MANIPULATION: Highlights step pills as user progresses through the form.
+ */
+function updateStepPills(form, hasDevices, hasDatetime) {
+  const pill1 = document.querySelector('.step-pill:nth-child(1)');
+  const pill2 = document.querySelector('#step-2-pill');
+  const pill3 = document.querySelector('#step-3-pill');
+  if (!pill1 || !pill2 || !pill3) return;
+
+  const hasAddress = form.elements['address'] && form.elements['address'].value.trim().length >= 5;
+
+  pill1.classList.toggle('done', hasDevices);
+  pill1.classList.toggle('active', !hasDevices);
+  pill2.classList.toggle('active', hasDevices && !hasDatetime);
+  pill2.classList.toggle('done', hasDatetime);
+  pill3.classList.toggle('active', hasDatetime && !hasAddress);
+  pill3.classList.toggle('done', hasAddress);
+}
+
+/* ════════════════════════════════════════════════════════════
+   FORM VALIDATION: Pickup form
+   ════════════════════════════════════════════════════════════ */
 /**
  * FORM VALIDATION: Validates the pickup scheduling form.
  * @param {HTMLFormElement} form
@@ -605,14 +904,14 @@ function validatePickupForm(form) {
 
   // FORM VALIDATION: each check maps to a data-error-for target
   const checks = [
-    ['pickup-name',     fullName.length >= 2,         'Enter your full name.'],
-    ['pickup-address',  address.length >= 10,         'Enter a complete pickup address (10+ characters).'],
-    ['itemType',        itemTypes.length > 0,         'Select at least one item type to collect.'],
+    ['itemType',        itemTypes.length > 0,                           'Select at least one item type to collect.'],
     ['pickup-quantity', !isNaN(quantity) && quantity >= 1 && quantity <= 50,
-                                                      'Enter a quantity between 1 and 50.'],
-    ['pickup-date',     Boolean(date),                'Choose a preferred pickup date.'],
-    ['pickup-time',     Boolean(time),                'Select a time slot.'],
-    ['condition',       Boolean(condition),           'Select the condition of your item(s).']
+                                                                        'Enter a quantity between 1 and 50.'],
+    ['pickup-date',     Boolean(date),                                  'Choose a preferred pickup date.'],
+    ['pickup-time',     Boolean(time),                                  'Select a time slot.'],
+    ['pickup-name',     fullName.length >= 2,                           'Enter your full name.'],
+    ['pickup-address',  address.length >= 10,                           'Enter a complete pickup address (10+ characters).'],
+    ['condition',       Boolean(condition),                             'Select the condition of your item(s).']
   ];
 
   checks.forEach(([id, passes, msg]) => {
@@ -648,7 +947,6 @@ function renderPickups() {
     // DOM MANIPULATION: createElement for each cell
     const row = document.createElement('tr');
 
-    // Add a delete button cell
     const data = [
       `#${index + 1}`,
       pickup.name,
@@ -689,6 +987,10 @@ function setupSchedulePage() {
   // Initial render of (empty) pickups table
   renderPickups();
 
+  // EVENT HANDLING: update live summary as user interacts with the form
+  form.addEventListener('input',  () => updatePickupSummary(form));
+  form.addEventListener('change', () => updatePickupSummary(form));
+
   // EVENT HANDLING: clear errors on user input
   form.addEventListener('input',  (e) => clearFieldError(e.target.id || e.target.name));
   form.addEventListener('change', (e) => clearFieldError(e.target.id || e.target.name));
@@ -697,6 +999,13 @@ function setupSchedulePage() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     hideStatus(statusEl);
+
+    // Disable submit button to prevent duplicate submissions
+    const submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Scheduling…';
+    }
 
     try {
       // EXCEPTION HANDLING: wrap entire submit in try-catch
@@ -708,10 +1017,15 @@ function setupSchedulePage() {
         const firstErr = form.querySelector('[data-error-for]:not(:empty)');
         if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
         setStatus(statusEl, 'error', 'Please correct the highlighted fields above.');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Confirm Pickup <span class="arrow" aria-hidden="true">→</span>';
+        }
         return;
       }
 
       // DOM MANIPULATION: collect form data and push to in-memory store
+      // JSON REPRESENTATION: newPickup is a JSON-serialisable object stored in the array
       const newPickup = {
         name:      form.elements['fullName'].value.trim(),
         address:   form.elements['address'].value.trim(),
@@ -734,10 +1048,19 @@ function setupSchedulePage() {
 
       form.reset();
 
+      // DOM MANIPULATION: reset live summary
+      updatePickupSummary(form);
+
+      // Re-enable button
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Confirm Pickup <span class="arrow" aria-hidden="true">→</span>';
+      }
+
       // Scroll to pickups section
       const pickupsSection = document.querySelector('.pickups-section');
       if (pickupsSection) {
-        setTimeout(() => pickupsSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+        setTimeout(() => pickupsSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
       }
 
     } catch (err) {
@@ -745,6 +1068,10 @@ function setupSchedulePage() {
       console.error('[GreenLoop] Schedule form error:', err);
       setStatus(statusEl, 'error',
         `Unable to schedule pickup: ${err.message}. Please refresh and try again.`);
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Confirm Pickup <span class="arrow" aria-hidden="true">→</span>';
+      }
     }
   });
 }

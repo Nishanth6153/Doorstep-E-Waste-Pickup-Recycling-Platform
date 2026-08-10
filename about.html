@@ -3,39 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="About GreenLoop — our mission, how our e-waste recycling process works, and what happens after your pickup.">
+  <meta name="description" content="About GreenLoop — our mission to make responsible e-waste recycling accessible through free doorstep collection and certified recycling partners.">
   <title>About | GreenLoop E-Waste Recycling</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="effects.css">
 </head>
 <body>
 
-  <!-- ══ SHARED NAVBAR ══════════════════════════════════════════ -->
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <span class="accent">◈</span> Green<span style="color:var(--text-muted)">Loop</span>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <a class="brand" href="index.html" aria-label="GreenLoop — home">
+      <span class="brand-icon" aria-hidden="true">♻</span>
+      GreenLoop
     </a>
-    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-    <nav class="site-nav" aria-label="Main navigation">
+    <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
       <a href="index.html">Home</a>
-      <a href="about.html" class="active">About</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="about.html" class="active" aria-current="page">About</a>
       <a href="register.html">Register</a>
       <a href="contact.html">Contact</a>
-      <a href="schedule.html" class="nav-cta">Schedule Pickup</a>
+      <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
     </nav>
   </header>
 
-  <main>
+  <main id="main-content">
 
-    <!-- ══ PAGE HERO ══════════════════════════════════════════════ -->
-    <section class="page-hero">
+    <!-- ══ PAGE HERO ════════════════════════════════════════════ -->
+    <section class="page-hero" aria-labelledby="about-page-heading">
       <div class="page-hero-content">
-        <span class="eyebrow">OUR MISSION</span>
-        <h1>
-          <span style="display:block;color:var(--text-primary)">Convenient recycling</span>
+        <span class="eyebrow">Our Mission</span>
+        <h1 id="about-page-heading">
+          <span style="display:block">Convenient recycling</span>
           <span style="display:block;color:var(--text-muted)">for a circular future.</span>
         </h1>
         <p class="lead">
@@ -45,13 +51,13 @@
       </div>
     </section>
 
-    <!-- ══ MISSION SPLIT ══════════════════════════════════════════ -->
-    <section class="section">
+    <!-- ══ MISSION SPLIT ════════════════════════════════════════ -->
+    <section class="section" aria-labelledby="purpose-heading">
       <div class="about-split">
         <div class="fade-in-up">
-          <span class="eyebrow">OUR PURPOSE</span>
-          <h2>
-            <span style="display:block;color:var(--text-primary)">Make the right thing</span>
+          <span class="eyebrow">Our Purpose</span>
+          <h2 id="purpose-heading">
+            <span style="display:block">Make the right thing</span>
             <span style="display:block;color:var(--text-muted)">the easy thing.</span>
           </h2>
           <p style="color:var(--text-muted);margin-top:20px;line-height:1.8;font-size:.95rem;">
@@ -59,30 +65,33 @@
             to do the right thing, but without a simple, trusted service, electronics end up in
             the back of a drawer — or worse, a landfill.
           </p>
-          <p style="color:var(--text-muted);margin-top:16px;line-height:1.8;font-size:.95rem;">
+          <p style="color:var(--text-muted);margin-top:14px;line-height:1.8;font-size:.95rem;">
             GreenLoop removes every friction point. We provide clear guidance, a doorstep collection
             service, and certified recycling partners who ensure your devices are processed safely and
             transparently — and that recovered materials return to the supply chain.
           </p>
-          <a href="schedule.html" class="btn" style="margin-top:32px;">
-            Book a pickup <span class="arrow">→</span>
+          <a href="schedule.html" class="btn" style="margin-top:32px;" id="about-schedule-btn">
+            Book a pickup <span class="arrow" aria-hidden="true">→</span>
           </a>
         </div>
         <div class="fade-in-up" data-delay="3">
           <img
             class="about-img"
-            src="https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?auto=format&fit=crop&w=1000&q=80"
+            src="https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?auto=format&fit=crop&w=900&q=80"
             alt="Technician carefully disassembling an electronic circuit board for responsible recycling"
+            loading="lazy"
+            width="900"
+            height="600"
           >
         </div>
       </div>
     </section>
 
-    <!-- ══ HOW IT WORKS — 3 STEPS (large numerals) ════════════════ -->
-    <section class="section alt">
+    <!-- ══ HOW IT WORKS — 3 STEPS ════════════════════════════════ -->
+    <section class="section alt" aria-labelledby="howitworks-heading">
       <div class="headline-wrap fade-in-up">
-        <span class="eyebrow">SIMPLE BY DESIGN</span>
-        <h2>
+        <span class="eyebrow">Simple by Design</span>
+        <h2 id="howitworks-heading">
           <span class="line1">How it works</span>
           <span class="line2">in three steps.</span>
         </h2>
@@ -90,25 +99,26 @@
           From your front door to certified recycling — GreenLoop handles every step so you don't have to.
         </p>
       </div>
-      <div class="about-steps">
-        <article class="about-step tilt-card fade-in-up" data-delay="1">
-          <div class="big-num">01</div>
+
+      <div class="about-steps" role="list" aria-label="How GreenLoop works">
+        <article class="about-step fade-in-up" data-delay="1" role="listitem">
+          <div class="big-num" aria-hidden="true">01</div>
           <h3>Tell us what you have</h3>
           <p>
             Browse the GreenLoop catalogue and select the devices you'd like to recycle.
             You can add phones, laptops, batteries, cables and more in a single booking.
           </p>
         </article>
-        <article class="about-step tilt-card fade-in-up" data-delay="2">
-          <div class="big-num">02</div>
+        <article class="about-step fade-in-up" data-delay="2" role="listitem">
+          <div class="big-num" aria-hidden="true">02</div>
           <h3>Choose a pickup window</h3>
           <p>
-            Select a date and time slot from our Schedule page. We'll send a mock confirmation
-            and hold the slot for your collection — no drop-off trips required.
+            Select a date and time slot from our Schedule page. We hold the slot for your
+            collection — no drop-off trips required.
           </p>
         </article>
-        <article class="about-step tilt-card fade-in-up" data-delay="3">
-          <div class="big-num">03</div>
+        <article class="about-step fade-in-up" data-delay="3" role="listitem">
+          <div class="big-num" aria-hidden="true">03</div>
           <h3>We collect responsibly</h3>
           <p>
             Our team arrives within the booked window. Items are safely sorted and transported
@@ -118,23 +128,23 @@
       </div>
     </section>
 
-    <!-- ══ WHAT HAPPENS NEXT — list + table ═══════════════════════ -->
-    <section class="section">
+    <!-- ══ WHAT HAPPENS NEXT ═════════════════════════════════════ -->
+    <section class="section" aria-labelledby="beyond-heading">
       <div class="headline-wrap fade-in-up">
-        <span class="eyebrow">BEYOND COLLECTION</span>
-        <h2>
+        <span class="eyebrow">Beyond Collection</span>
+        <h2 id="beyond-heading">
           <span class="line1">What happens</span>
           <span class="line2">after pickup.</span>
         </h2>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:60px;align-items:start;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);margin-top:56px;align-items:start;">
         <!-- Process list -->
         <div class="fade-in-up">
-          <ul class="about-list">
+          <ul class="about-list" aria-label="Post-collection process steps">
             <li>
               <strong>Collection</strong>
-              Items are safe-packed at pickup and transported with secure handling.
+              Items are safely packed at pickup and transported with secure handling.
             </li>
             <li>
               <strong>Assessment</strong>
@@ -155,80 +165,115 @@
           </ul>
         </div>
 
-        <!-- Certifications / partner table -->
+        <!-- Certifications table -->
         <div class="fade-in-up" data-delay="2">
-          <h3 style="margin-bottom:24px;font-size:1.1rem;color:var(--text-sub);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.8rem;">
+          <h3 style="font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-sub);margin-bottom:20px;">
             Our recycling standards
           </h3>
-          <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
-            <table>
+          <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-xs);">
+            <table aria-label="GreenLoop recycling standards">
               <thead>
                 <tr>
-                  <th>Standard</th>
-                  <th>Covers</th>
-                  <th>Status</th>
+                  <th scope="col">Standard</th>
+                  <th scope="col">Covers</th>
+                  <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><span class="cell-em">WEEE Directive</span></td>
                   <td>EU-compliant e-waste processing</td>
-                  <td style="color:var(--accent);">✓ Compliant</td>
+                  <td style="color:var(--accent);font-weight:600;">✓ Compliant</td>
                 </tr>
                 <tr>
                   <td><span class="cell-em">R2v3 Certification</span></td>
                   <td>Responsible recycler standard</td>
-                  <td style="color:var(--accent);">✓ Partner-certified</td>
+                  <td style="color:var(--accent);font-weight:600;">✓ Partner-certified</td>
                 </tr>
                 <tr>
                   <td><span class="cell-em">ISO 14001</span></td>
                   <td>Environmental management system</td>
-                  <td style="color:var(--accent);">✓ Verified</td>
+                  <td style="color:var(--accent);font-weight:600;">✓ Verified</td>
                 </tr>
                 <tr>
                   <td><span class="cell-em">NIST 800-88</span></td>
                   <td>Data sanitisation guidelines</td>
-                  <td style="color:var(--accent);">✓ Implemented</td>
+                  <td style="color:var(--accent);font-weight:600;">✓ Implemented</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <!-- External link -->
-          <a href="https://sustainableelectronics.org/" target="_blank" rel="noopener" class="ext-link" style="margin-top:20px;display:inline-flex;">
+          <a href="https://sustainableelectronics.org/" target="_blank" rel="noopener" class="ext-link" style="margin-top:18px;display:inline-flex;" id="sustainable-electronics-link">
             Sustainable Electronics Resource ↗
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ══ BOTTOM CTA ══════════════════════════════════════════════ -->
-    <div class="story-cta" style="padding:100px max(8vw,24px);">
-      <p class="big-cta fade-in-up" style="font-size:clamp(2rem,4vw,3.5rem);">
-        Join thousands making<br><span style="color:var(--text-muted)">e-waste history.</span>
-      </p>
-      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:8px;" class="fade-in-up" data-delay="2">
-        <a href="register.html" class="btn">Create account <span class="arrow">→</span></a>
-        <a href="contact.html" class="btn btn-ghost">Get in touch</a>
+    <!-- ══ BOTTOM CTA ════════════════════════════════════════════ -->
+    <section class="cta-section" aria-labelledby="about-cta-heading">
+      <div class="fade-in-up">
+        <h2 id="about-cta-heading">Ready to do your part?</h2>
+        <p>Schedule a free doorstep collection for your old electronics today.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+          <a href="schedule.html" class="btn btn-lg" id="about-final-cta">
+            Schedule a Pickup <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="contact.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);" id="about-contact-btn">
+            Get in touch
+          </a>
+        </div>
       </div>
-    </div>
+    </section>
 
   </main>
 
   <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
-  <footer>
-    <div>
-      <a class="brand" href="index.html">
-        <span class="accent">◈</span> Green<span style="color:var(--text-muted)">Loop</span>
-      </a>
-      <p style="margin-top:8px;">Making responsible recycling beautifully simple.</p>
+  <footer role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="GreenLoop home">
+          <span class="brand-icon" aria-hidden="true">♻</span>
+          GreenLoop
+        </a>
+        <p>Making responsible e-waste recycling beautifully simple.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Site navigation">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Useful links">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="schedule.html">Schedule Pickup</a></li>
+          <li><a href="https://ewastemonitor.info/" target="_blank" rel="noopener">E-Waste Monitor ↗</a></li>
+          <li><a href="https://sustainableelectronics.org/" target="_blank" rel="noopener">Sustainable Electronics ↗</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-cta-col">
+        <h4>Ready to recycle?</h4>
+        <p>Schedule a free doorstep pickup for your unwanted electronics.</p>
+        <a href="schedule.html" class="btn">Schedule Pickup <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="register.html">Register</a>
-      <a href="https://ewastemonitor.info/" target="_blank" rel="noopener">E-Waste Monitor ↗</a>
+
+    <div class="footer-bottom">
+      <p>© 2026 GreenLoop. Doorstep E-Waste Recycling.</p>
+      <div class="footer-bottom-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html">Register</a>
+      </div>
     </div>
-    <p>© 2026 GreenLoop</p>
   </footer>
 
   <script src="script.js"></script>

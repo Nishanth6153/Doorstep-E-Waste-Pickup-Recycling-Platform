@@ -3,171 +3,159 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="GreenLoop — E-waste recycling pickup scheduler. Give your old electronics a new purpose. Schedule a safe, simple pickup today.">
-  <title>GreenLoop | E-Waste Recycling Scheduler</title>
+  <meta name="description" content="GreenLoop — Schedule a doorstep pickup for your old electronics and send them into responsible recycling. Free collection, certified partners, simple process.">
+  <title>GreenLoop | Doorstep E-Waste Recycling</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="effects.css">
 </head>
 <body>
 
-  <!-- ══ SHARED NAVBAR ══════════════════════════════════════════ -->
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <span class="accent">◈</span> Green<span style="color:var(--text-muted)">Loop</span>
+  <!-- Skip link for accessibility -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <a class="brand" href="index.html" aria-label="GreenLoop — home">
+      <span class="brand-icon" aria-hidden="true">♻</span>
+      GreenLoop
     </a>
-    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-    <nav class="site-nav" aria-label="Main navigation">
-      <a href="index.html" class="active">Home</a>
+    <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html" class="active" aria-current="page">Home</a>
+      <a href="index.html#how-it-works">How It Works</a>
       <a href="about.html">About</a>
       <a href="register.html">Register</a>
       <a href="contact.html">Contact</a>
-      <a href="schedule.html" class="nav-cta">Schedule Pickup</a>
+      <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
     </nav>
   </header>
 
-  <main>
+  <main id="main-content">
 
-    <!-- ══ SCROLL STORY — SECTION 1: HERO INTRO ══════════════════ -->
-    <section class="story-section" id="story-1" style="background:var(--bg);">
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
+    <!-- ══ SECTION 1: HERO ══════════════════════════════════════ -->
+    <section class="hero" aria-labelledby="hero-heading">
 
-      <!-- Three.js canvas — fixed, covers right half -->
-      <div id="hero-canvas-mount" aria-hidden="true"></div>
+      <div class="hero-content fade-in-up">
+        <div class="hero-eyebrow" aria-label="Category label">
+          <span aria-hidden="true">♻</span>
+          Responsible E-Waste Recycling
+        </div>
 
-      <div class="story-content fade-in-up">
-        <span class="eyebrow">RESPONSIBLE TECH · BRIGHTER TOMORROW</span>
-        <h1 class="hero-title">
-          <span class="l1">Your E-Waste.</span>
-          <span class="l2">Reimagined.</span>
+        <h1 class="hero-title" id="hero-heading">
+          Your old tech deserves<br>
+          a <span class="highlight">better ending.</span>
         </h1>
+
         <p class="hero-lead">
-          Schedule a safe, simple pickup of your old electronics and help valuable
-          materials find their way back into circulation — not landfill.
+          Schedule a doorstep pickup and send your unwanted electronics
+          into responsible recycling — not landfill.
         </p>
-        <a href="schedule.html" class="btn">
-          Schedule a pickup <span class="arrow">→</span>
+
+        <div class="hero-actions">
+          <a href="schedule.html" class="btn btn-lg" id="hero-cta">
+            Schedule a Pickup <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#what-we-recycle" class="btn btn-ghost">
+            See What We Recycle
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-image-wrap fade-in-up" data-delay="2" aria-hidden="true">
+        <img
+          src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=1200&q=80"
+          alt="Circuit boards and electronic components ready for responsible recycling"
+          loading="eager"
+          width="1200"
+          height="800"
+        >
+        <div class="hero-image-badge">
+          <span class="hero-badge-icon" aria-hidden="true">🌿</span>
+          <div class="hero-badge-text">
+            <strong>Free doorstep collection</strong>
+            <span>Certified recycling partners</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══ SECTION 2: TRUST BAR ══════════════════════════════════ -->
+    <div class="trust-bar" role="list" aria-label="Key benefits">
+      <div class="trust-item fade-in-up" role="listitem">
+        <div class="trust-icon" aria-hidden="true">🚪</div>
+        <div class="trust-text">
+          <strong>Doorstep Pickup</strong>
+          <span>No drop-off trips needed</span>
+        </div>
+      </div>
+      <div class="trust-item fade-in-up" data-delay="1" role="listitem">
+        <div class="trust-icon" aria-hidden="true">📅</div>
+        <div class="trust-text">
+          <strong>Easy Scheduling</strong>
+          <span>Pick a date and time slot</span>
+        </div>
+      </div>
+      <div class="trust-item fade-in-up" data-delay="2" role="listitem">
+        <div class="trust-icon" aria-hidden="true">♻</div>
+        <div class="trust-text">
+          <strong>Responsible Recycling</strong>
+          <span>Certified WEEE partners</span>
+        </div>
+      </div>
+      <div class="trust-item fade-in-up" data-delay="3" role="listitem">
+        <div class="trust-icon" aria-hidden="true">✓</div>
+        <div class="trust-text">
+          <strong>Simple Process</strong>
+          <span>Four steps, zero hassle</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SECTION 3: WHAT WE RECYCLE ════════════════════════════ -->
+    <section class="section" id="what-we-recycle" aria-labelledby="recycle-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">What We Collect</span>
+        <h2 id="recycle-heading">Every device deserves<br>the right farewell.</h2>
+        <p class="subtext">
+          Different electronics carry different environmental risks. GreenLoop collects and
+          routes each category to the appropriate certified recycling process.
+        </p>
+      </div>
+
+      <!-- Cards rendered by JS from ewasteItems data -->
+      <div id="home-device-cards" class="device-cards-grid" aria-label="E-waste categories we collect"></div>
+
+      <div style="text-align:center;margin-top:40px;" class="fade-in-up" data-delay="4">
+        <a href="schedule.html" class="btn" id="browse-catalogue-cta">
+          Browse Full Catalogue <span class="arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </section>
 
-    <!-- ══ SCROLL STORY — SECTION 2: THE PROBLEM ══════════════════ -->
-    <section class="story-section" id="story-2" style="background:var(--bg-2);">
-      <div class="story-content">
-        <span class="eyebrow">THE BIGGER PICTURE</span>
-        <h2 class="hero-title">
-          <span class="l1">The problem</span>
-          <span class="l2">is enormous.</span>
-        </h2>
-        <p class="hero-lead">
-          Electronic waste is the world's fastest-growing waste stream. In 2023 alone,
-          humanity generated over 62 million tonnes of e-waste — enough to fill 1.5 million trucks.
-          Less than 22% is formally recycled.
-        </p>
-        <!-- External link requirement -->
-        <a href="https://ewastemonitor.info/" target="_blank" rel="noopener" class="ext-link">
-          Explore the Global E-Waste Monitor ↗
-        </a>
-
-        <div class="stat-row fade-in-up" data-delay="2">
-          <div class="stat-block">
-            <span class="num">62M</span>
-            <p class="label">tonnes of e-waste generated in 2023</p>
-          </div>
-          <div class="stat-block">
-            <span class="num">22%</span>
-            <p class="label">formally collected and recycled</p>
-          </div>
-          <div class="stat-block">
-            <span class="num">$91B</span>
-            <p class="label">worth of raw materials discarded annually</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ SCROLL STORY — SECTION 3: HOW IT WORKS ════════════════ -->
-    <section class="story-section" id="story-3" style="background:var(--bg);">
-      <div class="story-content">
-        <span class="eyebrow">THE GREENLOOP PROCESS</span>
-        <h2 class="hero-title">
-          <span class="l1">Three steps.</span>
-          <span class="l2">Zero hassle.</span>
-        </h2>
-        <p class="hero-lead">
-          We've made e-waste collection as simple as ordering a takeaway.
-          No drop-off trips, no complicated sorting — just book and we handle the rest.
-        </p>
-        <div class="step-cards fade-in-up" data-delay="2">
-          <div class="step-card">
-            <div class="step-num">01</div>
-            <h3>List your devices</h3>
-            <p>Select what you want to recycle from our catalogue.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-num">02</div>
-            <h3>Book a pickup</h3>
-            <p>Choose a date and time slot that suits you.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-num">03</div>
-            <h3>We collect &amp; recycle</h3>
-            <p>Your items go to certified recycling partners, not landfill.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ SCROLL STORY — SECTION 4: WHAT GETS RECOVERED ═════════ -->
-    <section class="story-section" id="story-4" style="background:var(--bg-2);">
-      <div class="story-content">
-        <span class="eyebrow">WHAT GETS RECOVERED</span>
-        <h2 class="hero-title">
-          <span class="l1">Valuable materials</span>
-          <span class="l2">hide inside.</span>
-        </h2>
-        <p class="hero-lead">
-          Every device contains metals, plastics and rare earths that can be reclaimed,
-          refined and re-used — reducing the need for destructive new mining.
-        </p>
-        <div class="recovery-chips fade-in-up" data-delay="2">
-          <div class="recovery-chip"><span class="chip-dot"></span>Lithium</div>
-          <div class="recovery-chip"><span class="chip-dot"></span>Gold</div>
-          <div class="recovery-chip copper"><span class="chip-dot"></span>Copper</div>
-          <div class="recovery-chip copper"><span class="chip-dot"></span>Cobalt</div>
-          <div class="recovery-chip"><span class="chip-dot"></span>Indium</div>
-          <div class="recovery-chip copper"><span class="chip-dot"></span>Aluminium</div>
-          <div class="recovery-chip"><span class="chip-dot"></span>Rare Earths</div>
-          <div class="recovery-chip copper"><span class="chip-dot"></span>Tin</div>
-          <div class="recovery-chip"><span class="chip-dot"></span>Nickel</div>
-          <div class="recovery-chip copper"><span class="chip-dot"></span>PVC Plastic</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ TABLE SECTION: E-waste categories ══════════════════════ -->
-    <section class="section alt" id="ewaste-table-section">
-      <div class="headline-wrap fade-in-up">
-        <span class="eyebrow">MAKE AN INFORMED CHOICE</span>
-        <h2>
-          <span class="line1">Every device deserves</span>
-          <span class="line2">the right farewell.</span>
-        </h2>
+    <!-- ══ SECTION 4: E-WASTE TABLE ══════════════════════════════ -->
+    <section class="section alt" aria-labelledby="table-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Make an Informed Choice</span>
+        <h2 id="table-heading">Understanding e-waste risk levels.</h2>
         <p class="subtext">
           Different electronics carry different environmental risks. Here's how to handle each category responsibly.
         </p>
       </div>
+
       <div class="impact-table-wrap fade-in-up" data-delay="2">
-        <table>
+        <table aria-label="E-waste categories and environmental handling guide">
           <thead>
             <tr>
-              <th>E-Waste Category</th>
-              <th>Key Materials</th>
-              <th>Environmental Impact</th>
-              <th>Recommended Disposal</th>
+              <th scope="col">E-Waste Category</th>
+              <th scope="col">Key Materials</th>
+              <th scope="col">Environmental Impact</th>
+              <th scope="col">Recommended Disposal</th>
             </tr>
           </thead>
           <tbody>
@@ -204,28 +192,133 @@
           </tbody>
         </table>
       </div>
+
+      <div style="text-align:center;margin-top:32px;" class="fade-in-up" data-delay="3">
+        <a href="https://ewastemonitor.info/" target="_blank" rel="noopener" class="ext-link" id="ewaste-monitor-link">
+          Explore the Global E-Waste Monitor ↗
+        </a>
+      </div>
     </section>
 
-    <!-- ══ LIST SECTION: What we collect ══════════════════════════ -->
-    <section class="section" id="accepted-section">
+    <!-- ══ SECTION 5: WHY RECYCLE RESPONSIBLY ════════════════════ -->
+    <section class="section" aria-labelledby="why-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Why It Matters</span>
+        <h2 id="why-heading">The problem is enormous.</h2>
+        <p class="subtext">
+          Electronic waste is the world's fastest-growing waste stream. In 2023, humanity generated
+          over 62 million tonnes of e-waste — enough to fill 1.5 million trucks. Less than 22% is formally recycled.
+        </p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card fade-in-up" data-delay="1">
+          <div class="why-icon green" aria-hidden="true">🛡</div>
+          <h3>Responsible Handling</h3>
+          <p>
+            Electronics contain hazardous materials — lead, mercury, cadmium — that contaminate
+            soil and water when landfilled. Proper collection keeps these chemicals out of the environment.
+          </p>
+        </div>
+        <div class="why-card fade-in-up" data-delay="2">
+          <div class="why-icon amber" aria-hidden="true">⚗</div>
+          <h3>Material Recovery</h3>
+          <p>
+            Every smartphone contains lithium, gold, cobalt and rare earths. Recovering
+            these materials reduces the need for destructive new mining and returns value to the supply chain.
+          </p>
+        </div>
+        <div class="why-card fade-in-up" data-delay="3">
+          <div class="why-icon blue" aria-hidden="true">🌍</div>
+          <h3>Reducing Improper Disposal</h3>
+          <p>
+            Over $91 billion worth of raw materials are discarded as e-waste annually. Making
+            responsible recycling easy — a doorstep pickup — converts intention into action.
+          </p>
+        </div>
+      </div>
+
+      <!-- Recovery materials chips -->
+      <div class="section-header fade-in-up" style="margin-top:56px;margin-bottom:16px;">
+        <span class="eyebrow">What Gets Recovered</span>
+        <h3 style="font-size:1.15rem;color:var(--text-primary);">Valuable materials hide inside every device.</h3>
+      </div>
+
+      <div class="recovery-chips fade-in-up" data-delay="1" role="list" aria-label="Materials recovered from e-waste">
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Lithium</div>
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Gold</div>
+        <div class="recovery-chip copper" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Copper</div>
+        <div class="recovery-chip copper" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Cobalt</div>
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Indium</div>
+        <div class="recovery-chip copper" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Aluminium</div>
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Rare Earths</div>
+        <div class="recovery-chip copper" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Tin</div>
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Nickel</div>
+        <div class="recovery-chip copper" role="listitem"><span class="chip-dot" aria-hidden="true"></span>PVC Plastic</div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 6: HOW IT WORKS ═══════════════════════════════ -->
+    <section class="section alt" id="how-it-works" aria-labelledby="how-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">The GreenLoop Process</span>
+        <h2 id="how-heading">Four steps. Zero hassle.</h2>
+        <p class="subtext">
+          We've made e-waste collection as simple as ordering a delivery.
+          No drop-off trips, no complicated sorting — just schedule and we handle the rest.
+        </p>
+      </div>
+
+      <div class="steps-grid" role="list" aria-label="How GreenLoop works">
+        <div class="step-item fade-in-up" data-delay="1" role="listitem">
+          <div class="step-num-circle" aria-hidden="true">01</div>
+          <h3>Choose</h3>
+          <p>Tell us what you want to recycle from our catalogue of accepted devices.</p>
+        </div>
+        <div class="step-item fade-in-up" data-delay="2" role="listitem">
+          <div class="step-num-circle" aria-hidden="true">02</div>
+          <h3>Schedule</h3>
+          <p>Select a convenient pickup date and time slot that suits your day.</p>
+        </div>
+        <div class="step-item fade-in-up" data-delay="3" role="listitem">
+          <div class="step-num-circle" aria-hidden="true">03</div>
+          <h3>Collect</h3>
+          <p>Prepare your electronics for doorstep pickup — we come to you.</p>
+        </div>
+        <div class="step-item fade-in-up" data-delay="4" role="listitem">
+          <div class="step-num-circle" aria-hidden="true">04</div>
+          <h3>Recycle</h3>
+          <p>Your items move into certified recycling — materials recovered, not wasted.</p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:48px;" class="fade-in-up" data-delay="5">
+        <a href="about.html" class="btn btn-outline-green" id="learn-more-process-btn">
+          Learn about the process <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 7: WHAT WE COLLECT (List) ══════════════════════ -->
+    <section class="section" aria-labelledby="accepted-heading">
       <div class="accepted-grid">
         <div class="fade-in-up">
-          <span class="eyebrow">WHAT WE COLLECT</span>
-          <h2>
-            <span style="display:block;color:var(--text-primary)">Small device.</span>
+          <span class="eyebrow">What We Collect</span>
+          <h2 id="accepted-heading">
+            <span style="display:block">Small device.</span>
             <span style="display:block;color:var(--text-muted)">Big impact.</span>
           </h2>
-          <p style="color:var(--text-sub);font-size:.95rem;margin-top:16px;max-width:460px;line-height:1.7;">
+          <p class="subtext" style="margin-top:14px;max-width:400px;">
             GreenLoop accepts a wide range of household and office electronics.
             If your device has a plug, battery or circuit board — we can take it.
           </p>
-          <!-- Internal link requirement -->
-          <a href="schedule.html" class="btn" style="margin-top:32px;">
-            Browse the catalogue <span class="arrow">→</span>
+          <a href="schedule.html" class="btn" style="margin-top:32px;" id="browse-catalogue-btn">
+            Browse the Catalogue <span class="arrow" aria-hidden="true">→</span>
           </a>
         </div>
+
         <div class="fade-in-up" data-delay="2">
-          <ul class="accepted-list">
+          <ul class="accepted-list" aria-label="Electronics we accept">
             <li>Mobile phones &amp; smartphones</li>
             <li>Tablets &amp; e-readers</li>
             <li>Laptops &amp; desktop computers</li>
@@ -241,47 +334,101 @@
       </div>
     </section>
 
-    <!-- ══ HERO IMAGE + EXTERNAL LINK ═════════════════════════════ -->
-    <section class="section alt" style="padding-top:0;padding-bottom:0;">
-      <img
-        src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=1400&q=80"
-        alt="Circuit boards and electronic components laid out ready for responsible recycling"
-        style="width:100%;height:420px;object-fit:cover;display:block;"
-      >
+    <!-- ══ SECTION 8: PLATFORM STATS / IMPACT ════════════════════ -->
+    <section class="section alt" aria-labelledby="impact-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">The E-Waste Crisis</span>
+        <h2 id="impact-heading">Global numbers that matter.</h2>
+        <p class="subtext">
+          Global e-waste data from the <a href="https://ewastemonitor.info/" target="_blank" rel="noopener" class="ext-link" style="display:inline;">Global E-Waste Monitor ↗</a>.
+          These are real-world statistics — not GreenLoop claims.
+        </p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card fade-in-up" data-delay="1">
+          <span class="num" id="stat-ewaste">62M</span>
+          <p class="label">Tonnes of e-waste generated globally in 2023</p>
+          <span class="demo-tag">Global Data · E-Waste Monitor 2024</span>
+        </div>
+        <div class="stat-card fade-in-up" data-delay="2">
+          <span class="num">22%</span>
+          <p class="label">Formally collected and recycled worldwide</p>
+          <span class="demo-tag">Global Data · E-Waste Monitor 2024</span>
+        </div>
+        <div class="stat-card fade-in-up" data-delay="3">
+          <span class="num">$91B</span>
+          <p class="label">Worth of raw materials discarded as e-waste annually</p>
+          <span class="demo-tag">Global Data · E-Waste Monitor 2024</span>
+        </div>
+      </div>
     </section>
 
-    <!-- ══ SCROLL STORY CTA ═══════════════════════════════════════ -->
-    <div class="story-cta">
-      <p class="big-cta fade-in-up">
-        Ready to recycle<br><span style="color:var(--text-muted)">responsibly?</span>
-      </p>
-      <a href="schedule.html" class="btn fade-in-up" data-delay="2" style="font-size:1.05rem;padding:18px 40px;">
-        Schedule your pickup <span class="arrow">→</span>
-      </a>
-    </div>
+    <!-- ══ SECTION 9: FINAL CTA ═══════════════════════════════════ -->
+    <section class="cta-section" aria-labelledby="cta-heading">
+      <div class="fade-in-up">
+        <h2 id="cta-heading">Got old electronics at home?</h2>
+        <p>Give them a better destination.</p>
+        <a href="schedule.html" class="btn btn-lg" id="final-cta-btn">
+          Schedule a Pickup <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
 
   </main>
 
   <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
-  <footer>
-    <div>
-      <a class="brand" href="index.html">
-        <span class="accent">◈</span> Green<span style="color:var(--text-muted)">Loop</span>
-      </a>
-      <p style="margin-top:8px;">Making responsible recycling beautifully simple.</p>
+  <footer role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="GreenLoop home">
+          <span class="brand-icon" aria-hidden="true">♻</span>
+          GreenLoop
+        </a>
+        <p>Making responsible e-waste recycling beautifully simple — one doorstep at a time.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Site navigation">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Account links">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="register.html">Create Account</a></li>
+          <li><a href="schedule.html">Schedule Pickup</a></li>
+          <li><a href="contact.html">Get Support</a></li>
+          <li><a href="https://ewastemonitor.info/" target="_blank" rel="noopener">E-Waste Monitor ↗</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-cta-col">
+        <h4>Ready to recycle?</h4>
+        <p>Schedule a free doorstep pickup for your unwanted electronics.</p>
+        <a href="schedule.html" class="btn" id="footer-schedule-cta">
+          Schedule Pickup <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="register.html">Register</a>
-      <a href="https://ewastemonitor.info/" target="_blank" rel="noopener">E-Waste Monitor ↗</a>
+
+    <div class="footer-bottom">
+      <p>© 2026 GreenLoop. Doorstep E-Waste Recycling.</p>
+      <div class="footer-bottom-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html">Register</a>
+      </div>
     </div>
-    <p>© 2026 GreenLoop</p>
   </footer>
 
-  <!-- Three.js CDN — loaded before three-scene.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="three-scene.js"></script>
+  <!-- data.js must load before script.js -->
+  <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
