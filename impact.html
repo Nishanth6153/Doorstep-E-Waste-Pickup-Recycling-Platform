@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GreenLoop's environmental impact — global e-waste statistics, material recovery data, and how responsible recycling makes a difference.">
+  <title>Impact | GreenLoop E-Waste Recycling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- No-flash theme loader -->
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('GREENLOOP_THEME');
+        if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
+  <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <a class="brand" href="index.html" aria-label="GreenLoop — home">
+      <span class="brand-icon" aria-hidden="true">♻</span>
+      GreenLoop
+    </a>
+    <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="what-we-recycle.html">What We Recycle</a>
+      <a href="about.html">About</a>
+      <a href="impact.html" class="active" aria-current="page">Impact</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark/light mode">🌙</button>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══ PAGE HERO ════════════════════════════════════════════ -->
+    <section class="page-hero" aria-labelledby="impact-heading">
+      <div class="page-hero-content">
+        <span class="eyebrow">The E-Waste Crisis</span>
+        <h1 id="impact-heading">
+          <span style="display:block">Numbers that</span>
+          <span style="display:block;color:var(--text-muted)">demand action.</span>
+        </h1>
+        <p class="lead">
+          Electronic waste is the world's fastest-growing waste stream.
+          Understanding the scale of the problem is the first step toward solving it.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 1: GLOBAL STATS ══════════════════════════════ -->
+    <section class="section" aria-labelledby="global-stats-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Global Data</span>
+        <h2 id="global-stats-heading">The scale of e-waste worldwide.</h2>
+        <p class="subtext">
+          Data from the <a href="https://ewastemonitor.info/" target="_blank" rel="noopener" class="ext-link">Global E-Waste Monitor 2024 ↗</a>.
+          These are verified real-world statistics — not GreenLoop claims.
+        </p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card fade-in-up" data-delay="1">
+          <span class="num" id="stat-tonnes" aria-label="62 million tonnes">62M</span>
+          <p class="label">Tonnes of e-waste generated globally in 2023</p>
+          <span class="demo-tag">Global Data · E-Waste Monitor 2024</span>
+        </div>
+        <div class="stat-card fade-in-up" data-delay="2">
+          <span class="num">22%</span>
+          <p class="label">Formally collected and recycled worldwide</p>
+          <span class="demo-tag">Global Data · E-Waste Monitor 2024</span>
+        </div>
+        <div class="stat-card fade-in-up" data-delay="3">
+          <span class="num">$91B</span>
+          <p class="label">Worth of raw materials discarded as e-waste annually</p>
+          <span class="demo-tag">Global Data · E-Waste Monitor 2024</span>
+        </div>
+        <div class="stat-card fade-in-up" data-delay="4">
+          <span class="num">1.5M</span>
+          <p class="label">Trucks needed to carry all the world's annual e-waste</p>
+          <span class="demo-tag">Global Data · E-Waste Monitor 2024</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 2: WHY RECYCLE MATTERS ═══════════════════════ -->
+    <section class="section alt" aria-labelledby="why-matters-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Why It Matters</span>
+        <h2 id="why-matters-heading">The environmental cost of improper disposal.</h2>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card fade-in-up" data-delay="1">
+          <div class="why-icon green" aria-hidden="true">☣</div>
+          <h3>Toxic Chemical Leaching</h3>
+          <p>
+            Electronics contain lead, mercury, cadmium, and brominated flame retardants. When landfilled,
+            these chemicals leach into soil and groundwater — contaminating food chains and water supplies.
+          </p>
+        </div>
+        <div class="why-card fade-in-up" data-delay="2">
+          <div class="why-icon amber" aria-hidden="true">🔥</div>
+          <h3>Informal Recycling Hazards</h3>
+          <p>
+            In many regions, e-waste is burned or acid-stripped informally to extract metals.
+            This releases toxic fumes — including dioxins and furans — into the atmosphere,
+            causing serious respiratory illness in local communities.
+          </p>
+        </div>
+        <div class="why-card fade-in-up" data-delay="3">
+          <div class="why-icon blue" aria-hidden="true">⛏</div>
+          <h3>Lost Material Value &amp; New Mining</h3>
+          <p>
+            The $91 billion in lost material value each year drives further destructive mining for
+            virgin lithium, cobalt, gold, and rare earths — often in regions with poor environmental
+            and labour protections. Responsible recycling reduces this demand.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 3: MATERIALS WE RECOVER ══════════════════════ -->
+    <section class="section" aria-labelledby="materials-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Material Recovery</span>
+        <h2 id="materials-heading">What gets recovered from your devices.</h2>
+        <p class="subtext">
+          Every device you hand to GreenLoop contains recoverable materials with real commercial value.
+          Responsible recycling keeps these resources in circulation.
+        </p>
+      </div>
+
+      <!-- Material recovery table -->
+      <div class="impact-table-wrap fade-in-up" data-delay="2">
+        <table aria-label="Materials recovered from e-waste by device type">
+          <thead>
+            <tr>
+              <th scope="col">Material</th>
+              <th scope="col">Found In</th>
+              <th scope="col">Why It Matters</th>
+              <th scope="col">Recovery Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="cell-em">⚡ Lithium</span></td>
+              <td>Phone batteries, laptops, tablets, power banks</td>
+              <td>Critical for EV batteries and energy storage; scarce supply</td>
+              <td>Hydrometallurgical processing — chemical leaching</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">🥇 Gold</span></td>
+              <td>Circuit board connectors, smartphones, processors</td>
+              <td>1 tonne of phones contains more gold than 1 tonne of gold ore</td>
+              <td>Urban mining — chemical dissolution and refining</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">🔶 Copper</span></td>
+              <td>All wiring, cables, motors, circuit boards</td>
+              <td>Fundamental conductor — demand from EV and renewable sector growing fast</td>
+              <td>Shredding, smelting, and electrolytic refining</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">🔵 Cobalt</span></td>
+              <td>Lithium-ion batteries (phones, laptops)</td>
+              <td>Critical mineral for battery cathodes; supply concentrated in DRC</td>
+              <td>Hydrometallurgical battery processing</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">🔩 Aluminium</span></td>
+              <td>Laptop chassis, phone frames, screens</td>
+              <td>Recycling aluminium uses 95% less energy than primary production</td>
+              <td>Shredding and furnace remelting</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">🌐 Rare Earth Elements</span></td>
+              <td>Speakers, motors, screens, hard drives</td>
+              <td>Essential for magnets in EVs, wind turbines, and electronics</td>
+              <td>Specialist pyrometallurgical and hydrometallurgical processes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Recovery chips -->
+      <div class="recovery-chips fade-in-up" data-delay="3" role="list" aria-label="Materials recovered from e-waste">
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Lithium</div>
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Gold</div>
+        <div class="recovery-chip copper" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Copper</div>
+        <div class="recovery-chip copper" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Cobalt</div>
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Indium</div>
+        <div class="recovery-chip copper" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Aluminium</div>
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Rare Earths</div>
+        <div class="recovery-chip copper" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Tin</div>
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Nickel</div>
+        <div class="recovery-chip" role="listitem"><span class="chip-dot" aria-hidden="true"></span>Neodymium</div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 4: JSON-LOADED CATALOGUE (fetch demo) ════════ -->
+    <!--
+      JSON REPRESENTATION + DOM MANIPULATION + EXCEPTION HANDLING:
+      loadEwasteData() in script.js fetches data/e_waste.json,
+      then renders a summary table below using createElement() / appendChild()
+    -->
+    <section class="section alt" aria-labelledby="catalogue-json-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Live Catalogue</span>
+        <h2 id="catalogue-json-heading">Devices we collect — loaded from JSON.</h2>
+        <p class="subtext">
+          The catalogue below is dynamically loaded from <code>data/e_waste.json</code> using
+          JavaScript's <code>fetch()</code> API — demonstrating JSON representation and DOM manipulation.
+        </p>
+      </div>
+
+      <!-- Status area for JSON loading -->
+      <div id="json-load-status" class="form-status" role="status" aria-live="polite" style="margin:0 auto 24px;max-width:640px;"></div>
+
+      <!-- Table rendered by loadEwasteData() in script.js -->
+      <div class="impact-table-wrap fade-in-up" data-delay="2" id="json-table-wrap">
+        <table id="json-ewaste-table" aria-label="E-waste catalogue loaded from JSON">
+          <thead>
+            <tr>
+              <th scope="col">Icon</th>
+              <th scope="col">Device</th>
+              <th scope="col">Category</th>
+              <th scope="col">Hazard Level</th>
+              <th scope="col">Key Materials</th>
+            </tr>
+          </thead>
+          <tbody id="json-ewaste-tbody">
+            <!-- Rows injected by loadEwasteData() in script.js -->
+            <tr>
+              <td colspan="5" style="text-align:center;color:var(--text-muted);padding:24px;">
+                Loading catalogue from JSON…
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 5: SUSTAINABILITY BENEFITS ═══════════════════ -->
+    <section class="section" aria-labelledby="benefits-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Sustainability Benefits</span>
+        <h2 id="benefits-heading">Why responsible recycling matters.</h2>
+      </div>
+
+      <div style="max-width:680px;margin:40px auto 0;" class="fade-in-up" data-delay="2">
+        <!-- UNORDERED LIST: benefits -->
+        <ul class="about-list" aria-label="Environmental benefits of responsible e-waste recycling">
+          <li>
+            <strong>Prevents hazardous contamination</strong>
+            Keeps lead, mercury, cadmium and other toxins out of soil and groundwater
+          </li>
+          <li>
+            <strong>Conserves finite natural resources</strong>
+            Recovered materials reduce the need for destructive new mining operations
+          </li>
+          <li>
+            <strong>Reduces carbon emissions</strong>
+            Recycled aluminium uses 95% less energy than smelting from bauxite ore
+          </li>
+          <li>
+            <strong>Supports the circular economy</strong>
+            Keeps valuable materials in productive use rather than landfill
+          </li>
+          <li>
+            <strong>Extends technology lifespans</strong>
+            Refurbished devices reach users who need them — reducing demand for new manufacturing
+          </li>
+          <li>
+            <strong>Protects communities</strong>
+            Prevents informal burning and acid-stripping that harms workers and local populations
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 6: EXTERNAL RESOURCES ═══════════════════════ -->
+    <section class="section alt" aria-labelledby="resources-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Learn More</span>
+        <h2 id="resources-heading">External resources on e-waste.</h2>
+        <p class="subtext">
+          GreenLoop is informed by global research. These are the primary sources behind the data on this page.
+        </p>
+      </div>
+
+      <div class="why-grid fade-in-up" data-delay="2">
+        <div class="why-card">
+          <div class="why-icon green" aria-hidden="true">📊</div>
+          <h3>Global E-Waste Monitor</h3>
+          <p>
+            The definitive annual report on global e-waste generation, collection rates, and material flows.
+            Published by UNU, ITU, UNITAR and UNIDO.
+          </p>
+          <a href="https://ewastemonitor.info/" target="_blank" rel="noopener" class="ext-link" style="margin-top:12px;display:inline-flex;" id="ewaste-monitor-impact-link">
+            Visit E-Waste Monitor ↗
+          </a>
+        </div>
+        <div class="why-card">
+          <div class="why-icon blue" aria-hidden="true">🔬</div>
+          <h3>Sustainable Electronics</h3>
+          <p>
+            Research and advocacy on electronics sustainability, from design through responsible end-of-life
+            processing.
+          </p>
+          <a href="https://sustainableelectronics.org/" target="_blank" rel="noopener" class="ext-link" style="margin-top:12px;display:inline-flex;" id="sustainable-electronics-impact-link">
+            Visit Sustainable Electronics ↗
+          </a>
+        </div>
+        <div class="why-card">
+          <div class="why-icon amber" aria-hidden="true">⚖</div>
+          <h3>WEEE Forum</h3>
+          <p>
+            Europe's leading e-waste compliance and producer responsibility organisation, tracking
+            collection and recycling rates under EU WEEE Directive.
+          </p>
+          <a href="https://weee-forum.org/" target="_blank" rel="noopener" class="ext-link" style="margin-top:12px;display:inline-flex;" id="weee-forum-link">
+            Visit WEEE Forum ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CTA ═══════════════════════════════════════════════════ -->
+    <section class="cta-section" aria-labelledby="impact-cta-heading">
+      <div class="fade-in-up">
+        <h2 id="impact-cta-heading">Be part of the solution.</h2>
+        <p>Schedule your free doorstep e-waste pickup today.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+          <a href="schedule.html" class="btn btn-lg" id="impact-final-cta">
+            Schedule a Pickup <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="what-we-recycle.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);" id="impact-catalogue-btn">
+            See What We Collect
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="GreenLoop home">
+          <span class="brand-icon" aria-hidden="true">♻</span>
+          GreenLoop
+        </a>
+        <p>Making responsible e-waste recycling beautifully simple — one doorstep at a time.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Site navigation">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="what-we-recycle.html">What We Recycle</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="impact.html">Impact</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Account links">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="login.html">Sign In</a></li>
+          <li><a href="register.html">Create Account</a></li>
+          <li><a href="schedule.html">Schedule Pickup</a></li>
+          <li><a href="servlet-concepts.html">Servlet Concepts</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-cta-col">
+        <h4>Ready to recycle?</h4>
+        <p>Schedule a free doorstep pickup for your unwanted electronics.</p>
+        <a href="schedule.html" class="btn">Schedule Pickup <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 GreenLoop. Doorstep E-Waste Recycling.</p>
+      <div class="footer-bottom-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html">Register</a>
+        <a href="servlet-concepts.html">Servlet Concepts</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

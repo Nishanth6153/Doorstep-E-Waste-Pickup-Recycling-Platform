@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -37,11 +37,13 @@
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main navigation">
       <a href="index.html">Home</a>
-      <a href="index.html#how-it-works">How It Works</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="what-we-recycle.html">What We Recycle</a>
       <a href="about.html">About</a>
+      <a href="impact.html">Impact</a>
+      <a href="contact.html">Contact</a>
       <a href="login.html" class="active" aria-current="page">Login</a>
       <a href="register.html">Register</a>
-      <a href="contact.html">Contact</a>
       <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
     </nav>
   </header>
@@ -142,6 +144,14 @@
               </button>
             </div>
             <span class="error-msg" id="auth-password-error" data-error-for="auth-password" role="alert"></span>
+          </div>
+
+          <!-- Remember Me checkbox -->
+          <div class="form-group" style="margin-top:-4px;">
+            <label class="choice-label" style="background:transparent;border:none;padding:0;gap:10px;font-size:.875rem;font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted);">
+              <input id="auth-remember" type="checkbox" name="rememberMe" value="yes">
+              Remember me for 30 days
+            </label>
           </div>
 
           <button type="submit" id="btn-submit-login" class="btn btn-full">

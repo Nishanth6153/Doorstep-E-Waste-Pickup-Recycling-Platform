@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -36,11 +36,13 @@
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main navigation">
       <a href="index.html">Home</a>
-      <a href="index.html#how-it-works">How It Works</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="what-we-recycle.html">What We Recycle</a>
       <a href="about.html">About</a>
+      <a href="impact.html">Impact</a>
+      <a href="contact.html">Contact</a>
       <a href="login.html">Login</a>
       <a href="register.html" class="active" aria-current="page">Register</a>
-      <a href="contact.html">Contact</a>
       <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
     </nav>
   </header>
@@ -172,6 +174,22 @@
             <span class="error-msg" id="reg-password-error" data-error-for="reg-password" role="alert"></span>
           </div>
 
+          <!-- Confirm Password — password input -->
+          <div class="form-group">
+            <label for="reg-confirm-password">Confirm password</label>
+            <input
+              id="reg-confirm-password"
+              name="confirmPassword"
+              type="password"
+              required
+              minlength="8"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+              aria-describedby="reg-confirm-password-error"
+            >
+            <span class="error-msg" id="reg-confirm-password-error" data-error-for="reg-confirm-password" role="alert"></span>
+          </div>
+
           <!-- Phone — tel input -->
           <div class="form-group">
             <label for="reg-phone">Phone number</label>
@@ -220,17 +238,20 @@
             <span class="error-msg" id="reg-house-error" data-error-for="reg-house" role="alert"></span>
           </div>
 
-          <!-- City — select -->
+          <!-- Preferred Pickup Area — select dropdown -->
           <div class="form-group">
-            <label for="reg-city">City / service area</label>
+            <label for="reg-city">Preferred pickup area</label>
             <select id="reg-city" name="city" required aria-describedby="reg-city-error">
-              <option value="">Select an area…</option>
+              <option value="">Select a pickup area…</option>
               <option>Central</option>
               <option>Northside</option>
               <option>Riverside</option>
               <option>West End</option>
               <option>East Quarter</option>
               <option>Southgate</option>
+              <option>Airport Zone</option>
+              <option>Business District</option>
+              <option>Old Town</option>
             </select>
             <span class="error-msg" id="reg-city-error" data-error-for="reg-city" role="alert"></span>
           </div>
@@ -251,6 +272,30 @@
           ></textarea>
           <span class="error-msg" id="reg-address-error" data-error-for="reg-address" role="alert"></span>
         </div>
+
+        <!-- Gender — radio inputs -->
+        <fieldset>
+          <legend>Gender</legend>
+          <div class="choice-group" role="radiogroup" aria-describedby="gender-error">
+            <label class="choice-label">
+              <input type="radio" name="gender" value="male" required aria-describedby="gender-error">
+              Male
+            </label>
+            <label class="choice-label">
+              <input type="radio" name="gender" value="female">
+              Female
+            </label>
+            <label class="choice-label">
+              <input type="radio" name="gender" value="other">
+              Other
+            </label>
+            <label class="choice-label">
+              <input type="radio" name="gender" value="prefer-not">
+              Prefer not to say
+            </label>
+          </div>
+          <span class="error-msg" id="gender-error" data-error-for="gender" role="alert"></span>
+        </fieldset>
 
         <!-- Account type — radio inputs -->
         <fieldset>

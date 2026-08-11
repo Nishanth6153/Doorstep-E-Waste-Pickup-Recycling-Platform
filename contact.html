@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -36,11 +36,13 @@
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main navigation">
       <a href="index.html">Home</a>
-      <a href="index.html#how-it-works">How It Works</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="what-we-recycle.html">What We Recycle</a>
       <a href="about.html">About</a>
+      <a href="impact.html">Impact</a>
+      <a href="contact.html" class="active" aria-current="page">Contact</a>
       <a href="login.html">Login</a>
       <a href="register.html">Register</a>
-      <a href="contact.html" class="active" aria-current="page">Contact</a>
       <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
     </nav>
   </header>
@@ -108,8 +110,26 @@
               <span class="error-msg" id="contact-email-error" data-error-for="contact-email" role="alert"></span>
             </div>
 
+            <!-- Mobile number — tel input -->
             <div class="form-group">
-              <label for="contact-subject">Subject</label>
+              <label for="contact-mobile">Mobile number</label>
+              <input
+                id="contact-mobile"
+                name="contactMobile"
+                type="tel"
+                required
+                pattern="[0-9]{10}"
+                maxlength="10"
+                placeholder="10-digit mobile number"
+                autocomplete="tel"
+                aria-describedby="contact-mobile-error"
+              >
+              <span class="error-msg" id="contact-mobile-error" data-error-for="contact-mobile" role="alert"></span>
+            </div>
+
+            <!-- Contact category — select dropdown -->
+            <div class="form-group">
+              <label for="contact-subject">Contact category</label>
               <select id="contact-subject" name="subject" required aria-describedby="contact-subject-error">
                 <option value="">Choose a topic…</option>
                 <option>Pickup question</option>
@@ -117,13 +137,28 @@
                 <option>Business collection</option>
                 <option>Partnership enquiry</option>
                 <option>Technical issue</option>
+                <option>Data safety query</option>
+                <option>Feedback</option>
                 <option>Other</option>
               </select>
               <span class="error-msg" id="contact-subject-error" data-error-for="contact-subject" role="alert"></span>
             </div>
 
+            <!-- Preferred contact date — date input -->
             <div class="form-group">
-              <label for="contact-message">Message</label>
+              <label for="contact-date">Preferred contact date</label>
+              <input
+                id="contact-date"
+                name="contactDate"
+                type="date"
+                required
+                aria-describedby="contact-date-error"
+              >
+              <span class="error-msg" id="contact-date-error" data-error-for="contact-date" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-message">Query / Message</label>
               <textarea
                 id="contact-message"
                 name="message"
@@ -135,6 +170,15 @@
                 aria-describedby="contact-message-error"
               ></textarea>
               <span class="error-msg" id="contact-message-error" data-error-for="contact-message" role="alert"></span>
+            </div>
+
+            <!-- Terms/consent checkbox -->
+            <div class="form-group">
+              <label class="choice-label" style="background:transparent;border:none;padding:0;gap:10px;font-size:.875rem;font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted);">
+                <input id="contact-consent" type="checkbox" name="contactConsent" required aria-describedby="contact-consent-error">
+                I consent to GreenLoop storing this message and contacting me in response.
+              </label>
+              <span class="error-msg" id="contact-consent-error" data-error-for="contact-consent" role="alert"></span>
             </div>
 
             <button class="btn" type="submit" id="contact-submit-btn" style="width:100%;justify-content:center;">
@@ -273,25 +317,26 @@
               <td><span class="cell-em">General Support</span></td>
               <!-- mailto: hyperlink requirement -->
               <td><a href="mailto:hello@greenloop.example" style="color:var(--accent);">hello@greenloop.example</a></td>
-              <td>+91 98765 43210</td>
+              <!-- tel: hyperlink requirement -->
+              <td><a href="tel:+919876543210" style="color:var(--accent);">+91 98765 43210</a></td>
               <td>Mon–Sat, 9 am–6 pm</td>
             </tr>
             <tr>
               <td><span class="cell-em">Business Pickups</span></td>
               <td><a href="mailto:business@greenloop.example" style="color:var(--accent);">business@greenloop.example</a></td>
-              <td>+91 98765 43211</td>
+              <td><a href="tel:+919876543211" style="color:var(--accent);">+91 98765 43211</a></td>
               <td>Mon–Fri, 9 am–5 pm</td>
             </tr>
             <tr>
               <td><span class="cell-em">Community Partners</span></td>
               <td><a href="mailto:partners@greenloop.example" style="color:var(--accent);">partners@greenloop.example</a></td>
-              <td>+91 98765 43212</td>
+              <td><a href="tel:+919876543212" style="color:var(--accent);">+91 98765 43212</a></td>
               <td>Mon–Fri, 10 am–4 pm</td>
             </tr>
             <tr>
               <td><span class="cell-em">Media &amp; Press</span></td>
               <td><a href="mailto:press@greenloop.example" style="color:var(--accent);">press@greenloop.example</a></td>
-              <td>+91 98765 43213</td>
+              <td><a href="tel:+919876543213" style="color:var(--accent);">+91 98765 43213</a></td>
               <td>Mon–Fri, 10 am–3 pm</td>
             </tr>
           </tbody>

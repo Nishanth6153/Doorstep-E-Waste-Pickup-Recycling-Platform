@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how GreenLoop's doorstep e-waste pickup works — from scheduling to certified recycling in four simple steps.">
+  <title>How It Works | GreenLoop E-Waste Recycling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- No-flash theme loader -->
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('GREENLOOP_THEME');
+        if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
+  <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <a class="brand" href="index.html" aria-label="GreenLoop — home">
+      <span class="brand-icon" aria-hidden="true">♻</span>
+      GreenLoop
+    </a>
+    <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html" class="active" aria-current="page">How It Works</a>
+      <a href="what-we-recycle.html">What We Recycle</a>
+      <a href="about.html">About</a>
+      <a href="impact.html">Impact</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark/light mode">🌙</button>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══ PAGE HERO ════════════════════════════════════════════ -->
+    <section class="page-hero" aria-labelledby="hiw-heading">
+      <div class="page-hero-content">
+        <span class="eyebrow">The Process</span>
+        <h1 id="hiw-heading">
+          <span style="display:block">Four steps.</span>
+          <span style="display:block;color:var(--text-muted)">Zero hassle.</span>
+        </h1>
+        <p class="lead">
+          GreenLoop makes responsible e-waste recycling as simple as ordering a delivery.
+          No drop-off trips, no complicated sorting — just schedule, and we handle the rest.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 1: THE 4 STEPS (Ordered List) ═══════════════ -->
+    <section class="section" aria-labelledby="steps-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Step by Step</span>
+        <h2 id="steps-heading">Your recycling journey, simplified.</h2>
+        <p class="subtext">
+          From your front door to certified recycling — here's exactly how GreenLoop works.
+        </p>
+      </div>
+
+      <!-- ORDERED LIST: The process steps -->
+      <div class="hiw-steps-wrap">
+        <ol class="hiw-steps-ol" aria-label="GreenLoop process steps">
+
+          <li class="hiw-step-item fade-in-up" data-delay="1">
+            <div class="hiw-step-number" aria-hidden="true">01</div>
+            <div class="hiw-step-body">
+              <div class="hiw-step-icon" aria-hidden="true">🔍</div>
+              <h3>Choose What to Recycle</h3>
+              <p>
+                Browse our full catalogue on the <a href="what-we-recycle.html" style="color:var(--accent);font-weight:600;">What We Recycle</a> page.
+                Select the devices you want to hand over — phones, laptops, batteries, cables, keyboards, and more.
+                You can add multiple device types in one booking.
+              </p>
+              <div class="hiw-step-tips">
+                <strong>💡 Tip:</strong> Check the preparation notes for each device before scheduling.
+              </div>
+            </div>
+          </li>
+
+          <li class="hiw-step-item fade-in-up" data-delay="2">
+            <div class="hiw-step-number" aria-hidden="true">02</div>
+            <div class="hiw-step-body">
+              <div class="hiw-step-icon" aria-hidden="true">📅</div>
+              <h3>Schedule Your Pickup</h3>
+              <p>
+                Head to the <a href="schedule.html" style="color:var(--accent);font-weight:600;">Schedule Pickup</a> page.
+                Fill in your address, choose a preferred date, and select a time slot that works for you —
+                morning, afternoon, or evening.
+              </p>
+              <div class="hiw-step-tips">
+                <strong>💡 Tip:</strong> Pickups are typically available within 3–5 business days.
+              </div>
+            </div>
+          </li>
+
+          <li class="hiw-step-item fade-in-up" data-delay="3">
+            <div class="hiw-step-number" aria-hidden="true">03</div>
+            <div class="hiw-step-body">
+              <div class="hiw-step-icon" aria-hidden="true">🚪</div>
+              <h3>Doorstep Collection</h3>
+              <p>
+                Our trained collection team arrives within your booked time window.
+                Have your devices ready — packed securely if possible.
+                We handle all the heavy lifting. You don't need to bring anything anywhere.
+              </p>
+              <div class="hiw-step-tips">
+                <strong>💡 Tip:</strong> You'll receive a collection confirmation once we've picked up your items.
+              </div>
+            </div>
+          </li>
+
+          <li class="hiw-step-item fade-in-up" data-delay="4">
+            <div class="hiw-step-number" aria-hidden="true">04</div>
+            <div class="hiw-step-body">
+              <div class="hiw-step-icon" aria-hidden="true">♻</div>
+              <h3>Certified Recycling</h3>
+              <p>
+                Your items are transported to our certified WEEE recycling partners.
+                Devices are assessed: reusable items go for refurbishment, the rest go through
+                responsible material recovery. Registered users receive a recycling receipt.
+              </p>
+              <div class="hiw-step-tips">
+                <strong>💡 Tip:</strong> <a href="register.html" style="color:var(--accent);font-weight:600;">Create a free account</a> to receive your recycling certificate.
+              </div>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 2: AFTER COLLECTION ══════════════════════════ -->
+    <section class="section alt" aria-labelledby="after-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Beyond Collection</span>
+        <h2 id="after-heading">What happens after pickup.</h2>
+        <p class="subtext">
+          Once we collect your devices, they enter a carefully managed chain of certified processing.
+        </p>
+      </div>
+
+      <div class="after-grid">
+
+        <article class="after-card fade-in-up" data-delay="1">
+          <div class="after-icon" aria-hidden="true">🔬</div>
+          <h3>Assessment &amp; Sorting</h3>
+          <p>
+            Every device collected by GreenLoop is assessed for reuse potential.
+            Working or repairable devices are separated for refurbishment — extending their life
+            rather than recycling immediately.
+          </p>
+        </article>
+
+        <article class="after-card fade-in-up" data-delay="2">
+          <div class="after-icon" aria-hidden="true">🗑</div>
+          <h3>Data Destruction</h3>
+          <p>
+            All storage devices — hard drives, SSDs, phones, tablets — undergo certified
+            data wiping under NIST 800-88 guidelines. A certificate of destruction is available
+            on request for registered users.
+          </p>
+        </article>
+
+        <article class="after-card fade-in-up" data-delay="3">
+          <div class="after-icon" aria-hidden="true">⚗</div>
+          <h3>Material Recovery</h3>
+          <p>
+            Non-reusable devices enter responsible dismantling. Circuit boards, metals, glass,
+            and plastics are separated and processed by specialist recyclers — recovering
+            lithium, gold, copper, cobalt and rare earth metals.
+          </p>
+        </article>
+
+        <article class="after-card fade-in-up" data-delay="4">
+          <div class="after-icon" aria-hidden="true">🔄</div>
+          <h3>Back into the Supply Chain</h3>
+          <p>
+            Recovered raw materials re-enter the manufacturing supply chain — reducing the
+            need for new mining and keeping valuable resources in circulation.
+            This is the circular economy in action.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ══ SECTION 3: DEVICE PREPARATION (Unordered List) ═══════ -->
+    <section class="section" aria-labelledby="prep-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Before We Arrive</span>
+        <h2 id="prep-heading">How to prepare your devices.</h2>
+        <p class="subtext">
+          A few simple steps will protect your personal data and ensure your devices
+          are processed as efficiently as possible.
+        </p>
+      </div>
+
+      <div class="prep-grid">
+
+        <div class="prep-card fade-in-up" data-delay="1">
+          <h3>📱 Phones &amp; Tablets</h3>
+          <ul class="prep-list" aria-label="Phone and tablet preparation steps">
+            <li>Back up your photos, contacts, and files to cloud or external storage</li>
+            <li>Sign out of all accounts (Google, Apple ID, Samsung, etc.)</li>
+            <li>Perform a full factory reset from device settings</li>
+            <li>Remove your SIM card and SD/memory card</li>
+            <li>Remove the device from any carrier lock or Find My Device service</li>
+          </ul>
+        </div>
+
+        <div class="prep-card fade-in-up" data-delay="2">
+          <h3>💻 Laptops &amp; Computers</h3>
+          <ul class="prep-list" aria-label="Laptop and computer preparation steps">
+            <li>Back up all important files to external storage or cloud</li>
+            <li>Sign out of all online accounts and browsers</li>
+            <li>Perform a factory reset or full operating system wipe</li>
+            <li>Remove any external drives or USB devices</li>
+            <li>Request NIST 800-88 certified data destruction at booking if required</li>
+          </ul>
+        </div>
+
+        <div class="prep-card fade-in-up" data-delay="3">
+          <h3>🔋 Batteries &amp; Power Banks</h3>
+          <ul class="prep-list" aria-label="Battery preparation steps">
+            <li>Do not puncture, crush, or short circuit the battery</li>
+            <li>Place insulating tape over battery terminals</li>
+            <li>Keep batteries separate from other metal items during transport</li>
+            <li>Do not place in plastic bags near heat sources</li>
+            <li>Inform our team of any swollen or damaged batteries at collection</li>
+          </ul>
+        </div>
+
+        <div class="prep-card fade-in-up" data-delay="4">
+          <h3>🖥 Monitors &amp; Screens</h3>
+          <ul class="prep-list" aria-label="Monitor preparation steps">
+            <li>Do not crack or break the screen panel — mercury vapour hazard</li>
+            <li>Keep the stand attached if possible for safe handling</li>
+            <li>Wrap in a blanket or bubble wrap for safe transport</li>
+            <li>CRT monitors (old tube screens) require specialist handling — always use certified collection</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ SECTION 4: DATA SAFETY DEEP-DIVE ═════════════════════ -->
+    <section class="section alt" aria-labelledby="data-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Your Data, Our Priority</span>
+        <h2 id="data-heading">Data safety, guaranteed.</h2>
+      </div>
+
+      <div class="data-safety-wrap fade-in-up" data-delay="2">
+        <div class="data-safety-text">
+          <p>
+            The biggest concern most people have about recycling electronics is: <strong>"What happens to my data?"</strong>
+            GreenLoop takes this seriously.
+          </p>
+          <p style="margin-top:16px;">
+            All storage devices processed through GreenLoop's partner facilities are handled under
+            <strong>NIST SP 800-88</strong> guidelines — the international gold standard for media sanitisation.
+          </p>
+          <p style="margin-top:16px;">
+            For devices that cannot be wiped (due to damage or manufacturer restrictions),
+            our partners perform physical destruction of storage media — shredding or degaussing.
+          </p>
+          <a href="register.html" class="btn" style="margin-top:28px;" id="hiw-register-btn">
+            Create an account for a destruction certificate <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <aside class="data-safety-standards" aria-label="Data safety certifications">
+          <h3>Certifications &amp; Standards</h3>
+          <table aria-label="Data safety standards used by GreenLoop">
+            <thead>
+              <tr>
+                <th scope="col">Standard</th>
+                <th scope="col">What It Covers</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="cell-em">NIST SP 800-88</span></td>
+                <td>Media sanitisation — overwrite, purge, destroy</td>
+              </tr>
+              <tr>
+                <td><span class="cell-em">WEEE Directive</span></td>
+                <td>EU-standard e-waste processing</td>
+              </tr>
+              <tr>
+                <td><span class="cell-em">ISO 14001</span></td>
+                <td>Environmental management</td>
+              </tr>
+              <tr>
+                <td><span class="cell-em">R2v3</span></td>
+                <td>Responsible recycler certification</td>
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ══ FAQ ═══════════════════════════════════════════════════ -->
+    <section class="section" aria-labelledby="faq-hiw-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Common Questions</span>
+        <h2 id="faq-hiw-heading">Frequently asked questions.</h2>
+      </div>
+
+      <div class="faq-list fade-in-up" data-delay="2" id="faq-list-hiw" role="list" style="max-width:760px;margin:0 auto;">
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-btn" aria-expanded="false" id="faq-hiw-1" aria-controls="faq-hiw-answer-1">
+            How soon can I get a pickup scheduled?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" id="faq-hiw-answer-1" role="region" aria-labelledby="faq-hiw-1">
+            <p>
+              Most pickups are available within 3–5 business days of booking. Same-week slots are often
+              available in central service areas. Check the <a href="schedule.html">Schedule page</a> for
+              live availability in your postcode.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-btn" aria-expanded="false" id="faq-hiw-2" aria-controls="faq-hiw-answer-2">
+            Is there a minimum number of items required?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" id="faq-hiw-answer-2" role="region" aria-labelledby="faq-hiw-2">
+            <p>
+              No minimum! You can book a collection for a single cable or a whole room of old electronics.
+              For very large volumes (50+ items), contact our business team for a dedicated collection service.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-btn" aria-expanded="false" id="faq-hiw-3" aria-controls="faq-hiw-answer-3">
+            Do I need to be home during collection?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" id="faq-hiw-answer-3" role="region" aria-labelledby="faq-hiw-3">
+            <p>
+              Yes — someone should be present to hand over the items. If you're unable to be home,
+              you can add access instructions in your booking notes (e.g., leave items with a concierge or neighbour).
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-btn" aria-expanded="false" id="faq-hiw-4" aria-controls="faq-hiw-answer-4">
+            What if my device is broken or won't turn on?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" id="faq-hiw-answer-4" role="region" aria-labelledby="faq-hiw-4">
+            <p>
+              We still accept broken devices! Select "Not working" or "Damaged / unsafe" as the condition
+              when booking. Our partners are equipped to safely handle broken screens, swollen batteries, and faulty units.
+              Do let us know if a battery is visibly swollen or leaking.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ CTA ═══════════════════════════════════════════════════ -->
+    <section class="cta-section" aria-labelledby="hiw-cta-heading">
+      <div class="fade-in-up">
+        <h2 id="hiw-cta-heading">Ready to get started?</h2>
+        <p>Schedule your first free doorstep pickup today.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+          <a href="schedule.html" class="btn btn-lg" id="hiw-final-cta">
+            Schedule a Pickup <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="what-we-recycle.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);" id="hiw-catalogue-btn">
+            Browse the Catalogue
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="GreenLoop home">
+          <span class="brand-icon" aria-hidden="true">♻</span>
+          GreenLoop
+        </a>
+        <p>Making responsible e-waste recycling beautifully simple — one doorstep at a time.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Site navigation">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="what-we-recycle.html">What We Recycle</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="impact.html">Impact</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Account links">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="login.html">Sign In</a></li>
+          <li><a href="register.html">Create Account</a></li>
+          <li><a href="schedule.html">Schedule Pickup</a></li>
+          <li><a href="servlet-concepts.html">Servlet Concepts</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-cta-col">
+        <h4>Ready to recycle?</h4>
+        <p>Schedule a free doorstep pickup for your unwanted electronics.</p>
+        <a href="schedule.html" class="btn">Schedule Pickup <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 GreenLoop. Doorstep E-Waste Recycling.</p>
+      <div class="footer-bottom-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html">Register</a>
+        <a href="servlet-concepts.html">Servlet Concepts</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

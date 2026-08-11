@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Servlet Concepts — Academic demonstration of Java Servlet architecture and lifecycle for the GreenLoop Full Stack Development assignment.">
+  <title>Servlet Concepts | GreenLoop – Academic Demonstration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- No-flash theme loader -->
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('GREENLOOP_THEME');
+        if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
+  <link rel="stylesheet" href="effects.css">
+  <style>
+    /* ── Servlet Concepts Page Styles ─────────────────────── */
+    .servlet-hero {
+      background: linear-gradient(135deg, var(--surface-alt) 0%, var(--surface) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: clamp(60px,10vw,100px) var(--page-pad);
+      text-align: center;
+    }
+    .servlet-hero .academic-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, #0B3D2E, #16834B);
+      color: #DDF5E7;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .servlet-hero h1 {
+      font-size: clamp(2rem,5vw,3.2rem);
+      margin-bottom: 16px;
+    }
+    .servlet-hero .disclaimer {
+      max-width: 680px;
+      margin: 20px auto 0;
+      padding: 16px 20px;
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      border-radius: var(--radius);
+      font-size: .875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .servlet-hero .disclaimer strong { color: var(--text-primary); }
+
+    /* Architecture diagram */
+    .arch-diagram {
+      max-width: 560px;
+      margin: 40px auto;
+    }
+    .arch-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      margin-bottom: 0;
+      transition: background var(--transition);
+    }
+    .arch-box:hover { background: color-mix(in srgb, var(--accent) 5%, var(--surface-alt)); }
+    .arch-box-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0B3D2E, #16834B);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .arch-box-text h4 {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .arch-box-text p {
+      font-size: .78rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .arch-arrow {
+      text-align: center;
+      padding: 6px 0;
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .arch-container-wrap {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin: 8px 0;
+      position: relative;
+    }
+    .arch-container-label {
+      position: absolute;
+      top: -12px;
+      left: 16px;
+      background: var(--surface);
+      padding: 0 8px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+    }
+
+    /* Lifecycle diagram */
+    .lifecycle-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      max-width: 440px;
+      margin: 40px auto;
+    }
+    .lc-node {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      transition: background var(--transition);
+    }
+    .lc-node:hover { background: color-mix(in srgb, var(--accent) 6%, var(--surface-alt)); }
+    .lc-node-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .lc-node-icon.init { background: linear-gradient(135deg, #16834B, #22A65A); }
+    .lc-node-icon.service { background: linear-gradient(135deg, #0B3D2E, #16834B); }
+    .lc-node-icon.destroy { background: linear-gradient(135deg, #101817, #0B3D2E); }
+    .lc-node-icon.system { background: linear-gradient(135deg, #3b3b3b, #555); }
+    .lc-node-text h4 { font-size: .9rem; font-weight: 700; margin-bottom: 2px; }
+    .lc-node-text p { font-size: .78rem; color: var(--text-muted); margin: 0; }
+    .lc-arrow {
+      width: 2px;
+      height: 28px;
+      background: linear-gradient(to bottom, var(--accent), color-mix(in srgb, var(--accent) 30%, transparent));
+      flex-shrink: 0;
+    }
+
+    /* Method cards */
+    .method-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .method-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+    .method-card .method-name {
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .method-card h4 {
+      font-size: .95rem;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+    .method-card p { font-size: .875rem; color: var(--text-muted); line-height: 1.7; }
+    .method-card .method-when {
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      border-radius: var(--radius-sm);
+      font-size: .78rem;
+      color: var(--text-muted);
+    }
+    .method-card .method-when strong { color: var(--accent); }
+
+    /* GreenLoop mapping */
+    .mapping-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 16px;
+    }
+    .mapping-card .mapping-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .mapping-card .mapping-badge {
+      font-family: 'Courier New', monospace;
+      font-size: .85rem;
+      font-weight: 700;
+      color: #DDF5E7;
+      background: linear-gradient(90deg, #0B3D2E, #16834B);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+    .mapping-card h4 { font-size: .95rem; font-weight: 700; }
+    .mapping-card p { font-size: .875rem; color: var(--text-muted); line-height: 1.7; margin-top: 8px; }
+    .mapping-card code {
+      font-family: 'Courier New', monospace;
+      font-size: .85rem;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .toc-nav {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      max-width: 480px;
+      margin: 0 auto 48px;
+    }
+    .toc-nav h3 { font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; color: var(--text-sub); margin-bottom: 12px; }
+    .toc-nav ol { padding-left: 20px; }
+    .toc-nav ol li { margin-bottom: 8px; font-size: .875rem; }
+    .toc-nav ol a { color: var(--accent); font-weight: 500; }
+
+    @media (max-width: 600px) {
+      .arch-diagram, .lifecycle-diagram { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <a class="brand" href="index.html" aria-label="GreenLoop — home">
+      <span class="brand-icon" aria-hidden="true">♻</span>
+      GreenLoop
+    </a>
+    <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="what-we-recycle.html">What We Recycle</a>
+      <a href="about.html">About</a>
+      <a href="impact.html">Impact</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark/light mode">🌙</button>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══ HERO ═════════════════════════════════════════════════ -->
+    <section class="servlet-hero" aria-labelledby="servlet-heading">
+      <div class="academic-badge">
+        <span aria-hidden="true">📚</span>
+        Academic Demonstration — Full Stack Development Assignment
+      </div>
+      <h1 id="servlet-heading">
+        Servlet Concepts
+      </h1>
+      <p style="color:var(--text-muted);font-size:1.05rem;max-width:600px;margin:0 auto;">
+        Java Servlet architecture &amp; lifecycle explained using GreenLoop as the reference application.
+      </p>
+      <div class="disclaimer">
+        <strong>Assignment Scope Clarification:</strong> This page explains Java Servlet architecture and
+        the Servlet Life Cycle <em>conceptually</em> as required by the Full Stack Development assignment.
+        <strong>No Java Servlet implementation or coding is required for this assignment.</strong>
+        GreenLoop is a frontend HTML/CSS/JavaScript application — this page fulfils the academic
+        Servlet concepts requirement through conceptual explanation and visual diagrams.
+      </div>
+    </section>
+
+    <!-- ══ TABLE OF CONTENTS ════════════════════════════════════ -->
+    <section class="section" aria-label="Table of contents">
+      <nav class="toc-nav fade-in-up" aria-label="Page sections">
+        <h3>Contents</h3>
+        <ol>
+          <li><a href="#servlet-what">What is a Java Servlet?</a></li>
+          <li><a href="#servlet-architecture">Servlet Architecture</a></li>
+          <li><a href="#servlet-lifecycle">Servlet Life Cycle</a></li>
+          <li><a href="#servlet-methods">Lifecycle Methods</a></li>
+          <li><a href="#servlet-greenloop">GreenLoop Servlet Mapping</a></li>
+          <li><a href="#servlet-table">Servlet vs. Static Web</a></li>
+        </ol>
+      </nav>
+    </section>
+
+    <!-- ══ SECTION 1: WHAT IS A SERVLET ════════════════════════ -->
+    <section class="section alt" id="servlet-what" aria-labelledby="what-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Foundation</span>
+        <h2 id="what-heading">What is a Java Servlet?</h2>
+      </div>
+
+      <div style="max-width:720px;margin:32px auto 0;" class="fade-in-up" data-delay="2">
+        <p style="color:var(--text-muted);line-height:1.8;font-size:.95rem;">
+          A <strong>Java Servlet</strong> is a server-side Java class that handles HTTP requests and generates
+          HTTP responses. Servlets run inside a <strong>Servlet Container</strong> (also called a Web Container)
+          such as Apache Tomcat, Jetty, or GlassFish.
+        </p>
+        <p style="color:var(--text-muted);line-height:1.8;font-size:.95rem;margin-top:16px;">
+          Servlets are the backbone of Java-based web applications. They receive requests from web browsers,
+          process them (e.g. read data from a database, validate a form), and send back an HTTP response —
+          typically HTML, JSON, or XML.
+        </p>
+
+        <div style="margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="why-grid">
+          <div class="why-card">
+            <div class="why-icon green" aria-hidden="true">⚡</div>
+            <h3>Performance</h3>
+            <p>Servlets are faster than CGI scripts — they remain in memory between requests and handle multiple requests via threads.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon blue" aria-hidden="true">🔒</div>
+            <h3>Security</h3>
+            <p>Running inside a container provides security isolation, session management, and HTTPS support out of the box.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 2: SERVLET ARCHITECTURE ═════════════════════ -->
+    <section class="section" id="servlet-architecture" aria-labelledby="arch-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Servlet Architecture</span>
+        <h2 id="arch-heading">How a request flows through the system.</h2>
+        <p class="subtext">
+          When a user submits the GreenLoop pickup form, here is the conceptual flow through a
+          Java Servlet architecture.
+        </p>
+      </div>
+
+      <!-- Architecture Diagram -->
+      <div class="arch-diagram fade-in-up" data-delay="2" role="img" aria-label="Servlet architecture request flow diagram">
+
+        <div class="arch-box">
+          <div class="arch-box-icon" aria-hidden="true">🌐</div>
+          <div class="arch-box-text">
+            <h4>Browser (Client)</h4>
+            <p>User submits the GreenLoop pickup form — browser sends HTTP POST request</p>
+          </div>
+        </div>
+
+        <div class="arch-arrow" aria-hidden="true">↓ HTTP Request</div>
+
+        <div class="arch-box">
+          <div class="arch-box-icon" aria-hidden="true">🖥</div>
+          <div class="arch-box-text">
+            <h4>Web Server</h4>
+            <p>Apache / Nginx receives the request and routes it to the Servlet Container</p>
+          </div>
+        </div>
+
+        <div class="arch-arrow" aria-hidden="true">↓ Forward Request</div>
+
+        <div class="arch-container-wrap">
+          <span class="arch-container-label">Servlet Container (Apache Tomcat)</span>
+
+          <div class="arch-box" style="margin-bottom:8px;">
+            <div class="arch-box-icon" aria-hidden="true">📦</div>
+            <div class="arch-box-text">
+              <h4>Container Routes Request</h4>
+              <p>Reads web.xml / annotations to find the matching Servlet class for the URL</p>
+            </div>
+          </div>
+
+          <div class="arch-arrow" aria-hidden="true">↓</div>
+
+          <div class="arch-box" style="margin-bottom:8px;background:color-mix(in srgb,var(--accent) 8%,var(--surface-alt));">
+            <div class="arch-box-icon" aria-hidden="true">☕</div>
+            <div class="arch-box-text">
+              <h4>PickupServlet.java</h4>
+              <p>doPost() validates the pickup form, creates a booking object, calls the service layer</p>
+            </div>
+          </div>
+
+          <div class="arch-arrow" aria-hidden="true">↓</div>
+
+          <div class="arch-box">
+            <div class="arch-box-icon" aria-hidden="true">🗄</div>
+            <div class="arch-box-text">
+              <h4>Business / Data Layer</h4>
+              <p>Service classes and DAO layer read/write from the database (e.g. MySQL)</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="arch-arrow" aria-hidden="true">↓ HTTP Response</div>
+
+        <div class="arch-box">
+          <div class="arch-box-icon" aria-hidden="true">🌐</div>
+          <div class="arch-box-text">
+            <h4>Browser (Client)</h4>
+            <p>Receives the response — HTML confirmation page or JSON status</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Explanation -->
+      <div style="max-width:680px;margin:40px auto 0;" class="fade-in-up" data-delay="4">
+        <h3 style="font-size:1rem;margin-bottom:12px;">Key Architecture Points</h3>
+        <ul class="prep-list" aria-label="Key servlet architecture points">
+          <li>The <strong>Servlet Container</strong> manages the entire lifecycle of each Servlet</li>
+          <li>Each <strong>HTTP method</strong> (GET, POST, PUT, DELETE) maps to a corresponding <code style="font-family:monospace;font-size:.9em;background:var(--surface-alt);padding:1px 6px;border-radius:4px;">doXxx()</code> method</li>
+          <li><strong>HttpServletRequest</strong> provides access to form data, headers, and session</li>
+          <li><strong>HttpServletResponse</strong> is used to write the response body and set headers</li>
+          <li>The <strong>web.xml</strong> deployment descriptor (or <code style="font-family:monospace;font-size:.9em;background:var(--surface-alt);padding:1px 6px;border-radius:4px;">@WebServlet</code> annotation) maps URLs to Servlet classes</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 3: SERVLET LIFECYCLE ════════════════════════ -->
+    <section class="section alt" id="servlet-lifecycle" aria-labelledby="lc-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Servlet Life Cycle</span>
+        <h2 id="lc-heading">From loading to destruction.</h2>
+        <p class="subtext">
+          The Servlet Container fully controls the lifecycle of every Servlet.
+          A Servlet goes through three distinct phases:
+        </p>
+      </div>
+
+      <!-- Lifecycle Diagram -->
+      <div class="lifecycle-diagram fade-in-up" data-delay="2" role="img" aria-label="Servlet lifecycle diagram">
+
+        <div class="lc-node">
+          <div class="lc-node-icon system" aria-hidden="true">📥</div>
+          <div class="lc-node-text">
+            <h4>Servlet Class Loaded</h4>
+            <p>Container loads the Servlet class into the JVM on startup or first request</p>
+          </div>
+        </div>
+        <div class="lc-arrow" aria-hidden="true"></div>
+
+        <div class="lc-node">
+          <div class="lc-node-icon system" aria-hidden="true">🔧</div>
+          <div class="lc-node-text">
+            <h4>Servlet Instantiated</h4>
+            <p>Container creates a single instance of the Servlet class using the default constructor</p>
+          </div>
+        </div>
+        <div class="lc-arrow" aria-hidden="true"></div>
+
+        <div class="lc-node" style="border-color:var(--accent);">
+          <div class="lc-node-icon init" aria-hidden="true">🟢</div>
+          <div class="lc-node-text">
+            <h4>init()</h4>
+            <p>Called <em>once</em> — Servlet initialises resources (DB connections, config loading)</p>
+          </div>
+        </div>
+        <div class="lc-arrow" aria-hidden="true"></div>
+
+        <div class="lc-node" style="border-color:var(--accent);">
+          <div class="lc-node-icon service" aria-hidden="true">⚙</div>
+          <div class="lc-node-text">
+            <h4>service()</h4>
+            <p>Called for <em>every</em> HTTP request — routes to doGet(), doPost(), etc.</p>
+          </div>
+        </div>
+        <div class="lc-arrow" aria-hidden="true"></div>
+
+        <div class="lc-node" style="border:1px dashed var(--border);opacity:.8;">
+          <div class="lc-node-icon system" aria-hidden="true">🔁</div>
+          <div class="lc-node-text">
+            <h4>Multiple Requests</h4>
+            <p>service() handles concurrent requests via threads — one Servlet instance serves all</p>
+          </div>
+        </div>
+        <div class="lc-arrow" aria-hidden="true"></div>
+
+        <div class="lc-node">
+          <div class="lc-node-icon destroy" aria-hidden="true">🔴</div>
+          <div class="lc-node-text">
+            <h4>destroy()</h4>
+            <p>Called <em>once</em> on shutdown — Servlet releases resources (DB connections, file handles)</p>
+          </div>
+        </div>
+        <div class="lc-arrow" aria-hidden="true"></div>
+
+        <div class="lc-node">
+          <div class="lc-node-icon system" aria-hidden="true">🗑</div>
+          <div class="lc-node-text">
+            <h4>Garbage Collection</h4>
+            <p>Container marks the instance for garbage collection — lifecycle complete</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ SECTION 4: LIFECYCLE METHODS ════════════════════════ -->
+    <section class="section" id="servlet-methods" aria-labelledby="methods-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">The Three Methods</span>
+        <h2 id="methods-heading">init(), service(), destroy() — explained.</h2>
+      </div>
+
+      <div class="method-cards">
+
+        <div class="method-card fade-in-up" data-delay="1">
+          <div class="method-name">init()</div>
+          <h4>Initialisation Method</h4>
+          <p>
+            Called <strong>once</strong> when the Servlet is first loaded by the container.
+            Used to set up resources that are needed for the entire lifetime of the Servlet —
+            such as database connection pools, loading configuration files, or caching reference data.
+          </p>
+          <p style="margin-top:12px;">
+            In GreenLoop, <code>init()</code> would open a connection pool to the MySQL database
+            and load the list of accepted e-waste categories from a configuration file.
+          </p>
+          <div class="method-when">
+            <strong>When called:</strong> Once, before the first request is handled.<br>
+            <strong>Signature:</strong> <code>public void init(ServletConfig config) throws ServletException</code>
+          </div>
+        </div>
+
+        <div class="method-card fade-in-up" data-delay="2">
+          <div class="method-name">service()</div>
+          <h4>Request Handling Method</h4>
+          <p>
+            Called <strong>for every HTTP request</strong> received by the Servlet.
+            The <code>service()</code> method determines the request type (GET, POST, PUT, DELETE)
+            and delegates to the appropriate handler method.
+          </p>
+          <p style="margin-top:12px;">
+            In GreenLoop, <code>service()</code> would dispatch a pickup form submission (POST) to
+            <code>doPost()</code>, which validates the form data, creates a booking record, and
+            returns a JSON confirmation response.
+          </p>
+          <div class="method-when">
+            <strong>When called:</strong> On every request — can handle concurrent requests via threads.<br>
+            <strong>Signature:</strong> <code>protected void service(HttpServletRequest req, HttpServletResponse res)</code>
+          </div>
+        </div>
+
+        <div class="method-card fade-in-up" data-delay="3">
+          <div class="method-name">destroy()</div>
+          <h4>Cleanup Method</h4>
+          <p>
+            Called <strong>once</strong> when the Servlet Container shuts down or when the Servlet
+            is removed from service. Used to release any resources that were acquired in
+            <code>init()</code> — preventing memory leaks.
+          </p>
+          <p style="margin-top:12px;">
+            In GreenLoop, <code>destroy()</code> would close the database connection pool and
+            flush any pending write buffers — ensuring no data loss on shutdown.
+          </p>
+          <div class="method-when">
+            <strong>When called:</strong> Once, when the Servlet is being removed from service.<br>
+            <strong>Signature:</strong> <code>public void destroy()</code>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ SECTION 5: GREENLOOP MAPPING ════════════════════════ -->
+    <section class="section alt" id="servlet-greenloop" aria-labelledby="mapping-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">GreenLoop Application</span>
+        <h2 id="mapping-heading">How GreenLoop would map to Servlet architecture.</h2>
+        <p class="subtext">
+          If GreenLoop were implemented as a Java EE application, each major feature
+          would map to a dedicated Servlet class.
+        </p>
+      </div>
+
+      <div style="max-width:720px;margin:40px auto 0;" class="fade-in-up" data-delay="2">
+
+        <div class="mapping-card">
+          <div class="mapping-header">
+            <span class="mapping-badge">PickupServlet.java</span>
+            <h4>Pickup Scheduling Feature</h4>
+          </div>
+          <p>
+            Handles <code>POST /api/pickup/schedule</code> — receives the pickup form data submitted
+            by the user, validates all required fields (device type, date, address), creates a new
+            booking record in the database via the <code>PickupDAO</code> class, and returns a
+            JSON response confirming the booking reference number.
+          </p>
+          <p style="margin-top:8px;">
+            <strong>init():</strong> Opens database connection pool, loads time slot configuration.<br>
+            <strong>service():</strong> Validates form, calls DAO, sends JSON response.<br>
+            <strong>destroy():</strong> Closes database connections.
+          </p>
+        </div>
+
+        <div class="mapping-card">
+          <div class="mapping-header">
+            <span class="mapping-badge">UserServlet.java</span>
+            <h4>Registration &amp; Authentication</h4>
+          </div>
+          <p>
+            Handles <code>POST /api/user/register</code> and <code>POST /api/user/login</code>.
+            For registration: validates form data, hashes the password using BCrypt, stores the
+            new user in the database. For login: verifies credentials, creates an <code>HttpSession</code>,
+            and redirects the user to their dashboard.
+          </p>
+        </div>
+
+        <div class="mapping-card">
+          <div class="mapping-header">
+            <span class="mapping-badge">CatalogueServlet.java</span>
+            <h4>E-Waste Catalogue API</h4>
+          </div>
+          <p>
+            Handles <code>GET /api/catalogue</code> — queries the database for the current list of
+            accepted e-waste categories, serialises the results to JSON, and writes them to the
+            <code>HttpServletResponse</code> with <code>Content-Type: application/json</code>.
+            The frontend JavaScript then renders this data dynamically into the page.
+          </p>
+        </div>
+
+        <div class="mapping-card">
+          <div class="mapping-header">
+            <span class="mapping-badge">ContactServlet.java</span>
+            <h4>Contact Form Submission</h4>
+          </div>
+          <p>
+            Handles <code>POST /api/contact</code> — validates the contact form submission,
+            stores the enquiry in the database, and triggers an automated email acknowledgement
+            via the JavaMail API. Returns a success JSON response to the browser.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ SECTION 6: COMPARISON TABLE ══════════════════════════ -->
+    <section class="section" id="servlet-table" aria-labelledby="compare-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Technical Comparison</span>
+        <h2 id="compare-heading">Servlet vs. Static Web Application.</h2>
+      </div>
+
+      <div class="impact-table-wrap fade-in-up" data-delay="2">
+        <table aria-label="Comparison of Java Servlet versus static web applications">
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col">Static Web App (HTML/CSS/JS)</th>
+              <th scope="col">Java Servlet Application</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="cell-em">Processing</span></td>
+              <td>Client-side only (browser)</td>
+              <td>Server-side processing before response</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">Data Storage</span></td>
+              <td>LocalStorage, SessionStorage, cookies</td>
+              <td>Server-side database (MySQL, PostgreSQL)</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">Authentication</span></td>
+              <td>Frontend mock / JWT validation</td>
+              <td>HttpSession management — server-side sessions</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">Form Validation</span></td>
+              <td>JavaScript validation only</td>
+              <td>Server-side validation (cannot be bypassed)</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">Data Security</span></td>
+              <td>Data visible in client code</td>
+              <td>Business logic and data hidden from client</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">Deployment</span></td>
+              <td>Any static file host (Netlify, GitHub Pages)</td>
+              <td>Java EE server (Tomcat, Jetty, GlassFish)</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">GreenLoop Use</span></td>
+              <td style="color:var(--accent);font-weight:600;">✓ This implementation</td>
+              <td>Conceptual — demonstrated on this page</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 7: SAMPLE PSEUDOCODE ════════════════════════ -->
+    <section class="section alt" aria-labelledby="code-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Pseudocode Example</span>
+        <h2 id="code-heading">GreenLoop PickupServlet — conceptual code.</h2>
+        <p class="subtext">
+          The following is illustrative pseudocode — not actual running code.
+          It shows how GreenLoop's pickup feature would be implemented as a Java Servlet.
+        </p>
+      </div>
+
+      <div class="fade-in-up" data-delay="2" style="max-width:760px;margin:32px auto 0;">
+        <pre style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;overflow-x:auto;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.7;color:var(--text-muted);"><code><span style="color:var(--text-sub);">// GreenLoop — PickupServlet.java (Conceptual / Pseudocode)</span>
+<span style="color:#B8F35A;">@WebServlet</span>("/api/pickup/schedule")
+<span style="color:var(--accent);">public class</span> PickupServlet <span style="color:var(--accent);">extends</span> HttpServlet {
+
+  <span style="color:var(--text-sub);">// init() — called ONCE when Servlet is loaded</span>
+  <span style="color:var(--accent);">@Override</span>
+  <span style="color:var(--accent);">public void</span> init(ServletConfig config) {
+    openDatabaseConnectionPool();
+    loadPickupAreaConfiguration();
+    System.out.println(<span style="color:#B8F35A;">"GreenLoop PickupServlet initialised"</span>);
+  }
+
+  <span style="color:var(--text-sub);">// service() delegates to doPost() for POST requests</span>
+  <span style="color:var(--accent);">@Override</span>
+  <span style="color:var(--accent);">protected void</span> doPost(HttpServletRequest req, HttpServletResponse res) {
+    String deviceType = req.getParameter(<span style="color:#B8F35A;">"deviceType"</span>);
+    String date       = req.getParameter(<span style="color:#B8F35A;">"pickupDate"</span>);
+    String address    = req.getParameter(<span style="color:#B8F35A;">"address"</span>);
+
+    <span style="color:var(--text-sub);">// Validate required fields</span>
+    <span style="color:var(--accent);">if</span> (deviceType == null || date == null || address == null) {
+      res.sendError(400, <span style="color:#B8F35A;">"Missing required pickup fields"</span>);
+      <span style="color:var(--accent);">return</span>;
+    }
+
+    <span style="color:var(--text-sub);">// Save booking to database</span>
+    Booking booking = pickupDAO.createBooking(deviceType, date, address);
+
+    <span style="color:var(--text-sub);">// Send JSON confirmation response</span>
+    res.setContentType(<span style="color:#B8F35A;">"application/json"</span>);
+    res.getWriter().write(
+      <span style="color:#B8F35A;">"{\"success\": true, \"bookingId\": \""</span> + booking.getId() + <span style="color:#B8F35A;">"\"}"</span>
+    );
+  }
+
+  <span style="color:var(--text-sub);">// destroy() — called ONCE on shutdown</span>
+  <span style="color:var(--accent);">@Override</span>
+  <span style="color:var(--accent);">public void</span> destroy() {
+    closeDatabaseConnectionPool();
+    System.out.println(<span style="color:#B8F35A;">"GreenLoop PickupServlet shutting down"</span>);
+  }
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ══ CTA ═══════════════════════════════════════════════════ -->
+    <section class="cta-section" aria-labelledby="servlet-cta-heading">
+      <div class="fade-in-up">
+        <h2 id="servlet-cta-heading">Now explore the actual GreenLoop app.</h2>
+        <p>The frontend implementation — HTML5, CSS3, and JavaScript — is live and ready to use.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+          <a href="index.html" class="btn btn-lg" id="servlet-home-btn">
+            Go to Homepage <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="schedule.html" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);" id="servlet-schedule-btn">
+            Schedule a Pickup
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="GreenLoop home">
+          <span class="brand-icon" aria-hidden="true">♻</span>
+          GreenLoop
+        </a>
+        <p>Making responsible e-waste recycling beautifully simple — one doorstep at a time.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Site navigation">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="what-we-recycle.html">What We Recycle</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="impact.html">Impact</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Account links">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="login.html">Sign In</a></li>
+          <li><a href="register.html">Create Account</a></li>
+          <li><a href="schedule.html">Schedule Pickup</a></li>
+          <li><a href="servlet-concepts.html">Servlet Concepts</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-cta-col">
+        <h4>Ready to recycle?</h4>
+        <p>Schedule a free doorstep pickup for your unwanted electronics.</p>
+        <a href="schedule.html" class="btn">Schedule Pickup <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 GreenLoop. Doorstep E-Waste Recycling. | Servlet Concepts — Academic Demonstration</p>
+      <div class="footer-bottom-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html">Register</a>
+        <a href="servlet-concepts.html">Servlet Concepts</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

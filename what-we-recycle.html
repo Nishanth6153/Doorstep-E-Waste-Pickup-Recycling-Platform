@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GreenLoop accepts smartphones, laptops, tablets, headphones, cables, keyboards, batteries and more for certified doorstep recycling collection.">
+  <title>What We Recycle | GreenLoop E-Waste Recycling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- No-flash theme loader -->
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('GREENLOOP_THEME');
+        if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
+  <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <a class="brand" href="index.html" aria-label="GreenLoop — home">
+      <span class="brand-icon" aria-hidden="true">♻</span>
+      GreenLoop
+    </a>
+    <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="what-we-recycle.html" class="active" aria-current="page">What We Recycle</a>
+      <a href="about.html">About</a>
+      <a href="impact.html">Impact</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark/light mode">🌙</button>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══ PAGE HERO ════════════════════════════════════════════ -->
+    <section class="page-hero" aria-labelledby="wwr-heading">
+      <div class="page-hero-content">
+        <span class="eyebrow">The Catalogue</span>
+        <h1 id="wwr-heading">
+          <span style="display:block">Every device</span>
+          <span style="display:block;color:var(--text-muted)">deserves a proper farewell.</span>
+        </h1>
+        <p class="lead">
+          GreenLoop collects a wide range of household and office electronics.
+          Browse below to see what we accept, how to prepare each device, and how it's recycled.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 1: QUICK ACCEPT LIST ════════════════════════ -->
+    <section class="section" aria-labelledby="accepted-list-heading">
+      <div class="accepted-grid">
+        <div class="fade-in-up">
+          <span class="eyebrow">What We Collect</span>
+          <h2 id="accepted-list-heading">
+            <span style="display:block">If it has a plug,</span>
+            <span style="display:block;color:var(--text-muted)">battery, or circuit board.</span>
+          </h2>
+          <p class="subtext" style="margin-top:14px;max-width:400px;">
+            GreenLoop accepts a comprehensive range of electronics from households and businesses.
+            The list below covers our standard accepted categories.
+          </p>
+          <a href="schedule.html" class="btn" style="margin-top:32px;" id="wwr-schedule-btn">
+            Schedule a Pickup <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="fade-in-up" data-delay="2">
+          <!-- UNORDERED LIST: accepted devices -->
+          <ul class="accepted-list" aria-label="Device categories we accept">
+            <li>📱 Mobile phones &amp; smartphones</li>
+            <li>💻 Laptops &amp; desktop computers</li>
+            <li>📟 Tablets &amp; e-readers</li>
+            <li>🎧 Headphones &amp; earphones</li>
+            <li>⌨ Keyboards &amp; mice</li>
+            <li>🔌 Chargers, cables &amp; adapters</li>
+            <li>🖥 Monitors &amp; screens</li>
+            <li>🔋 Rechargeable batteries &amp; power banks</li>
+            <li>🖨 Printers &amp; scanners</li>
+            <li>🔈 Smart speakers &amp; home hubs</li>
+            <li>📡 Routers &amp; networking gear</li>
+            <li>🎮 Gaming consoles &amp; controllers</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 2: DEVICE CARDS (rendered from JS) ════════════ -->
+    <section class="section alt" aria-labelledby="catalogue-cards-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Device Categories</span>
+        <h2 id="catalogue-cards-heading">Browse by device type.</h2>
+        <p class="subtext">
+          Click any card to learn more about how that device is processed and what materials are recovered.
+        </p>
+      </div>
+
+      <!-- Cards rendered by JS from ewasteItems data -->
+      <div id="wwr-device-cards" class="device-cards-grid" aria-label="E-waste device categories" aria-live="polite"></div>
+    </section>
+
+    <!-- ══ SECTION 3: FULL RECYCLING GUIDE TABLE ════════════════ -->
+    <!--
+      HTML TABLE: The main assignment table requirement
+      Shows Device Type / Examples / Accepted / Preparation / Data Safety / Recycling Method
+    -->
+    <section class="section" aria-labelledby="guide-table-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">Recycling Guide</span>
+        <h2 id="guide-table-heading">E-Waste Pickup &amp; Recycling Guide.</h2>
+        <p class="subtext">
+          A complete reference for how each device category is handled — from your doorstep to certified recycling.
+        </p>
+      </div>
+
+      <div class="impact-table-wrap fade-in-up" data-delay="2">
+        <table aria-label="E-waste pickup and recycling guide — complete reference table">
+          <thead>
+            <tr>
+              <th scope="col">Device Type</th>
+              <th scope="col">Examples</th>
+              <th scope="col">Accepted</th>
+              <th scope="col">Preparation Required</th>
+              <th scope="col">Data Safety</th>
+              <th scope="col">Recycling Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="cell-em">📱 Smartphones</span></td>
+              <td>iPhone, Samsung, OnePlus, Pixel</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>Factory reset, remove SIM &amp; SD card</td>
+              <td>NIST 800-88 wipe on request</td>
+              <td>Urban mining — gold, cobalt, lithium recovery</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">💻 Laptops</span></td>
+              <td>MacBook, Dell, Lenovo, HP, Asus</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>Full OS wipe or factory reset</td>
+              <td>Certified data destruction certificate available</td>
+              <td>Shredding &amp; material separation at WEEE facility</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">📟 Tablets</span></td>
+              <td>iPad, Samsung Tab, Lenovo Tab, Fire</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>Factory reset, remove SIM</td>
+              <td>NIST 800-88 wipe on request</td>
+              <td>Indium tin oxide recovery, lithium recycling</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">🎧 Headphones</span></td>
+              <td>Sony, Bose, Apple AirPods, JBL</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>No preparation needed</td>
+              <td>No sensitive data stored</td>
+              <td>Neodymium magnet &amp; copper recovery</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">⌨ Keyboards</span></td>
+              <td>Mechanical, membrane, wireless keyboards</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>No preparation needed</td>
+              <td>No sensitive data stored</td>
+              <td>PCB disassembly, copper &amp; plastic recovery</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">🔌 Cables &amp; Chargers</span></td>
+              <td>USB-C, Lightning, HDMI, laptop chargers</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>No preparation needed</td>
+              <td>No sensitive data stored</td>
+              <td>Copper wire extraction, PVC plastic recycling</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em" style="color:var(--hazard-high)">🔋 Batteries</span></td>
+              <td>AA/AAA, power banks, laptop batteries</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>Tape terminals, handle gently — fire risk if damaged</td>
+              <td>No sensitive data stored</td>
+              <td>Hydrometallurgical recovery — lithium, cobalt, nickel</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em" style="color:var(--hazard-high)">🖥 Monitors</span></td>
+              <td>LCD, LED, ultrawide, CRT (old tube)</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>Do not crack screen — mercury vapour hazard in CRTs</td>
+              <td>No sensitive data stored</td>
+              <td>Specialist facility — mercury lamp removal, glass &amp; metal recovery</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">🖨 Printers</span></td>
+              <td>Inkjet, laser, all-in-one, label printers</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>Remove ink cartridges, clear network settings</td>
+              <td>Clear print queue before collection</td>
+              <td>Component disassembly, material stream separation</td>
+            </tr>
+            <tr>
+              <td><span class="cell-em">🔈 Smart Speakers</span></td>
+              <td>Amazon Echo, Google Nest, HomePod, Sonos</td>
+              <td style="color:var(--accent);font-weight:700;">✓ Yes</td>
+              <td>Factory reset, deregister from your account</td>
+              <td>Factory reset removes voice profiles &amp; personal data</td>
+              <td>Embedded battery removal, copper &amp; plastic recovery</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="text-align:center;margin-top:32px;" class="fade-in-up" data-delay="3">
+        <p style="color:var(--text-muted);font-size:.875rem;margin-bottom:16px;">
+          Don't see your device? <a href="contact.html" style="color:var(--accent);font-weight:600;">Contact us</a> — we may still be able to help.
+        </p>
+        <a href="schedule.html" class="btn" id="wwr-catalogue-cta">
+          Schedule a Pickup <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 4: NOT ACCEPTED LIST ════════════════════════ -->
+    <section class="section alt" aria-labelledby="not-accepted-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">What We Don't Collect</span>
+        <h2 id="not-accepted-heading">Items we cannot currently accept.</h2>
+        <p class="subtext">
+          Some items require specialist facilities we don't yet partner with. Please do not include these in your booking.
+        </p>
+      </div>
+
+      <div style="max-width:720px;margin:40px auto 0;" class="fade-in-up" data-delay="2">
+        <!-- UNORDERED LIST: not accepted -->
+        <ul class="prep-list" style="columns:2;column-gap:48px;" aria-label="Items we cannot accept">
+          <li>Medical devices and equipment</li>
+          <li>Large household appliances (fridges, washing machines)</li>
+          <li>Smoke detectors with radioactive elements</li>
+          <li>Fluorescent light tubes and bulbs</li>
+          <li>Asbestos-containing materials</li>
+          <li>Gas-filled devices (aerosols)</li>
+          <li>Radioactive waste of any kind</li>
+          <li>Automotive parts and batteries</li>
+        </ul>
+        <p style="margin-top:24px;color:var(--text-muted);font-size:.875rem;">
+          For large appliances, contact your local council waste service. For medical devices, check with your healthcare provider.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══ SECTION 5: RECYCLING STEPS (Ordered List) ════════════ -->
+    <section class="section" aria-labelledby="recycle-steps-heading">
+      <div class="section-header center fade-in-up">
+        <span class="eyebrow">The Recycling Process</span>
+        <h2 id="recycle-steps-heading">From your door to certified recycling.</h2>
+      </div>
+
+      <div style="max-width:640px;margin:40px auto 0;" class="fade-in-up" data-delay="2">
+        <!-- ORDERED LIST: process steps -->
+        <ol class="process-steps-ol" aria-label="Recycling process steps">
+          <li>
+            <strong>Schedule Pickup</strong>
+            <span>Book a free doorstep collection through our schedule page</span>
+          </li>
+          <li>
+            <strong>Prepare Your Device</strong>
+            <span>Back up data, reset your device, and follow the category-specific preparation guide above</span>
+          </li>
+          <li>
+            <strong>Doorstep Collection</strong>
+            <span>Our trained team collects items from your door within the booked time window</span>
+          </li>
+          <li>
+            <strong>Responsible Sorting</strong>
+            <span>Devices are assessed — reusable items separated for refurbishment, the rest for recycling</span>
+          </li>
+          <li>
+            <strong>Certified Data Destruction</strong>
+            <span>All storage media wiped or destroyed under NIST 800-88 certified guidelines</span>
+          </li>
+          <li>
+            <strong>Material Recovery &amp; Recycling</strong>
+            <span>Valuable materials (lithium, gold, copper, cobalt) extracted by specialist certified facilities</span>
+          </li>
+          <li>
+            <strong>Back into the Supply Chain</strong>
+            <span>Recovered materials re-enter manufacturing — completing the circular economy loop</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══ CTA ═══════════════════════════════════════════════════ -->
+    <section class="cta-section" aria-labelledby="wwr-cta-heading">
+      <div class="fade-in-up">
+        <h2 id="wwr-cta-heading">Found what you want to recycle?</h2>
+        <p>Schedule a free collection — we come to your door.</p>
+        <a href="schedule.html" class="btn btn-lg" id="wwr-final-cta">
+          Schedule a Pickup <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="GreenLoop home">
+          <span class="brand-icon" aria-hidden="true">♻</span>
+          GreenLoop
+        </a>
+        <p>Making responsible e-waste recycling beautifully simple — one doorstep at a time.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Site navigation">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="what-we-recycle.html">What We Recycle</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="impact.html">Impact</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Account links">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="login.html">Sign In</a></li>
+          <li><a href="register.html">Create Account</a></li>
+          <li><a href="schedule.html">Schedule Pickup</a></li>
+          <li><a href="servlet-concepts.html">Servlet Concepts</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-cta-col">
+        <h4>Ready to recycle?</h4>
+        <p>Schedule a free doorstep pickup for your unwanted electronics.</p>
+        <a href="schedule.html" class="btn">Schedule Pickup <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 GreenLoop. Doorstep E-Waste Recycling.</p>
+      <div class="footer-bottom-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html">Register</a>
+        <a href="servlet-concepts.html">Servlet Concepts</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

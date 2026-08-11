@@ -20,7 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
   setupFaq();                    // contact.html
   setupSchedulePage();           // schedule.html
   renderHomeDeviceCards();       // index.html — device cards from JSON
+  renderWwrDeviceCards();        // what-we-recycle.html — device cards
   loadMalformedDraftDemo();      // Exception Handling demo (schedule.html)
+  loadEwasteData();              // impact.html — JSON fetch demo
+  setupRememberMe();             // login.html — remember me checkbox
 });
 
 /* ════════════════════════════════════════════════════════════
@@ -406,6 +409,9 @@ function validateRegistration(form) {
   let valid = true;
 
   // FORM VALIDATION: define all checks as [fieldId, passes, errorMessage]
+  const confirmPw = form.elements['confirmPassword'] ? form.elements['confirmPassword'].value : password;
+  const gender    = form.querySelector('input[name="gender"]:checked');
+
   const checks = [
     ['reg-name',
       name.length >= 2 && /^[A-Za-z\s'-]+$/.test(name),
@@ -416,6 +422,9 @@ function validateRegistration(form) {
     ['reg-password',
       /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(password),
       'Password must be at least 8 characters with a letter and a number.'],
+    ['reg-confirm-password',
+      confirmPw === password && confirmPw.length >= 8,
+      'Passwords do not match. Please re-enter your password.'],
     ['reg-phone',
       /^\d{10}$/.test(phone),
       'Enter a 10-digit phone number with no spaces.'],
@@ -427,10 +436,13 @@ function validateRegistration(form) {
       'Enter a valid house / flat number.'],
     ['reg-city',
       city !== '',
-      'Select your city or service area.'],
+      'Select your preferred pickup area.'],
     ['reg-address',
       address.length >= 10,
       'Enter your full address (at least 10 characters).'],
+    ['gender',
+      Boolean(gender),
+      'Please select your gender.'],
     ['accountType',
       Boolean(acctType),
       'Choose an account type — Individual or Business.'],
@@ -536,15 +548,21 @@ function setupContactForm() {
       // FORM VALIDATION: use custom checks with inline errors
       const name    = form.elements['contactName'].value.trim();
       const email   = form.elements['contactEmail'].value.trim();
+      const mobile  = form.elements['contactMobile'] ? form.elements['contactMobile'].value.trim() : '0000000000';
       const subject = form.elements['subject'].value;
+      const date    = form.elements['contactDate'] ? form.elements['contactDate'].value : '2026-01-01';
       const message = form.elements['message'].value.trim();
+      const consent = form.elements['contactConsent'] ? form.elements['contactConsent'].checked : true;
 
       // FORM VALIDATION: check each field individually with inline errors
       const checks = [
         ['contact-name',    name.length >= 2,                                    'Enter your name (at least 2 characters).'],
         ['contact-email',   /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email),        'Enter a valid email address.'],
-        ['contact-subject', Boolean(subject),                                    'Please choose a topic.'],
-        ['contact-message', message.length >= 10,                                'Enter a message (at least 10 characters).']
+        ['contact-mobile',  /^\d{10}$/.test(mobile),                            'Enter a valid 10-digit mobile number.'],
+        ['contact-subject', Boolean(subject),                                    'Please choose a contact category.'],
+        ['contact-date',    Boolean(date),                                       'Please select a preferred contact date.'],
+        ['contact-message', message.length >= 10,                                'Enter a message (at least 10 characters).'],
+        ['contact-consent', consent,                                             'Please consent to being contacted in response.']
       ];
 
       let valid = true;
@@ -1142,4 +1160,220 @@ function setupSchedulePage() {
       }
     }
   });
+}
+
+/* ════════════════════════════════════════════════════════════
+   REMEMBER ME — EVENT HANDLING + localStorage
+   ════════════════════════════════════════════════════════════ */
+/**
+ * EVENT HANDLING: Sets up the Remember Me checkbox on login.html.
+ * EXCEPTION HANDLING: Wraps localStorage access in try-catch.
+ * If remember me is checked, persists the email in localStorage.
+ */
+function setupRememberMe() {
+  const rememberCheckbox = document.getElementById('auth-remember');
+  const emailInput       = document.getElementById('auth-email');
+  if (!rememberCheckbox || !emailInput) return;
+
+  // EXCEPTION HANDLING: localStorage access may fail in private/incognito
+  try {
+    const savedEmail = localStorage.getItem('GREENLOOP_REMEMBERED_EMAIL');
+    if (savedEmail) {
+      emailInput.value         = savedEmail;
+      rememberCheckbox.checked = true;
+    }
+  } catch (storageErr) {
+    console.warn('[GreenLoop] Could not read remembered email from localStorage:', storageErr.message);
+  }
+
+  // EVENT HANDLING: change event on remember me checkbox
+  rememberCheckbox.addEventListener('change', () => {
+    try {
+      if (rememberCheckbox.checked && emailInput.value) {
+        localStorage.setItem('GREENLOOP_REMEMBERED_EMAIL', emailInput.value);
+      } else {
+        localStorage.removeItem('GREENLOOP_REMEMBERED_EMAIL');
+      }
+    } catch (storageErr) {
+      console.warn('[GreenLoop] Could not save remembered email:', storageErr.message);
+    }
+  });
+
+  // EVENT HANDLING: also save when user blurs email field while remember is checked
+  emailInput.addEventListener('blur', () => {
+    try {
+      if (rememberCheckbox.checked && emailInput.value) {
+        localStorage.setItem('GREENLOOP_REMEMBERED_EMAIL', emailInput.value);
+      }
+    } catch (storageErr) {
+      console.warn('[GreenLoop] Could not update remembered email:', storageErr.message);
+    }
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   JSON FETCH — impact.html (JSON REPRESENTATION + DOM MANIPULATION)
+   ════════════════════════════════════════════════════════════ */
+/**
+ * JSON REPRESENTATION: Loads data/e_waste.json using fetch().
+ * DOM MANIPULATION: Dynamically renders rows into #json-ewaste-tbody.
+ * EXCEPTION HANDLING: try-catch around fetch() and JSON parsing.
+ * EVENT HANDLING: runs on DOMContentLoaded via loadEwasteData().
+ */
+async function loadEwasteData() {
+  const tbody    = document.getElementById('json-ewaste-tbody');
+  const statusEl = document.getElementById('json-load-status');
+  if (!tbody) return; // only runs on impact.html
+
+  try {
+    // JSON REPRESENTATION: fetch the external JSON file
+    const response = await fetch('data/e_waste.json');
+
+    // EXCEPTION HANDLING: check HTTP status
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status} — could not load e_waste.json`);
+    }
+
+    // EXCEPTION HANDLING: JSON.parse errors caught if response body is malformed
+    const items = await response.json();
+
+    if (!Array.isArray(items) || items.length === 0) {
+      throw new Error('e_waste.json returned empty or non-array data.');
+    }
+
+    // DOM MANIPULATION: clear placeholder row
+    tbody.innerHTML = '';
+
+    // DOM MANIPULATION: render each JSON item as a table row
+    items.forEach(item => {
+      const row = document.createElement('tr');
+
+      // Hazard colour coding
+      const hazardColors = { High: '#e74c3c', Medium: '#f39c12', Low: 'var(--accent)' };
+      const hazardColor  = hazardColors[item.hazardLevel] || 'var(--text-muted)';
+
+      // DOM MANIPULATION: build row cells using innerHTML (safe — data is from our own JSON)
+      row.innerHTML = `
+        <td style="font-size:1.4rem;">${item.icon || '♻'}</td>
+        <td><span class="cell-em">${item.name}</span></td>
+        <td style="color:var(--text-muted);">${item.category}</td>
+        <td><span style="color:${hazardColor};font-weight:700;font-size:.8rem;">${item.hazardLevel} Hazard</span></td>
+        <td style="font-size:.8rem;color:var(--text-muted);">${(item.recyclableMaterials || []).slice(0,3).join(', ')}</td>
+      `;
+
+      // DOM MANIPULATION: appendChild to insert row into table
+      tbody.appendChild(row);
+    });
+
+    // DOM MANIPULATION: show success status
+    if (statusEl) {
+      statusEl.className = 'form-status success visible';
+      statusEl.textContent = `✓ Catalogue loaded from data/e_waste.json — ${items.length} device categories found.`;
+    }
+
+    // Re-run fade observer so newly added rows animate in
+    setupFadeInObserver();
+
+  } catch (fetchError) {
+    // EXCEPTION HANDLING: graceful fallback on fetch/parse/network error
+    console.error('[GreenLoop] Failed to load e_waste.json:', fetchError.message);
+
+    // DOM MANIPULATION: show error message in tbody
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align:center;color:var(--text-muted);padding:24px;">
+          <strong>Note:</strong> Live JSON loading requires a web server.
+          When served locally, the catalogue loads from <code>data/e_waste.json</code>.
+          Data is also available as the JavaScript array in <code>data.js</code>.
+        </td>
+      </tr>
+    `;
+
+    // DOM MANIPULATION: show inline fallback using ewasteItems from data.js
+    if (typeof ewasteItems !== 'undefined' && Array.isArray(ewasteItems)) {
+      tbody.innerHTML = '';
+      ewasteItems.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="font-size:1.4rem;">${item.iconOrImage || '♻'}</td>
+          <td><span class="cell-em">${item.itemName}</span></td>
+          <td style="color:var(--text-muted);">${item.category}</td>
+          <td><span style="color:var(--text-muted);font-weight:700;font-size:.8rem;">${item.hazardLevel} Hazard</span></td>
+          <td style="font-size:.8rem;color:var(--text-muted);">${(item.recoveredMaterials || []).slice(0,3).join(', ')}</td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      if (statusEl) {
+        statusEl.className = 'form-status visible';
+        statusEl.style.cssText = 'background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);';
+        statusEl.textContent = 'ℹ️ Showing catalogue from data.js (JSON file requires a web server to fetch).';
+      }
+    }
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   WHAT WE RECYCLE PAGE — DEVICE CARDS (DOM MANIPULATION, JSON)
+   ════════════════════════════════════════════════════════════ */
+/**
+ * DOM MANIPULATION: Renders e-waste device cards on what-we-recycle.html.
+ * JSON REPRESENTATION: Uses ewasteItems array from data.js.
+ * EXCEPTION HANDLING: try-catch around data access.
+ */
+function renderWwrDeviceCards() {
+  const grid = document.querySelector('#wwr-device-cards');
+  if (!grid) return; // only on what-we-recycle.html
+
+  try {
+    // EXCEPTION HANDLING: verify data is available
+    if (typeof ewasteItems === 'undefined' || !Array.isArray(ewasteItems)) {
+      throw new Error('ewasteItems data not available for WWR page.');
+    }
+
+    // DOM MANIPULATION: render each item as a card
+    ewasteItems.forEach(item => {
+      const card = document.createElement('article');
+      card.className = 'device-card fade-in-up';
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'article');
+      card.setAttribute('aria-label', `${item.itemName} — ${item.category}`);
+
+      // DOM MANIPULATION: build card children
+      card.innerHTML = `
+        <div class="card-icon" aria-hidden="true">${item.iconOrImage}</div>
+        <p class="card-cat">${item.category}</p>
+        <h3>${item.itemName}</h3>
+        <p class="card-desc">${item.description}</p>
+        <span class="hazard ${item.hazardLevel.toLowerCase()}">${item.hazardLevel} hazard</span>
+        <div class="card-materials">
+          ${(item.recoveredMaterials || []).map(m => `<span class="material-chip">${m}</span>`).join('')}
+        </div>
+        <span class="card-arrow" aria-hidden="true">→</span>
+      `;
+
+      // EVENT HANDLING: click to schedule
+      card.addEventListener('click', () => {
+        window.location.href = 'schedule.html';
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.location.href = 'schedule.html';
+        }
+      });
+
+      grid.appendChild(card);
+    });
+
+    setupFadeInObserver();
+
+  } catch (err) {
+    // EXCEPTION HANDLING: graceful fallback
+    console.error('[GreenLoop] Could not render WWR device cards:', err.message);
+    const msg = document.createElement('p');
+    msg.style.cssText = 'color:var(--text-muted);padding:24px 0;text-align:center;';
+    msg.textContent = 'Device catalogue is loading…';
+    grid.appendChild(msg);
+  }
 }
