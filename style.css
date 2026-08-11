@@ -1,45 +1,46 @@
 /* ============================================================
-   GreenLoop — Premium Light Theme
-   Clean environmental-tech product design
+   GreenLoop — Tech × Circular Economy Design System
+   Dual-Mode: Light (:root) + Dark ([data-theme="dark"])
    ============================================================ */
 
 /* ── Google Fonts ── */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap');
 
-/* ── Design Tokens ── */
+/* ── LIGHT THEME (default) ── */
 :root {
+  color-scheme: light;
+
   /* Backgrounds */
-  --bg:            #fafaf8;
-  --bg-2:          #f2f1ee;
-  --bg-card:       #ffffff;
-  --bg-green-pale: #edf7f1;
-  --bg-nav:        rgba(250,250,248,.92);
+  --bg:            #F7FAF8;
+  --bg-2:          #EDF5F0;
+  --bg-card:       #FFFFFF;
+  --bg-green-pale: #DDF5E7;
+  --bg-nav:        rgba(247,250,248,.92);
 
   /* Text */
-  --text-primary:  #1c1c1a;
-  --text-muted:    #6b7280;
-  --text-sub:      #9ca3af;
+  --text-primary:  #101817;
+  --text-muted:    #4B5563;
+  --text-sub:      #9CA3AF;
 
-  /* Accent — Natural Deep Green */
-  --accent:        #1f6b47;
-  --accent-mid:    #2d8a5e;
-  --accent-light:  #52b788;
-  --accent-pale:   #d8f3dc;
-  --accent-glow:   rgba(31,107,71,.12);
+  /* Accent — Deep Forest → Emerald */
+  --accent:        #16834B;
+  --accent-mid:    #22A65A;
+  --accent-light:  #52D68A;
+  --accent-pale:   #DDF5E7;
+  --accent-glow:   rgba(22,131,75,.12);
+  --accent-lime:   #B8F35A;
 
-  /* Secondary */
-  --accent-2:      #b07d5a;
-  --accent-2-pale: #f5ede6;
-  --accent-2-glow: rgba(176,125,90,.12);
+  /* Deep Forest for headings/dark sections */
+  --forest:        #0B3D2E;
 
   /* Status */
-  --hazard-high:   #c0392b;
-  --hazard-medium: #d97706;
-  --success:       #1f6b47;
-  --error:         #c0392b;
+  --hazard-high:   #DC2626;
+  --hazard-medium: #D97706;
+  --success:       #16834B;
+  --error:         #DC2626;
 
   /* Borders & Shadows */
-  --border:        #e5e7eb;
+  --border:        #E5E7EB;
   --border-focus:  var(--accent);
   --shadow-xs:     0 1px 2px rgba(0,0,0,.05);
   --shadow-sm:     0 1px 4px rgba(0,0,0,.07), 0 2px 8px rgba(0,0,0,.04);
@@ -49,14 +50,63 @@
 
   /* Radius */
   --radius-sm:     8px;
-  --radius:        12px;
-  --radius-lg:     20px;
+  --radius:        14px;
+  --radius-lg:     22px;
   --radius-pill:   100px;
 
   /* Spacing */
   --section-y:     100px;
   --section-x:     clamp(24px, 8vw, 96px);
   --nav-h:         68px;
+
+  /* Theme toggle icon */
+  --theme-icon:    "🌙";
+}
+
+/* ── DARK THEME ── */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --bg:            #0A1A12;
+  --bg-2:          #0F2318;
+  --bg-card:       #152A1E;
+  --bg-green-pale: #0F2318;
+  --bg-nav:        rgba(10,26,18,.92);
+
+  /* Text */
+  --text-primary:  #E8F5ED;
+  --text-muted:    #8BAF98;
+  --text-sub:      #5A7A68;
+
+  /* Accent */
+  --accent:        #22A65A;
+  --accent-mid:    #2EC76C;
+  --accent-light:  #52D68A;
+  --accent-pale:   #0F2B1E;
+  --accent-glow:   rgba(34,166,90,.15);
+  --accent-lime:   #B8F35A;
+
+  /* Deep Forest → becomes mid-dark bg in dark mode */
+  --forest:        #1A4A32;
+
+  /* Status */
+  --hazard-high:   #F87171;
+  --hazard-medium: #FBBF24;
+  --success:       #22A65A;
+  --error:         #F87171;
+
+  /* Borders & Shadows */
+  --border:        #1E3D2A;
+  --border-focus:  var(--accent);
+  --shadow-xs:     0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:     0 1px 4px rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.2);
+  --shadow-md:     0 4px 16px rgba(0,0,0,.4), 0 1px 3px rgba(0,0,0,.2);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.3);
+  --shadow-card:   0 0 0 1px var(--border), var(--shadow-md);
+
+  /* Theme toggle icon */
+  --theme-icon:    "☀️";
 }
 
 /* ── Reset ── */
@@ -131,7 +181,12 @@ button { font-family: inherit; cursor: pointer; }
 .site-header.scrolled {
   border-bottom-color: var(--border);
   box-shadow: var(--shadow-sm);
-  background: rgba(250,250,248,.97);
+  background: var(--bg-nav);
+}
+
+/* Dark mode nav bg override when scrolled */
+[data-theme="dark"] .site-header.scrolled {
+  background: rgba(10,26,18,.98);
 }
 
 /* Brand */
@@ -204,6 +259,30 @@ button { font-family: inherit; cursor: pointer; }
   color: #fff !important;
 }
 
+/* ── Theme Toggle Button ── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .2s, box-shadow .2s;
+  flex-shrink: 0;
+  margin-left: 6px;
+}
+.theme-toggle:hover {
+  background: var(--accent-pale);
+  border-color: var(--accent);
+  transform: rotate(20deg) scale(1.1);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
 /* Mobile toggle */
 .menu-toggle {
   display: none;
@@ -223,6 +302,10 @@ button { font-family: inherit; cursor: pointer; }
    SHARED LAYOUT
    ============================================================ */
 main { padding-top: var(--nav-h); }
+
+.section, section[id], div[id] {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
 
 .section {
   padding: var(--section-y) var(--section-x);
@@ -384,7 +467,21 @@ main { padding-top: var(--nav-h); }
   padding: 60px var(--section-x) 80px;
   position: relative;
   overflow: hidden;
+  background: radial-gradient(ellipse 80% 60% at 70% 40%, var(--accent-pale) 0%, var(--bg) 70%);
 }
+
+/* Subtle circuit-dot pattern overlay */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--accent-glow) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero > * { position: relative; z-index: 1; }
 
 .hero-content { max-width: 580px; }
 
@@ -401,6 +498,7 @@ main { padding-top: var(--nav-h); }
   letter-spacing: .08em;
   text-transform: uppercase;
   margin-bottom: 24px;
+  border: 1px solid var(--accent-light);
 }
 
 .hero-title {
@@ -413,6 +511,25 @@ main { padding-top: var(--nav-h); }
 
 .hero-title .highlight {
   color: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-mid) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Lime "electric" accent pill on hero */
+.hero-title .highlight-lime {
+  color: var(--forest);
+  background: var(--accent-lime);
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  padding: 0 6px;
+  border-radius: 6px;
+  display: inline-block;
+}
+[data-theme="dark"] .hero-title .highlight-lime {
+  color: #0A1A12;
 }
 
 .hero-lead {
@@ -435,19 +552,26 @@ main { padding-top: var(--nav-h); }
   height: 520px;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--border);
 }
 
 .hero-image-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.hero-image-wrap:hover img {
+  transform: scale(1.03);
 }
 
 .hero-image-badge {
   position: absolute;
   bottom: 24px;
   left: 24px;
-  background: rgba(255,255,255,.95);
+  background: var(--bg-card);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -456,6 +580,10 @@ main { padding-top: var(--nav-h); }
   align-items: center;
   gap: 12px;
   box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .hero-image-badge {
+  background: rgba(21,42,30,.92);
 }
 
 .hero-badge-icon {
@@ -482,6 +610,7 @@ main { padding-top: var(--nav-h); }
 }
 
 .hero-badge-text span { color: var(--text-muted); }
+
 
 /* ============================================================
    HOME — TRUST BAR
@@ -1949,3 +2078,289 @@ footer {
   white-space: nowrap;
   border: 0;
 }
+
+/* ============================================================
+   AUTHENTICATION & LOGIN COMPONENT STYLES
+   ============================================================ */
+
+/* Google OAuth Button */
+.btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: .95rem;
+  box-shadow: var(--shadow-xs);
+  transition: background .2s, border-color .2s, box-shadow .2s, transform .15s;
+}
+
+.btn-google:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.btn-google:active {
+  transform: translateY(0);
+}
+
+.btn-google svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Auth Divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.auth-divider span {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--text-sub);
+  text-transform: uppercase;
+}
+
+/* Password Input Wrap & Eye Toggle */
+.password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrap input {
+  padding-right: 48px !important;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  padding: 6px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .2s, background .2s;
+}
+
+.toggle-password-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-2);
+}
+
+/* Confirmed Email Pill */
+.confirmed-email-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--bg-green-pale);
+  border: 1px solid var(--accent-pale);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+}
+
+.confirmed-email-pill .email-text {
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--accent);
+  word-break: break-all;
+}
+
+.confirmed-email-pill .btn-change {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Auth Loading Spinner */
+.auth-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: auth-spin .8s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+@keyframes auth-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Auth Dev / Integration Alert Banner */
+.auth-dev-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.auth-dev-alert-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.auth-dev-alert-content strong {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.auth-dev-alert-content p {
+  margin: 0;
+  opacity: .95;
+}
+
+.auth-dev-alert.alert-info {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+}
+
+.auth-dev-alert.alert-warning {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+}
+
+.auth-dev-alert.alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.auth-dev-alert.alert-success {
+  background: var(--bg-green-pale);
+  border: 1px solid var(--accent-pale);
+  color: var(--accent);
+}
+
+/* ============================================================
+   DARK MODE OVERRIDES
+   Fine-tune any hardcoded light values for [data-theme="dark"]
+   ============================================================ */
+
+/* Alert banners */
+[data-theme="dark"] .auth-dev-alert.alert-info {
+  background: rgba(30,58,138,.25);
+  border-color: rgba(59,130,246,.3);
+  color: #93c5fd;
+}
+[data-theme="dark"] .auth-dev-alert.alert-warning {
+  background: rgba(120,53,15,.25);
+  border-color: rgba(245,158,11,.3);
+  color: #fcd34d;
+}
+[data-theme="dark"] .auth-dev-alert.alert-error {
+  background: rgba(127,29,29,.25);
+  border-color: rgba(239,68,68,.3);
+  color: #fca5a5;
+}
+
+/* Trust bar */
+[data-theme="dark"] .trust-bar {
+  background: var(--bg-2);
+  border-color: var(--border);
+}
+
+/* Card images in catalogue / schedule */
+[data-theme="dark"] .device-card,
+[data-theme="dark"] .schedule-device-card {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+/* Page hero (inner pages) */
+[data-theme="dark"] .page-hero {
+  background: linear-gradient(135deg, var(--bg-2) 0%, var(--bg) 100%);
+}
+
+/* Input autofill fix for dark mode */
+[data-theme="dark"] input:-webkit-autofill,
+[data-theme="dark"] input:-webkit-autofill:hover,
+[data-theme="dark"] input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #152A1E inset !important;
+  -webkit-text-fill-color: #E8F5ED !important;
+  border-color: var(--accent) !important;
+}
+
+/* Scrollbar in dark mode */
+[data-theme="dark"] ::-webkit-scrollbar-track { background: var(--bg-2); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--border); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: var(--text-sub); }
+
+/* Smooth color transitions when toggling theme */
+*,
+*::before,
+*::after {
+  transition:
+    background-color .25s ease,
+    border-color .25s ease,
+    color .15s ease,
+    box-shadow .25s ease;
+}
+
+/* But NOT for elements where instant transitions are needed */
+.theme-toggle,
+.theme-toggle *,
+button,
+a,
+input,
+select,
+textarea,
+img,
+video,
+.hero-image-wrap img {
+  transition: none;
+}
+
+/* Re-apply specific transitions for interactive elements */
+.theme-toggle {
+  transition: background .2s, border-color .2s, transform .2s, box-shadow .2s;
+}
+button,
+a.btn,
+.btn { transition: background .18s, color .18s, transform .15s, box-shadow .18s, border-color .18s; }
+input,
+select,
+textarea { transition: border-color .15s, box-shadow .15s; }
+.hero-image-wrap img { transition: transform .4s ease; }

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "usr_seed_1",
+    "name": "Demo Admin",
+    "email": "admin@greenloop.eco",
+    "passwordHash": "dbc19dfd28db6c7cf7d2269dd645492a87157cf6674830aefeb79380a06166baab4b6e06ecfc652139b50d32ed3851b44a387787cfdd5476e26a64dc8085eb8a",
+    "salt": "4397bbc246822ebd6d4288ffda0d4045",
+    "accountType": "Individual",
+    "createdAt": "2026-08-11T15:57:55.665Z"
+  },
+  {
+    "id": "usr_1786464319099_088e2615",
+    "name": "Nishanth G",
+    "email": "nishanth@greenloop.eco",
+    "passwordHash": "c87286670811105e300187c799c3668a308014fcb8e4eefbeeb9cb45161b69cebd01c894e17b6c3c3190c6657a85af52fe97169c5f655c05608f8b545bfeb6d0",
+    "salt": "2999e19686b488a2ce4e1ea94cd8bc90",
+    "accountType": "Individual",
+    "createdAt": "2026-08-11T16:05:19.099Z"
+  },
+  {
+    "id": "usr_g_1786464470890",
+    "name": "Google User",
+    "email": "google.user@greenloop.eco",
+    "passwordHash": "b9c46747fad407ab76b601ab94b0d7ccd19c01ed249d6ce6127da8d06bd764ba293841ad835744545312df356108bc9986d8e07b704a7ff6e1629736e716dbdc",
+    "salt": "8a241edc7b046d7414f71937492fb07a",
+    "accountType": "Google OAuth",
+    "createdAt": "2026-08-11T16:07:50.954Z"
+  }
+]

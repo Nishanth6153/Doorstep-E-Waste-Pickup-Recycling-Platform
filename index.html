@@ -9,6 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- No-flash theme loader: runs synchronously before page paint -->
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('GREENLOOP_THEME');
+        if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
   <link rel="stylesheet" href="effects.css">
 </head>
 <body>
@@ -29,10 +39,12 @@
       <a href="index.html" class="active" aria-current="page">Home</a>
       <a href="index.html#how-it-works">How It Works</a>
       <a href="about.html">About</a>
+      <a href="login.html">Login</a>
       <a href="register.html">Register</a>
       <a href="contact.html">Contact</a>
       <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
     </nav>
+    <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark/light mode">🌙</button>
   </header>
 
   <main id="main-content">
@@ -47,13 +59,14 @@
         </div>
 
         <h1 class="hero-title" id="hero-heading">
-          Your old tech deserves<br>
-          a <span class="highlight">better ending.</span>
+          Technology doesn't<br>
+          have to <span class="highlight">die.</span>
+          <span class="highlight-lime">Give it a second life.</span>
         </h1>
 
         <p class="hero-lead">
-          Schedule a doorstep pickup and send your unwanted electronics
-          into responsible recycling — not landfill.
+          Book a free doorstep pickup for your old electronics.
+          We handle certified recycling — you help the planet.
         </p>
 
         <div class="hero-actions">
@@ -68,11 +81,12 @@
 
       <div class="hero-image-wrap fade-in-up" data-delay="2" aria-hidden="true">
         <img
-          src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=1200&q=80"
-          alt="Circuit boards and electronic components ready for responsible recycling"
+          src="hero.png"
+          alt="Premium eco-tech flat-lay: laptop, smartphone, keyboard, headphones, cables and circuit board arranged on a mint-green surface with tropical leaves"
           loading="eager"
           width="1200"
           height="800"
+          style="border-radius:var(--radius-lg);object-fit:cover;"
         >
         <div class="hero-image-badge">
           <span class="hero-badge-icon" aria-hidden="true">🌿</span>
@@ -430,5 +444,6 @@
   <!-- data.js must load before script.js -->
   <script src="data.js"></script>
   <script src="script.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>

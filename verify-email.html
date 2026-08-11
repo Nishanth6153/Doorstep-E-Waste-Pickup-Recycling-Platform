@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Verify your GreenLoop account email address to activate doorstep pickup scheduling and account features.">
+  <title>Verify Email | GreenLoop E-Waste Recycling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- No-flash theme loader: runs synchronously before page paint -->
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('GREENLOOP_THEME');
+        if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
+  <link rel="stylesheet" href="effects.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <a class="brand" href="index.html" aria-label="GreenLoop — home">
+      <span class="brand-icon" aria-hidden="true">♻</span>
+      GreenLoop
+    </a>
+    <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="index.html#how-it-works">How It Works</a>
+      <a href="about.html">About</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="contact.html">Contact</a>
+      <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="form-page-wrap" aria-labelledby="verify-heading">
+
+      <!-- ── Copy Column ──────────────────────────────────────── -->
+      <div class="form-page-copy fade-in-up">
+        <span class="eyebrow">Email Verification</span>
+        <h1 id="verify-heading">
+          <span style="display:block">Check your</span>
+          <span style="display:block;color:var(--text-muted)">inbox.</span>
+        </h1>
+        <p>
+          We've sent a verification link to your email address. Please click the link
+          in the email to activate your account and access doorstep recycling scheduling.
+        </p>
+
+        <div class="benefit-list" role="list" aria-label="Verification instructions">
+          <div class="benefit-item" role="listitem">
+            <div class="benefit-icon" aria-hidden="true">📩</div>
+            <div class="benefit-text">
+              <strong>Check your spam folder</strong>
+              <span>If you don't see the email within 2 minutes, check your bulk or spam folder.</span>
+            </div>
+          </div>
+          <div class="benefit-item" role="listitem">
+            <div class="benefit-icon" aria-hidden="true">🔄</div>
+            <div class="benefit-text">
+              <strong>Request a resend</strong>
+              <span>Use the resend button if your verification link has expired.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Verification Card ────────────────────────────────── -->
+      <div class="form-card fade-in-up" data-delay="2" style="text-align:center;">
+
+        <div style="font-size:3rem;margin-bottom:16px;" aria-hidden="true">✉️</div>
+        
+        <h2 style="font-size:1.6rem;margin-bottom:8px;">Check your email</h2>
+        <p style="color:var(--text-muted);font-size:.95rem;margin-bottom:28px;line-height:1.6;">
+          We've sent a verification link to your registered email address.
+        </p>
+
+        <!-- Status banner injected here by auth.js -->
+
+        <button type="button" id="btn-resend-verification" class="btn btn-full">
+          Resend verification email
+        </button>
+
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);text-align:center;font-size:.875rem;color:var(--text-muted);">
+          Verified already?
+          <a href="login.html" style="color:var(--accent);font-weight:700;margin-left:4px;">
+            Back to Sign In
+          </a>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="GreenLoop home">
+          <span class="brand-icon" aria-hidden="true">♻</span>
+          GreenLoop
+        </a>
+        <p>Making responsible e-waste recycling beautifully simple — one doorstep at a time.</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Site navigation">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Account links">
+        <h4>Account</h4>
+        <ul>
+          <li><a href="login.html">Sign In</a></li>
+          <li><a href="register.html">Create Account</a></li>
+          <li><a href="schedule.html">Schedule Pickup</a></li>
+          <li><a href="contact.html">Get Support</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-cta-col">
+        <h4>Ready to recycle?</h4>
+        <p>Schedule a free doorstep pickup for your unwanted electronics.</p>
+        <a href="schedule.html" class="btn">
+          Schedule Pickup <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 GreenLoop. Doorstep E-Waste Recycling.</p>
+      <div class="footer-bottom-links">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html">Register</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

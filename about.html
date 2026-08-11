@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,6 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- No-flash theme loader: runs synchronously before page paint -->
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('GREENLOOP_THEME');
+        if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
   <link rel="stylesheet" href="effects.css">
 </head>
 <body>
@@ -28,6 +38,7 @@
       <a href="index.html">Home</a>
       <a href="index.html#how-it-works">How It Works</a>
       <a href="about.html" class="active" aria-current="page">About</a>
+      <a href="login.html">Login</a>
       <a href="register.html">Register</a>
       <a href="contact.html">Contact</a>
       <a href="schedule.html" class="nav-cta">Schedule Pickup →</a>
@@ -277,5 +288,6 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
    ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   // EVENT HANDLING: Wire up all page-specific modules safely
+  setupThemeToggle();            // Dark/Light mode toggle
   setupNavbar();
   setupFadeInObserver();
   setupRegistrationForm();       // register.html
@@ -62,6 +63,44 @@ function setupNavbar() {
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 20);
     }, { passive: true });
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   DARK / LIGHT MODE THEME TOGGLE
+   ════════════════════════════════════════════════════════════ */
+function setupThemeToggle() {
+  const btn = document.getElementById('theme-toggle-btn');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  // Restore saved preference, or use OS preference
+  const saved = localStorage.getItem('GREENLOOP_THEME');
+  const initial = saved || (prefersDark.matches ? 'dark' : 'light');
+  applyTheme(initial, btn);
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next, btn);
+      localStorage.setItem('GREENLOOP_THEME', next);
+    });
+  }
+
+  // Respond to OS preference change when no saved preference
+  prefersDark.addEventListener('change', (e) => {
+    if (!localStorage.getItem('GREENLOOP_THEME')) {
+      applyTheme(e.matches ? 'dark' : 'light', btn);
+    }
+  });
+}
+
+function applyTheme(theme, btn) {
+  document.documentElement.setAttribute('data-theme', theme);
+  if (btn) {
+    btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
   }
 }
 
@@ -616,15 +655,30 @@ function renderItems(items) {
     emptyRow.className = 'empty-row';
     const emptyCell = document.createElement('td');
     emptyCell.colSpan = 5;
-    emptyCell.textContent = 'No items match your search. Try a different keyword or category.';
+    emptyCell.innerHTML = 'No items match your search. <button type="button" id="btn-reset-table-search" style="background:none;border:none;color:var(--accent);font-weight:700;cursor:pointer;text-decoration:underline;">Reset Search & Filters</button>';
     emptyRow.appendChild(emptyCell);
     tableBody.appendChild(emptyRow);
 
     // DOM MANIPULATION: empty card state
     const emptyWrap = document.createElement('div');
     emptyWrap.style.cssText = 'text-align:center;padding:48px 24px;color:var(--text-muted);grid-column:1/-1;';
-    emptyWrap.innerHTML = '<p style="font-size:1.1rem;font-weight:600;margin-bottom:8px;">No devices match your search.</p><p style="font-size:.875rem;">Try another category or clear your filters.</p>';
+    emptyWrap.innerHTML = `
+      <p style="font-size:1.1rem;font-weight:600;margin-bottom:8px;">No devices match your search.</p>
+      <p style="font-size:.875rem;margin-bottom:16px;">Try another category or clear your filters.</p>
+      <button type="button" id="btn-reset-cards-search" class="btn btn-outline-green" style="padding:6px 16px;font-size:.825rem;">
+        Reset Search & Filters
+      </button>
+    `;
     cardsGrid.appendChild(emptyWrap);
+
+    const resetBtn1 = document.getElementById('btn-reset-table-search');
+    const resetBtn2 = document.getElementById('btn-reset-cards-search');
+    const resetSearch = () => {
+      const searchEl = document.querySelector('#item-search');
+      if (searchEl) { searchEl.value = ''; searchEl.dispatchEvent(new Event('input')); }
+    };
+    resetBtn1?.addEventListener('click', resetSearch);
+    resetBtn2?.addEventListener('click', resetSearch);
     return;
   }
 
@@ -925,14 +979,30 @@ function validatePickupForm(form) {
 /**
  * DOM MANIPULATION: Re-renders the "My Scheduled Pickups" table from the in-memory array.
  */
-function renderPickups() {
+async function renderPickups() {
   const tbody = document.querySelector('#pickups-table-body');
   if (!tbody) return;
 
-  // DOM MANIPULATION: clear and rebuild
+  const token = localStorage.getItem('GREENLOOP_TOKEN');
+  let currentPickups = [...pickupsStore];
+
+  if (token) {
+    try {
+      const res = await fetch('/api/pickups', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.pickups) {
+          currentPickups = data.pickups;
+        }
+      }
+    } catch (e) {}
+  }
+
   tbody.innerHTML = '';
 
-  if (!pickupsStore.length) {
+  if (!currentPickups.length) {
     const emptyRow  = document.createElement('tr');
     emptyRow.className = 'empty-row';
     const emptyCell = document.createElement('td');
@@ -943,17 +1013,17 @@ function renderPickups() {
     return;
   }
 
-  pickupsStore.forEach((pickup, index) => {
-    // DOM MANIPULATION: createElement for each cell
+  currentPickups.forEach((pickup, index) => {
     const row = document.createElement('tr');
+    const itemsText = Array.isArray(pickup.items) ? pickup.items.join(', ') : (pickup.itemTypes ? pickup.itemTypes.join(', ') : 'E-Waste');
 
     const data = [
       `#${index + 1}`,
-      pickup.name,
-      pickup.items.join(', '),
-      String(pickup.quantity),
-      `${pickup.date} · ${pickup.time}`,
-      pickup.condition
+      pickup.userName || pickup.name || 'User',
+      itemsText,
+      String(pickup.quantity || 1),
+      `${pickup.date} · ${pickup.timeSlot || pickup.time}`,
+      pickup.condition || 'Good'
     ];
 
     data.forEach(val => {
@@ -966,41 +1036,34 @@ function renderPickups() {
   });
 }
 
-/**
- * EVENT HANDLING + DOM MANIPULATION: Full schedule page initialisation.
- * Loads JSON data, wires filters, wires form submit into in-memory store.
- */
 function setupSchedulePage() {
   const form     = document.querySelector('#schedule-form');
   const statusEl = document.querySelector('#schedule-status');
   if (!form) return;
 
-  // JSON REPRESENTATION: load items via safe loader
   const items = safelyLoadItems();
 
-  // DOM MANIPULATION: initial render
   renderItems(items);
-
-  // EVENT HANDLING: setup filter/sort controls
   setupCatalogueFilters(items);
-
-  // Initial render of (empty) pickups table
   renderPickups();
 
-  // EVENT HANDLING: update live summary as user interacts with the form
   form.addEventListener('input',  () => updatePickupSummary(form));
   form.addEventListener('change', () => updatePickupSummary(form));
 
-  // EVENT HANDLING: clear errors on user input
   form.addEventListener('input',  (e) => clearFieldError(e.target.id || e.target.name));
   form.addEventListener('change', (e) => clearFieldError(e.target.id || e.target.name));
 
-  // EVENT HANDLING: pickup form submit
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     hideStatus(statusEl);
 
-    // Disable submit button to prevent duplicate submissions
+    // Authentication Guard Check
+    const token = localStorage.getItem('GREENLOOP_TOKEN');
+    if (!token) {
+      window.location.href = 'login.html?redirect=schedule.html';
+      return;
+    }
+
     const submitBtn = form.querySelector('[type="submit"]');
     if (submitBtn) {
       submitBtn.disabled = true;
@@ -1008,11 +1071,9 @@ function setupSchedulePage() {
     }
 
     try {
-      // EXCEPTION HANDLING: wrap entire submit in try-catch
       getRequiredField(form, 'fullName', statusEl);
       getRequiredField(form, 'address', statusEl);
 
-      // FORM VALIDATION
       if (!validatePickupForm(form)) {
         const firstErr = form.querySelector('[data-error-for]:not(:empty)');
         if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1024,50 +1085,57 @@ function setupSchedulePage() {
         return;
       }
 
-      // DOM MANIPULATION: collect form data and push to in-memory store
-      // JSON REPRESENTATION: newPickup is a JSON-serialisable object stored in the array
-      const newPickup = {
-        name:      form.elements['fullName'].value.trim(),
-        address:   form.elements['address'].value.trim(),
-        items:     [...form.querySelectorAll('input[name="itemType"]:checked')].map(cb => cb.value),
-        quantity:  form.elements['quantity'].value,
-        date:      form.elements['date'].value,
-        time:      form.elements['time'].value,
-        condition: form.querySelector('input[name="condition"]:checked').value,
-        instructions: form.elements['instructions'] ? form.elements['instructions'].value.trim() : ''
+      const itemsSelected = [...form.querySelectorAll('input[name="itemType"]:checked')].map(cb => cb.value);
+      const payload = {
+        items: itemsSelected,
+        itemTypes: itemsSelected,
+        quantity: form.elements['quantity'].value,
+        date: form.elements['date'].value,
+        timeSlot: form.elements['time'].value,
+        address: form.elements['address'].value.trim(),
+        phone: form.elements['phone'] ? form.elements['phone'].value.trim() : '9876543210',
+        condition: form.querySelector('input[name="condition"]:checked')?.value || 'Good',
+        notes: form.elements['instructions'] ? form.elements['instructions'].value.trim() : ''
       };
 
-      pickupsStore.push(newPickup);
+      const res = await fetch('/api/pickups', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
 
-      // DOM MANIPULATION: re-render the pickups table with new entry
-      renderPickups();
+      const resData = await res.json();
 
-      // DOM MANIPULATION: success status
-      setStatus(statusEl, 'success',
-        `✓ Pickup #${pickupsStore.length} confirmed! Scroll down to see your scheduled pickups.`);
+      if (res.ok && resData.success) {
+        if (resData.pickup) pickupsStore.unshift(resData.pickup);
+        await renderPickups();
 
-      form.reset();
+        setStatus(statusEl, 'success',
+          `✓ Doorstep Pickup confirmed! Your request is registered under your account.`);
 
-      // DOM MANIPULATION: reset live summary
-      updatePickupSummary(form);
+        form.reset();
+        updatePickupSummary(form);
 
-      // Re-enable button
+        const pickupsSection = document.querySelector('.pickups-section');
+        if (pickupsSection) {
+          setTimeout(() => pickupsSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
+        }
+      } else {
+        setStatus(statusEl, 'error', resData.error || 'Failed to schedule pickup.');
+      }
+
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.innerHTML = 'Confirm Pickup <span class="arrow" aria-hidden="true">→</span>';
       }
 
-      // Scroll to pickups section
-      const pickupsSection = document.querySelector('.pickups-section');
-      if (pickupsSection) {
-        setTimeout(() => pickupsSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
-      }
-
     } catch (err) {
-      // EXCEPTION HANDLING: catch unexpected errors during scheduling
       console.error('[GreenLoop] Schedule form error:', err);
       setStatus(statusEl, 'error',
-        `Unable to schedule pickup: ${err.message}. Please refresh and try again.`);
+        `Unable to schedule pickup: ${err.message}. Please try again.`);
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.innerHTML = 'Confirm Pickup <span class="arrow" aria-hidden="true">→</span>';
